@@ -4,3 +4,5 @@ export * from './AppCard';
 export * from './AppTextInput';
 export * from './Screen';
 export * from './AppIcon';
+export * from './AppGradient';
+export * from './AppBottomSheet';

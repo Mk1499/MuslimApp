@@ -40,3 +40,67 @@ jest.mock('react-native-vector-icons/Ionicons', () => {
     default: MockIcon,
   };
 });
+
+jest.mock('react-native-reanimated', () =>
+  require('react-native-reanimated/mock'),
+);
+
+jest.mock('react-native-linear-gradient', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+
+  const MockLinearGradient = (props, ref) => {
+    const { colors, locations, start, end, ...viewProps } = props;
+    return React.createElement(View, { ...viewProps, ref });
+  };
+
+  return {
+    __esModule: true,
+    default: React.forwardRef(MockLinearGradient),
+  };
+});
+
+jest.mock('@gorhom/bottom-sheet', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+
+  const BottomSheetModal = React.forwardRef((props, ref) => {
+    React.useImperativeHandle(
+      ref,
+      () => ({
+        present: jest.fn(),
+        dismiss: jest.fn(),
+        close: jest.fn(),
+        expand: jest.fn(),
+        collapse: jest.fn(),
+        snapToIndex: jest.fn(),
+      }),
+      [],
+    );
+    return React.createElement(View, null, props.children);
+  });
+
+  return {
+    __esModule: true,
+    BottomSheetModalProvider: ({ children }) => children,
+    BottomSheetModal,
+    BottomSheetView: (props) =>
+      React.createElement(View, { style: props.style }, props.children),
+    BottomSheetScrollView: (props) =>
+      React.createElement(View, { style: props.style }, props.children),
+    BottomSheetFlatList: () => null,
+    BottomSheetBackdrop: () => null,
+    BottomSheetTextInput: (props) =>
+      React.createElement(View, { style: props.style }),
+    useBottomSheet: () => ({
+      expand: jest.fn(),
+      collapse: jest.fn(),
+      close: jest.fn(),
+      snapToIndex: jest.fn(),
+    }),
+    useBottomSheetModal: () => ({
+      present: jest.fn(),
+      dismiss: jest.fn(),
+    }),
+  };
+});

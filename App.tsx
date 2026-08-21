@@ -1,28 +1,34 @@
-import { I18nManager, StatusBar } from 'react-native';
+import { I18nManager, StatusBar, StyleSheet } from 'react-native';
 import React from 'react';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider, useTheme } from './src/theme';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import './src/i18n';
 
 function App(): React.JSX.Element {
   return (
-    <ThemeProvider>
-      <SafeAreaProvider>
-        <ThemedApp />
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={styles.flex}>
+      <ThemeProvider>
+        <SafeAreaProvider>
+          <ThemedApp />
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 
 function ThemedApp(): React.JSX.Element {
   const theme = useTheme();
 
+  const baseTheme = theme.mode === 'dark' ? DarkTheme : DefaultTheme;
   const navigationTheme = {
-    ...DefaultTheme,
+    ...baseTheme,
+    dark: theme.mode === 'dark',
     colors: {
-      ...DefaultTheme.colors,
+      ...baseTheme.colors,
       background: theme.background.primary,
       card: theme.card.primary,
       text: theme.text.primary,
@@ -35,10 +41,18 @@ function ThemedApp(): React.JSX.Element {
     <NavigationContainer
       theme={navigationTheme}
       direction={I18nManager.isRTL ? 'rtl' : 'ltr'}>
-      <StatusBar barStyle={theme.mode === 'dark' ? 'light-content' : 'dark-content'} />
-      <RootNavigator />
+      <StatusBar
+        barStyle={theme.mode === 'dark' ? 'light-content' : 'dark-content'}
+      />
+      <BottomSheetModalProvider>
+        <RootNavigator />
+      </BottomSheetModalProvider>
     </NavigationContainer>
   );
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  flex: { flex: 1 },
+});

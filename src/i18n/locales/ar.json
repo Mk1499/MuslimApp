@@ -12,13 +12,20 @@
   },
   "home": {
     "greeting": "السلام عليكم",
-    "subtitle": "أتمنى لك يوماً مباركاً"
+    "subtitle": "أتمنى لك يوماً مباركاً",
+    "nextPrayer": "الصلاة القادمة",
+    "viewAllPrayers": "عرض الكل"
   },
   "quran": {
     "title": "القرآن الكريم"
   },
   "prayerTimes": {
-    "title": "مواقيت الصلاة"
+    "title": "مواقيت الصلاة",
+    "fajr": "الفجر",
+    "dhuhr": "الظهر",
+    "asr": "العصر",
+    "maghrib": "المغرب",
+    "isha": "العشاء"
   },
   "about": {
     "title": "عن التطبيق"
@@ -28,6 +35,10 @@
     "languageSection": "اللغة",
     "english": "English",
     "arabic": "العربية",
-    "currentLanguage": "اللغة الحالية: {{language}}"
+    "currentLanguage": "اللغة الحالية: {{language}}",
+    "appearanceSection": "المظهر",
+    "system": "حسب النظام",
+    "light": "فاتح",
+    "dark": "داكن"
   }
 }

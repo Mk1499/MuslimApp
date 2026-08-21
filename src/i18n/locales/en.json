@@ -12,13 +12,20 @@
   },
   "home": {
     "greeting": "Assalamu Alaikum",
-    "subtitle": "Have a blessed day"
+    "subtitle": "Have a blessed day",
+    "nextPrayer": "Next Prayer",
+    "viewAllPrayers": "View all"
   },
   "quran": {
     "title": "Holy Quran"
   },
   "prayerTimes": {
-    "title": "Prayer Times"
+    "title": "Prayer Times",
+    "fajr": "Fajr",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha"
   },
   "about": {
     "title": "About"
@@ -28,6 +35,10 @@
     "languageSection": "Language",
     "english": "English",
     "arabic": "العربية",
-    "currentLanguage": "Current language: {{language}}"
+    "currentLanguage": "Current language: {{language}}",
+    "appearanceSection": "Appearance",
+    "system": "System Default",
+    "light": "Light",
+    "dark": "Dark"
   }
 }

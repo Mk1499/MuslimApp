@@ -40,6 +40,9 @@ export const palette = {
 
 export type ThemeMode = 'light' | 'dark';
 
+/** User-facing preference - 'system' follows the OS appearance. */
+export type ThemePreference = ThemeMode | 'system';
+
 /**
  * Design system tokens grouped by component.
  * Every group owns its colors so components stay self-contained
@@ -85,6 +88,8 @@ export type AppTheme = {
   };
   /** Brand accent highlights. */
   accent: { primary: string; soft: string };
+  /** Gradient fills (use via AppGradient). */
+  gradient: { hero: [string, string]; primary: [string, string]; scrim: [string, string] };
   divider: string;
   overlay: string;
 };
@@ -141,6 +146,11 @@ export const lightTheme: AppTheme = {
     primary: palette.gold[600],
     soft: palette.gold[100],
   },
+  gradient: {
+    hero: [palette.emerald[500], palette.emerald[800]],
+    primary: [palette.gold[500], palette.gold[600]],
+    scrim: ['rgba(15, 23, 42, 0)', 'rgba(15, 23, 42, 0.75)'],
+  },
   divider: palette.neutral[200],
   overlay: 'rgba(15, 23, 42, 0.5)',
 };
@@ -196,6 +206,11 @@ export const darkTheme: AppTheme = {
   accent: {
     primary: palette.gold[300],
     soft: palette.gold[700],
+  },
+  gradient: {
+    hero: [palette.emerald[600], palette.emerald[900]],
+    primary: [palette.gold[600], palette.gold[700]],
+    scrim: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.85)'],
   },
   divider: palette.neutral[700],
   overlay: 'rgba(0, 0, 0, 0.65)',
