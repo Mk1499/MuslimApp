@@ -1,0 +1,33 @@
+{
+  "common": {
+    "appName": "تطبيق مسلم",
+    "ok": "حسناً",
+    "cancel": "إلغاء"
+  },
+  "tabs": {
+    "home": "الرئيسية",
+    "quran": "القرآن",
+    "prayerTimes": "مواقيت الصلاة",
+    "settings": "الإعدادات"
+  },
+  "home": {
+    "greeting": "السلام عليكم",
+    "subtitle": "أتمنى لك يوماً مباركاً"
+  },
+  "quran": {
+    "title": "القرآن الكريم"
+  },
+  "prayerTimes": {
+    "title": "مواقيت الصلاة"
+  },
+  "about": {
+    "title": "عن التطبيق"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "languageSection": "اللغة",
+    "english": "English",
+    "arabic": "العربية",
+    "currentLanguage": "اللغة الحالية: {{language}}"
+  }
+}

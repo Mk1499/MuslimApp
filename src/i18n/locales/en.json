@@ -1,0 +1,33 @@
+{
+  "common": {
+    "appName": "Muslim App",
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "tabs": {
+    "home": "Home",
+    "quran": "Quran",
+    "prayerTimes": "Prayer Times",
+    "settings": "Settings"
+  },
+  "home": {
+    "greeting": "Assalamu Alaikum",
+    "subtitle": "Have a blessed day"
+  },
+  "quran": {
+    "title": "Holy Quran"
+  },
+  "prayerTimes": {
+    "title": "Prayer Times"
+  },
+  "about": {
+    "title": "About"
+  },
+  "settings": {
+    "title": "Settings",
+    "languageSection": "Language",
+    "english": "English",
+    "arabic": "العربية",
+    "currentLanguage": "Current language: {{language}}"
+  }
+}
