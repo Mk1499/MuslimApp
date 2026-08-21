@@ -2,32 +2,42 @@ import { I18nManager, StatusBar } from 'react-native';
 import React from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeProvider, useTheme } from './src/theme';
 import { RootNavigator } from './src/navigation/RootNavigator';
-import { lightTheme } from './src/theme';
 import './src/i18n';
 
 function App(): React.JSX.Element {
+  return (
+    <ThemeProvider>
+      <SafeAreaProvider>
+        <ThemedApp />
+      </SafeAreaProvider>
+    </ThemeProvider>
+  );
+}
+
+function ThemedApp(): React.JSX.Element {
+  const theme = useTheme();
+
   const navigationTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: lightTheme.background,
-      card: lightTheme.surface,
-      text: lightTheme.text,
-      border: lightTheme.border,
-      primary: lightTheme.primary,
+      background: theme.background.primary,
+      card: theme.card.primary,
+      text: theme.text.primary,
+      border: theme.divider,
+      primary: theme.button.primaryBg,
     },
   };
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer
-        theme={navigationTheme}
-        direction={I18nManager.isRTL ? 'rtl' : 'ltr'}>
-        <StatusBar barStyle="dark-content" />
-        <RootNavigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <NavigationContainer
+      theme={navigationTheme}
+      direction={I18nManager.isRTL ? 'rtl' : 'ltr'}>
+      <StatusBar barStyle={theme.mode === 'dark' ? 'light-content' : 'dark-content'} />
+      <RootNavigator />
+    </NavigationContainer>
   );
 }
 

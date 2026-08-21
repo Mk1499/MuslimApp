@@ -21,3 +21,22 @@ jest.mock('react-native-restart', () => ({
   __esModule: true,
   default: { restart: jest.fn(), Restart: jest.fn() },
 }));
+
+jest.mock('react-native-vector-icons/Ionicons', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+
+  const MockIcon = props =>
+    React.createElement(Text, { ...props, allowFontScaling: false }, '?');
+
+  MockIcon.getRawGlyphMap = () => ({});
+  MockIcon.getImageSource = async () => ({ uri: '' });
+  MockIcon.getImageSourceSync = () => ({ uri: '' });
+  MockIcon.loadFont = async () => undefined;
+  MockIcon.hasIcon = () => true;
+
+  return {
+    __esModule: true,
+    default: MockIcon,
+  };
+});

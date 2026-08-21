@@ -2,33 +2,71 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
-import { HomeScreen } from '../screens/home/HomeScreen';
-import { QuranScreen } from '../screens/quran/QuranScreen';
-import { PrayerTimesScreen } from '../screens/prayerTimes/PrayerTimesScreen';
-import { SettingsScreen } from '../screens/settings/SettingsScreen';
-import { fontFamily, fontSize, fontWeight, lightTheme } from '../theme';
+import { HomeScreen } from '../features/home/HomeScreen';
+import { QuranScreen } from '../features/quran/QuranScreen';
+import { PrayerTimesScreen } from '../features/prayer-times/PrayerTimesScreen';
+import { SettingsScreen } from '../features/settings/SettingsScreen';
+import { AppIcon, type AppIconName } from '../components/ui';
+import { fontFamily, fontSize, useTheme } from '../theme';
 import type { MainTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
+const tabIcons: Record<keyof MainTabParamList, AppIconName> = {
+  Home: 'home',
+  Quran: 'book',
+  PrayerTimes: 'time',
+  Settings: 'settings-outline',
+};
+
+interface TabBarIconProps {
+  focused: boolean;
+  size: number;
+  name: AppIconName;
+}
+
+function TabBarIcon({ focused, size, name }: TabBarIconProps): React.JSX.Element {
+  return (
+    <AppIcon
+      name={name}
+      size={size}
+      color={focused ? 'tabBar.active' : 'tabBar.inactive'}
+    />
+  );
+}
+
 export function BottomTabs(): React.JSX.Element {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         headerShadowVisible: false,
-        headerTitleStyle: styles.headerTitle,
-        headerTintColor: lightTheme.primary,
-        tabBarActiveTintColor: lightTheme.tabBarActive,
-        tabBarInactiveTintColor: lightTheme.tabBarInactive,
+        headerTintColor: theme.button.primaryBg,
+        headerTitleStyle: {
+          fontFamily: fontFamily.semiBold,
+          fontSize: fontSize.lg,
+          color: theme.text.primary,
+        },
+        headerStyle: { backgroundColor: theme.background.primary },
+        tabBarActiveTintColor: theme.tabBar.active,
+        tabBarInactiveTintColor: theme.tabBar.inactive,
         tabBarLabelStyle: styles.tabLabel,
         tabBarStyle: {
-          backgroundColor: lightTheme.tabBarBackground,
-          borderTopColor: lightTheme.border,
+          backgroundColor: theme.tabBar.background,
+          borderTopColor: theme.tabBar.border,
         },
-        sceneStyle: { backgroundColor: lightTheme.background },
-      }}>
+        sceneStyle: { backgroundColor: theme.background.primary },
+        // eslint-disable-next-line react/no-unstable-nested-components
+        tabBarIcon: ({ focused, size }) => (
+          <TabBarIcon
+            focused={focused}
+            size={size}
+            name={tabIcons[route.name as keyof MainTabParamList]}
+          />
+        ),
+      })}>
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('tabs.home') }} />
       <Tab.Screen name="Quran" component={QuranScreen} options={{ title: t('tabs.quran') }} />
       <Tab.Screen
@@ -46,15 +84,8 @@ export function BottomTabs(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  headerTitle: {
-    color: lightTheme.text,
-    fontSize: fontSize.lg,
-    fontWeight: fontWeight.semiBold as never,
-    fontFamily: fontFamily.semiBold,
-  },
   tabLabel: {
     fontFamily: fontFamily.medium,
     fontSize: fontSize.xs,
-    fontWeight: fontWeight.medium as never,
   },
 });

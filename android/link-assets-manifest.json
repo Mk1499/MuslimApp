@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Cairo-Bold.ttf",
+      "sha1": "1142a2450371704f10577e56298ea115cb3de13e"
+    },
+    {
+      "path": "src/assets/fonts/Cairo-Medium.ttf",
+      "sha1": "9b4d4473d96142b398df9579bf0b8d8ca3a7c68a"
+    },
+    {
+      "path": "src/assets/fonts/Cairo-Regular.ttf",
+      "sha1": "03370f5d215d26b9952ea36bb3c467dc65e85e62"
+    },
+    {
+      "path": "src/assets/fonts/Cairo-SemiBold.ttf",
+      "sha1": "bdfd50d1eaca813b7536481ddd4e7071a66c4d84"
+    }
+  ]
+}

@@ -1,13 +1,12 @@
 /**
- * Typography scale.
- * Swap 'System' with custom font family names (e.g. 'Amiri-Regular')
- * once fonts are linked via react-native.config.js.
+ * Cairo font family names map to the bundled TTF filenames
+ * (src/assets/fonts/Cairo-*.ttf) registered via react-native.config.js.
  */
 export const fontFamily = {
-  regular: 'System',
-  medium: 'System',
-  semiBold: 'System',
-  bold: 'System',
+  regular: 'Cairo-Regular',
+  medium: 'Cairo-Medium',
+  semiBold: 'Cairo-SemiBold',
+  bold: 'Cairo-Bold',
 };
 
 export const fontSize = {
@@ -20,15 +19,10 @@ export const fontSize = {
   display: 32,
 } as const;
 
-export const fontWeight = {
-  regular: '400',
-  medium: '500',
-  semiBold: '600',
-  bold: '700',
-} as const;
-
 export const lineHeight = {
   tight: 1.25,
   normal: 1.4,
   relaxed: 1.6,
 } as const;
+
+export type FontFamilyToken = keyof typeof fontFamily;

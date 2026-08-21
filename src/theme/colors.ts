@@ -1,6 +1,6 @@
 /**
- * Raw color palette. Semantic app tokens (background, text, primary...)
- * are derived from this palette in lightTheme / darkTheme.
+ * Raw color palette. Semantic per-component tokens are derived from
+ * this palette in lightTheme / darkTheme - never use hex values in screens.
  */
 export const palette = {
   emerald: {
@@ -38,65 +38,169 @@ export const palette = {
   },
 } as const;
 
+export type ThemeMode = 'light' | 'dark';
+
+/**
+ * Design system tokens grouped by component.
+ * Every group owns its colors so components stay self-contained
+ * and swapping themes only touches this file.
+ */
 export type AppTheme = {
-  mode: 'light' | 'dark';
-  background: string;
-  surface: string;
-  surfaceMuted: string;
-  text: string;
-  textMuted: string;
-  border: string;
-  primary: string;
-  primarySoft: string;
-  onPrimary: string;
-  accent: string;
-  success: string;
-  warning: string;
-  error: string;
-  info: string;
-  tabBarBackground: string;
-  tabBarActive: string;
-  tabBarInactive: string;
+  mode: ThemeMode;
+  /** Screen backgrounds. */
+  background: { primary: string; secondary: string };
+  /** Typography colors (use via AppText). */
+  text: { primary: string; secondary: string; muted: string; inverse: string };
+  /** Card surfaces (use via AppCard). */
+  card: { primary: string; secondary: string; border: string };
+  /** Text inputs (use via AppTextInput). */
+  input: {
+    background: string;
+    border: string;
+    borderFocused: string;
+    placeholder: string;
+    text: string;
+  };
+  /** Touchable buttons (use via AppTouchable variants). */
+  button: {
+    primaryBg: string;
+    primaryText: string;
+    secondaryBg: string;
+    secondaryText: string;
+    disabledBg: string;
+    disabledText: string;
+  };
+  /** Bottom tab bar. */
+  tabBar: { background: string; active: string; inactive: string; border: string };
+  /** Status colors + soft backgrounds for badges/banners. */
+  status: {
+    success: string;
+    successSoft: string;
+    warning: string;
+    warningSoft: string;
+    error: string;
+    errorSoft: string;
+    info: string;
+    infoSoft: string;
+  };
+  /** Brand accent highlights. */
+  accent: { primary: string; soft: string };
+  divider: string;
+  overlay: string;
 };
 
 export const lightTheme: AppTheme = {
   mode: 'light',
-  background: palette.neutral[50],
-  surface: palette.neutral[0],
-  surfaceMuted: palette.neutral[100],
-  text: palette.neutral[900],
-  textMuted: palette.neutral[500],
-  border: palette.neutral[200],
-  primary: palette.emerald[600],
-  primarySoft: palette.emerald[100],
-  onPrimary: palette.neutral[0],
-  accent: palette.gold[600],
-  success: palette.emerald[500],
-  warning: palette.gold[500],
-  error: '#DC2626',
-  info: '#2563EB',
-  tabBarBackground: palette.neutral[0],
-  tabBarActive: palette.emerald[600],
-  tabBarInactive: palette.neutral[400],
+  background: {
+    primary: palette.neutral[50],
+    secondary: palette.neutral[100],
+  },
+  text: {
+    primary: palette.neutral[900],
+    secondary: palette.neutral[600],
+    muted: palette.neutral[400],
+    inverse: palette.neutral[0],
+  },
+  card: {
+    primary: palette.neutral[0],
+    secondary: palette.neutral[50],
+    border: palette.neutral[200],
+  },
+  input: {
+    background: palette.neutral[0],
+    border: palette.neutral[300],
+    borderFocused: palette.emerald[600],
+    placeholder: palette.neutral[400],
+    text: palette.neutral[900],
+  },
+  button: {
+    primaryBg: palette.emerald[600],
+    primaryText: palette.neutral[0],
+    secondaryBg: palette.emerald[100],
+    secondaryText: palette.emerald[800],
+    disabledBg: palette.neutral[200],
+    disabledText: palette.neutral[500],
+  },
+  tabBar: {
+    background: palette.neutral[0],
+    active: palette.emerald[600],
+    inactive: palette.neutral[400],
+    border: palette.neutral[200],
+  },
+  status: {
+    success: palette.emerald[600],
+    successSoft: palette.emerald[100],
+    warning: palette.gold[500],
+    warningSoft: palette.gold[100],
+    error: '#DC2626',
+    errorSoft: '#FEE2E2',
+    info: '#2563EB',
+    infoSoft: '#DBEAFE',
+  },
+  accent: {
+    primary: palette.gold[600],
+    soft: palette.gold[100],
+  },
+  divider: palette.neutral[200],
+  overlay: 'rgba(15, 23, 42, 0.5)',
 };
 
 export const darkTheme: AppTheme = {
   mode: 'dark',
-  background: palette.neutral[900],
-  surface: palette.neutral[800],
-  surfaceMuted: palette.neutral[700],
-  text: palette.neutral[50],
-  textMuted: palette.neutral[400],
-  border: palette.neutral[700],
-  primary: palette.emerald[400],
-  primarySoft: palette.emerald[900],
-  onPrimary: palette.neutral[900],
-  accent: palette.gold[300],
-  success: palette.emerald[400],
-  warning: palette.gold[300],
-  error: '#F87171',
-  info: '#60A5FA',
-  tabBarBackground: palette.neutral[800],
-  tabBarActive: palette.emerald[400],
-  tabBarInactive: palette.neutral[400],
+  background: {
+    primary: palette.neutral[900],
+    secondary: palette.neutral[800],
+  },
+  text: {
+    primary: palette.neutral[50],
+    secondary: palette.neutral[300],
+    muted: palette.neutral[500],
+    inverse: palette.neutral[900],
+  },
+  card: {
+    primary: palette.neutral[800],
+    secondary: palette.neutral[700],
+    border: palette.neutral[700],
+  },
+  input: {
+    background: palette.neutral[800],
+    border: palette.neutral[600],
+    borderFocused: palette.emerald[400],
+    placeholder: palette.neutral[500],
+    text: palette.neutral[50],
+  },
+  button: {
+    primaryBg: palette.emerald[500],
+    primaryText: palette.neutral[900],
+    secondaryBg: palette.emerald[900],
+    secondaryText: palette.emerald[200],
+    disabledBg: palette.neutral[700],
+    disabledText: palette.neutral[500],
+  },
+  tabBar: {
+    background: palette.neutral[800],
+    active: palette.emerald[400],
+    inactive: palette.neutral[400],
+    border: palette.neutral[700],
+  },
+  status: {
+    success: palette.emerald[400],
+    successSoft: palette.emerald[900],
+    warning: palette.gold[300],
+    warningSoft: palette.gold[700],
+    error: '#F87171',
+    errorSoft: '#7F1D1D',
+    info: '#60A5FA',
+    infoSoft: '#1E3A8A',
+  },
+  accent: {
+    primary: palette.gold[300],
+    soft: palette.gold[700],
+  },
+  divider: palette.neutral[700],
+  overlay: 'rgba(0, 0, 0, 0.65)',
 };
+
+export function getTheme(mode: ThemeMode): AppTheme {
+  return mode === 'dark' ? darkTheme : lightTheme;
+}
