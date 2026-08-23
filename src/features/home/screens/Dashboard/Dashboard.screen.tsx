@@ -10,15 +10,18 @@ import {
   AppText,
   AppTouchable,
   Screen,
-} from '../../components/ui';
-import { radius, spacing, useTheme } from '../../theme';
+} from '@/components/ui';
+import { radius, spacing, useTheme } from '@/theme';
+import makeStyle from './styles';
 
 const PRAYER_KEYS = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
 
-export function HomeScreen(): React.JSX.Element {
+export function DashboardScreen(): React.JSX.Element {
   const { t } = useTranslation();
   const theme = useTheme();
   const sheetRef = useRef<AppBottomSheetRef>(null);
+  const styles = makeStyle(theme);
+
   return (
     <Screen padded>
       <AppGradient preset="hero" style={styles.hero}>
@@ -43,7 +46,8 @@ export function HomeScreen(): React.JSX.Element {
         <AppTouchable
           variant="ghost"
           style={[styles.row, { borderTopColor: theme.divider }]}
-          onPress={() => sheetRef.current?.present()}>
+          onPress={() => sheetRef.current?.present()}
+        >
           <AppText color="secondary">{t('prayerTimes.title')}</AppText>
           <AppText weight="semiBold" color="success">
             {t('home.viewAllPrayers')}
@@ -65,7 +69,8 @@ export function HomeScreen(): React.JSX.Element {
             {PRAYER_KEYS.map(key => (
               <View
                 key={key}
-                style={[styles.sheetRow, { borderBottomColor: theme.divider }]}>
+                style={[styles.sheetRow, { borderBottomColor: theme.divider }]}
+              >
                 <AppText>{t(`prayerTimes.${key}`)}</AppText>
                 <AppText weight="semiBold" color="muted">
                   --
@@ -78,57 +83,3 @@ export function HomeScreen(): React.JSX.Element {
     </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  hero: {
-    borderRadius: radius.xl,
-    padding: spacing.lg,
-    marginBottom: spacing.lg,
-  },
-  heroHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.md,
-  },
-  heroTexts: {
-    flex: 1,
-    gap: spacing.xs,
-  },
-  prayerCard: {
-    marginBottom: spacing.md,
-    gap: spacing.md,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: spacing.md,
-    borderTopWidth: 1,
-  },
-  quoteCard: {
-    borderRadius: radius.lg,
-    gap: spacing.sm,
-    alignItems: 'flex-start',
-  },
-  sheetContent: {
-    paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.xl,
-    gap: spacing.lg,
-  },
-  sheetList: {
-    gap: spacing.sm,
-  },
-  sheetRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: spacing.sm,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-});

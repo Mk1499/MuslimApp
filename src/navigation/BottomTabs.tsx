@@ -9,6 +9,7 @@ import { SettingsScreen } from '../features/settings/SettingsScreen';
 import { AppIcon, type AppIconName } from '../components/ui';
 import { fontFamily, fontSize, useTheme } from '../theme';
 import type { MainTabParamList } from './types';
+import { DashboardScreen } from '@/features/home/screens/Dashboard/Dashboard.screen';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -25,7 +26,11 @@ interface TabBarIconProps {
   name: AppIconName;
 }
 
-function TabBarIcon({ focused, size, name }: TabBarIconProps): React.JSX.Element {
+function TabBarIcon({
+  focused,
+  size,
+  name,
+}: TabBarIconProps): React.JSX.Element {
   return (
     <AppIcon
       name={name}
@@ -43,6 +48,7 @@ export function BottomTabs(): React.JSX.Element {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShadowVisible: false,
+        headerShown: false,
         headerTintColor: theme.button.primaryBg,
         headerTitleStyle: {
           fontFamily: fontFamily.semiBold,
@@ -66,9 +72,18 @@ export function BottomTabs(): React.JSX.Element {
             name={tabIcons[route.name as keyof MainTabParamList]}
           />
         ),
-      })}>
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('tabs.home') }} />
-      <Tab.Screen name="Quran" component={QuranScreen} options={{ title: t('tabs.quran') }} />
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={DashboardScreen}
+        options={{ title: t('tabs.home') }}
+      />
+      <Tab.Screen
+        name="Quran"
+        component={QuranScreen}
+        options={{ title: t('tabs.quran') }}
+      />
       <Tab.Screen
         name="PrayerTimes"
         component={PrayerTimesScreen}

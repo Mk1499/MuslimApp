@@ -24,9 +24,13 @@ export function AppStack(): React.JSX.Element {
         },
         headerStyle: { backgroundColor: theme.background.primary },
         contentStyle: { backgroundColor: theme.background.primary },
-      }}>
-      <Stack.Screen name="MainTabs" component={BottomTabs} options={{ headerShown: false }} />
-      <Stack.Screen name="About" component={AboutScreen} options={{ title: t('about.title') }} />
+      }}
+    >
+      <Stack.Screen
+        name="MainTabs"
+        component={BottomTabs}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
