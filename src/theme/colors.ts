@@ -3,17 +3,17 @@
  * this palette in lightTheme / darkTheme - never use hex values in screens.
  */
 export const palette = {
-  emerald: {
-    50: '#ECFDF5',
-    100: '#D1FAE5',
-    200: '#A7F3D0',
-    300: '#6EE7B7',
-    400: '#34D399',
-    500: '#10B981',
-    600: '#059669',
-    700: '#047857',
-    800: '#065F46',
-    900: '#064E3B',
+  primary: {
+    50: '#eefdfd',
+    100: '#d4f9f9',
+    200: '#aff0f2',
+    300: '#78e3e8',
+    400: '#39cdd7',
+    500: '#1db1bd',
+    600: '#1d98a9',
+    700: '#1d7381',
+    800: '#205d6a',
+    900: '#1f4e5a',
   },
   gold: {
     100: '#FEF3C7',
@@ -35,6 +35,18 @@ export const palette = {
     700: '#334155',
     800: '#1E293B',
     900: '#0F172A',
+  },
+  entity: {
+    900: '#0E6C78',
+    800: '#0E6C78',
+    700: '#0E6C78',
+    600: '#0E6C78',
+    500: '#0E6C78',
+    400: '#0E6C78',
+    300: '#0E6C78',
+    200: '#0E6C78',
+    100: '#0E6C78',
+    50: '#0E6C78',
   },
 } as const;
 
@@ -74,7 +86,12 @@ export type AppTheme = {
     disabledText: string;
   };
   /** Bottom tab bar. */
-  tabBar: { background: string; active: string; inactive: string; border: string };
+  tabBar: {
+    background: string;
+    active: string;
+    inactive: string;
+    border: string;
+  };
   /** Status colors + soft backgrounds for badges/banners. */
   status: {
     success: string;
@@ -89,9 +106,17 @@ export type AppTheme = {
   /** Brand accent highlights. */
   accent: { primary: string; soft: string };
   /** Gradient fills (use via AppGradient). */
-  gradient: { hero: [string, string]; primary: [string, string]; scrim: [string, string] };
+  gradient: {
+    hero: [string, string];
+    primary: [string, string];
+    scrim: [string, string];
+  };
   divider: string;
   overlay: string;
+  banner: {
+    upperCont: string;
+    headerCont: string;
+  };
 };
 
 export const lightTheme: AppTheme = {
@@ -114,27 +139,27 @@ export const lightTheme: AppTheme = {
   input: {
     background: palette.neutral[0],
     border: palette.neutral[300],
-    borderFocused: palette.emerald[600],
+    borderFocused: palette.primary[600],
     placeholder: palette.neutral[400],
     text: palette.neutral[900],
   },
   button: {
-    primaryBg: palette.emerald[600],
+    primaryBg: palette.primary[600],
     primaryText: palette.neutral[0],
-    secondaryBg: palette.emerald[100],
-    secondaryText: palette.emerald[800],
+    secondaryBg: palette.primary[100],
+    secondaryText: palette.primary[800],
     disabledBg: palette.neutral[200],
     disabledText: palette.neutral[500],
   },
   tabBar: {
     background: palette.neutral[0],
-    active: palette.emerald[600],
+    active: palette.primary[600],
     inactive: palette.neutral[400],
     border: palette.neutral[200],
   },
   status: {
-    success: palette.emerald[600],
-    successSoft: palette.emerald[100],
+    success: palette.primary[600],
+    successSoft: palette.primary[100],
     warning: palette.gold[500],
     warningSoft: palette.gold[100],
     error: '#DC2626',
@@ -147,12 +172,16 @@ export const lightTheme: AppTheme = {
     soft: palette.gold[100],
   },
   gradient: {
-    hero: [palette.emerald[500], palette.emerald[800]],
+    hero: [palette.primary[500], palette.primary[800]],
     primary: [palette.gold[500], palette.gold[600]],
     scrim: ['rgba(15, 23, 42, 0)', 'rgba(15, 23, 42, 0.75)'],
   },
   divider: palette.neutral[200],
   overlay: 'rgba(15, 23, 42, 0.5)',
+  banner: {
+    upperCont: palette.primary[600],
+    headerCont: palette.primary[200],
+  },
 };
 
 export const darkTheme: AppTheme = {
@@ -175,27 +204,27 @@ export const darkTheme: AppTheme = {
   input: {
     background: palette.neutral[800],
     border: palette.neutral[600],
-    borderFocused: palette.emerald[400],
+    borderFocused: palette.primary[400],
     placeholder: palette.neutral[500],
     text: palette.neutral[50],
   },
   button: {
-    primaryBg: palette.emerald[500],
+    primaryBg: palette.primary[500],
     primaryText: palette.neutral[900],
-    secondaryBg: palette.emerald[900],
-    secondaryText: palette.emerald[200],
+    secondaryBg: palette.primary[900],
+    secondaryText: palette.primary[200],
     disabledBg: palette.neutral[700],
     disabledText: palette.neutral[500],
   },
   tabBar: {
     background: palette.neutral[800],
-    active: palette.emerald[400],
+    active: palette.primary[400],
     inactive: palette.neutral[400],
     border: palette.neutral[700],
   },
   status: {
-    success: palette.emerald[400],
-    successSoft: palette.emerald[900],
+    success: palette.primary[400],
+    successSoft: palette.primary[900],
     warning: palette.gold[300],
     warningSoft: palette.gold[700],
     error: '#F87171',
@@ -208,12 +237,16 @@ export const darkTheme: AppTheme = {
     soft: palette.gold[700],
   },
   gradient: {
-    hero: [palette.emerald[600], palette.emerald[900]],
+    hero: [palette.primary[600], palette.primary[900]],
     primary: [palette.gold[600], palette.gold[700]],
     scrim: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.85)'],
   },
   divider: palette.neutral[700],
   overlay: 'rgba(0, 0, 0, 0.65)',
+  banner: {
+    upperCont: palette.primary[700],
+    headerCont: palette.primary[700],
+  },
 };
 
 export function getTheme(mode: ThemeMode): AppTheme {

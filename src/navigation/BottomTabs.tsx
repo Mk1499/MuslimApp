@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
-import { HomeScreen } from '../features/home/HomeScreen';
 import { QuranScreen } from '../features/quran/QuranScreen';
 import { PrayerTimesScreen } from '../features/prayer-times/PrayerTimesScreen';
 import { SettingsScreen } from '../features/settings/SettingsScreen';
