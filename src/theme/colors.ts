@@ -117,6 +117,10 @@ export type AppTheme = {
     upperCont: string;
     headerCont: string;
   };
+  basic: {
+    white: string;
+    black: string;
+  };
 };
 
 export const lightTheme: AppTheme = {
@@ -182,6 +186,10 @@ export const lightTheme: AppTheme = {
     upperCont: palette.primary[600],
     headerCont: palette.primary[200],
   },
+  basic: {
+    white: palette.neutral[0],
+    black: palette.neutral[900],
+  },
 };
 
 export const darkTheme: AppTheme = {
@@ -246,6 +254,10 @@ export const darkTheme: AppTheme = {
   banner: {
     upperCont: palette.primary[700],
     headerCont: palette.primary[700],
+  },
+  basic: {
+    white: palette.neutral[0],
+    black: palette.neutral[900],
   },
 };
 

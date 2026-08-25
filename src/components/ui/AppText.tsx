@@ -9,7 +9,12 @@ import {
   type FontFamilyToken,
 } from '../../theme';
 
-export type AppTextVariant = 'display' | 'title' | 'subtitle' | 'body' | 'caption';
+export type AppTextVariant =
+  | 'display'
+  | 'title'
+  | 'subtitle'
+  | 'body'
+  | 'caption';
 
 export type TextColorToken =
   | keyof AppTheme['text']
@@ -24,22 +29,22 @@ const variantStyles: Record<AppTextVariant, TextStyle> = {
   },
   title: {
     fontSize: fontSize.xxl,
-    lineHeight: Math.round(fontSize.xxl * lineHeight.tight),
+    // lineHeight: Math.round(fontSize.xxl * lineHeight.normal),
     fontFamily: fontFamily.semiBold,
   },
   subtitle: {
     fontSize: fontSize.lg,
-    lineHeight: Math.round(fontSize.lg * lineHeight.normal),
+    // lineHeight: Math.round(fontSize.lg * lineHeight.normal),
     fontFamily: fontFamily.medium,
   },
   body: {
     fontSize: fontSize.md,
-    lineHeight: Math.round(fontSize.md * lineHeight.normal),
+    // lineHeight: Math.round(fontSize.md * lineHeight.normal),
     fontFamily: fontFamily.regular,
   },
   caption: {
     fontSize: fontSize.sm,
-    lineHeight: Math.round(fontSize.sm * lineHeight.relaxed),
+    // lineHeight: Math.round(fontSize.sm * lineHeight.relaxed),
     fontFamily: fontFamily.regular,
   },
 };
