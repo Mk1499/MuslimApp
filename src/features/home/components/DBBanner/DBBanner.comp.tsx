@@ -1,10 +1,12 @@
-import { View, Text, FlatList, ImageBackground } from 'react-native';
+import { View, FlatList, ImageBackground } from 'react-native';
 import React from 'react';
 import { spacing, useTheme } from '@/theme';
 import makeStyle from './styles';
 import { AppIcon, AppText } from '@/components/ui';
 import { MosqueImage } from '@/assets/images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useDateHook from '@/hooks/useDateHook';
+import { usePrayerTimes } from '@/hooks/queries/usePrayerTimes';
 
 const prayers = [
   {
@@ -38,13 +40,28 @@ export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { top } = useSafeAreaInsets();
+  const { getCurrentTime } = useDateHook();
+  const { data, isLoading, isError, error } = usePrayerTimes({
+    latitude: 24.7136,
+    longitude: 46.6753,
+    date: '2026-08-26',
+  });
+
+  const prayers = Object.entries(data?.data.prayer_times || {}).map(
+    ([key, value]) => ({
+      name: key,
+      time: value,
+      icon: key === 'Fajr' ? 'sunrise' : 'sunset',
+    }),
+  );
 
   function renderPrayerItem({ item }: { item: (typeof prayers)[0] }) {
     return (
       <View
         style={[
           styles.prayerItem,
-          item.name === 'Fajr' && styles.prayerItemActive,
+          item.name === data?.data.current_status?.current_prayer &&
+            styles.prayerItemActive,
         ]}
       >
         <AppText style={styles.prayerName}>{item.name}</AppText>
@@ -63,13 +80,13 @@ export default function DBBannerComponent() {
     <ImageBackground
       source={MosqueImage}
       style={[styles.upperCont, { paddingTop: top + spacing.lg }]}
-      tintColor={'#fff'}
-      imageStyle={{ opacity: 0.1, resizeMode: 'cover' }}
+      tintColor={theme.basic.white}
+      imageStyle={styles.bgImg}
     >
       <View style={styles.headerCont}>
         <View style={styles.nextPrayerCont}>
           <AppText style={styles.nextPlayerTime} variant="title">
-            05:30
+            {getCurrentTime()}
           </AppText>
           <View style={styles.nextPrayerRow}>
             <AppIcon
@@ -87,14 +104,20 @@ export default function DBBannerComponent() {
           </AppText>
         </View>
       </View>
-      <FlatList
-        data={prayers}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.paryersListCont}
-        keyExtractor={item => item.name}
-        renderItem={renderPrayerItem}
-      />
+      {isLoading ? (
+        <View>
+          <AppText>Loading prayer times...</AppText>
+        </View>
+      ) : (
+        <FlatList
+          data={prayers}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.paryersListCont}
+          keyExtractor={item => item.name}
+          renderItem={renderPrayerItem}
+        />
+      )}
     </ImageBackground>
   );
 }

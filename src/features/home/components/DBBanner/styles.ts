@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { spacing, AppTheme, fontSize, lineHeight } from '@/theme';
+import { spacing, AppTheme, fontSize } from '@/theme';
 
 export default (theme: AppTheme) =>
   StyleSheet.create({
@@ -11,7 +11,6 @@ export default (theme: AppTheme) =>
     headerCont: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      //   alignItems: 'center',
     },
     nextPrayerCont: {},
     nextPlayerTime: {
@@ -58,4 +57,5 @@ export default (theme: AppTheme) =>
       fontSize: fontSize.lg,
     },
     prayerIcon: {},
+    bgImg: { opacity: 0.1, resizeMode: 'cover' },
   });
