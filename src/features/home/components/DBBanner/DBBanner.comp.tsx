@@ -8,40 +8,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useDateHook from '@/hooks/useDateHook';
 import { usePrayerTimes } from '@/hooks/queries/usePrayerTimes';
 
-const prayers = [
-  {
-    name: 'Fajr',
-    time: '05:30',
-    icon: 'sunrise',
-  },
-  {
-    name: 'Dhuhr',
-    time: '12:15',
-    icon: 'sun',
-  },
-  {
-    name: 'Asr',
-    time: '15:45',
-    icon: 'sun',
-  },
-  {
-    name: 'Maghrib',
-    time: '18:30',
-    icon: 'sunset',
-  },
-  {
-    name: 'Isha',
-    time: '20:00',
-    icon: 'moon',
-  },
-];
-
 export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { top } = useSafeAreaInsets();
   const { getCurrentTime } = useDateHook();
-  const { data, isLoading, isError, error } = usePrayerTimes({
+  const { data, isLoading } = usePrayerTimes({
     latitude: 24.7136,
     longitude: 46.6753,
     date: '2026-08-26',
