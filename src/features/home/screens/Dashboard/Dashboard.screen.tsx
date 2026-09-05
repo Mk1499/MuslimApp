@@ -5,6 +5,7 @@ import { AppText, Screen } from '@/components/ui';
 import { useTheme } from '@/theme';
 import makeStyle from './styles';
 import DBBannerComponent from '../../components/DBBanner/DBBanner.comp';
+import FastAction from '../../components/FastAction/FastAction.comp';
 
 export function DashboardScreen(): React.JSX.Element {
   const { t } = useTranslation();
@@ -14,6 +15,9 @@ export function DashboardScreen(): React.JSX.Element {
   return (
     <Screen topSafeAreaStyle={styles.safeContainer}>
       <DBBannerComponent />
+      <View style={styles.lastReadCont}>
+        <FastAction />
+      </View>
     </Screen>
   );
 }

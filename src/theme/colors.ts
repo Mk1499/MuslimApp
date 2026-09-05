@@ -172,8 +172,8 @@ export const lightTheme: AppTheme = {
     infoSoft: '#DBEAFE',
   },
   accent: {
-    primary: palette.gold[600],
-    soft: palette.gold[100],
+    primary: palette.primary[600],
+    soft: palette.primary[100],
   },
   gradient: {
     hero: [palette.primary[500], palette.primary[800]],

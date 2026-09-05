@@ -7,6 +7,7 @@ import { MosqueImage } from '@/assets/images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useDateHook from '@/hooks/useDateHook';
 import { usePrayerTimes } from '@/hooks/queries/usePrayerTimes';
+import { useTranslation } from 'react-i18next';
 
 const prayers = [
   {
@@ -40,31 +41,32 @@ export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { top } = useSafeAreaInsets();
+  const { t } = useTranslation();
   const { getCurrentTime } = useDateHook();
   const { data, isLoading, isError, error } = usePrayerTimes({
     latitude: 24.7136,
     longitude: 46.6753,
     date: '2026-08-26',
   });
+  const { prayer_times, current_status } = data?.data ?? {};
 
-  const prayers = Object.entries(data?.data.prayer_times || {}).map(
-    ([key, value]) => ({
-      name: key,
-      time: value,
-      icon: key === 'Fajr' ? 'sunrise' : 'sunset',
-    }),
-  );
+  const prayers = Object.entries(prayer_times || {}).map(([key, value]) => ({
+    name: key,
+    time: value,
+    icon: key === 'fajr' ? 'sunrise' : 'sunset',
+  }));
 
   function renderPrayerItem({ item }: { item: (typeof prayers)[0] }) {
     return (
       <View
         style={[
           styles.prayerItem,
-          item.name === data?.data.current_status?.current_prayer &&
-            styles.prayerItemActive,
+          item.name === current_status?.next_prayer && styles.prayerItemActive,
         ]}
       >
-        <AppText style={styles.prayerName}>{item.name}</AppText>
+        <AppText style={styles.prayerName}>
+          {t(`prayerTimes.${item.name}`) ?? item.name}
+        </AppText>
         <AppIcon
           name={item.icon}
           size={spacing.xxl}
@@ -110,7 +112,9 @@ export default function DBBannerComponent() {
         </View>
       ) : (
         <FlatList
-          data={prayers}
+          data={prayers.filter(
+            item => !['sunrise', 'imsak'].includes(item.name),
+          )}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.paryersListCont}

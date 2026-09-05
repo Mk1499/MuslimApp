@@ -15,6 +15,7 @@ export default (theme: AppTheme) =>
     nextPrayerCont: {},
     nextPlayerTime: {
       color: theme.basic.white,
+      textAlign: 'left',
     },
     nextPrayerRow: {
       flexDirection: 'row',
@@ -32,6 +33,7 @@ export default (theme: AppTheme) =>
       color: theme.basic.white,
       fontSize: fontSize.lg,
       fontWeight: '100',
+      textAlign: 'right',
     },
     paryersListCont: {
       flexDirection: 'row',
@@ -57,5 +59,5 @@ export default (theme: AppTheme) =>
       fontSize: fontSize.lg,
     },
     prayerIcon: {},
-    bgImg: { opacity: 0.1, resizeMode: 'cover' },
+    bgImg: { opacity: 0.06, resizeMode: 'cover' },
   });

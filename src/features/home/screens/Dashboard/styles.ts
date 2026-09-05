@@ -7,4 +7,8 @@ export default (theme: AppTheme) =>
       backgroundColor: theme.banner.upperCont,
       display: 'none',
     },
+    lastReadCont: {
+      marginTop: '-8%',
+      paddingHorizontal: 16,
+    },
   });

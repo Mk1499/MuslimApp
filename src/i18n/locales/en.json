@@ -2,7 +2,8 @@
   "common": {
     "appName": "Muslim App",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "continue": "Continue"
   },
   "tabs": {
     "home": "Home",
@@ -40,5 +41,10 @@
     "system": "System Default",
     "light": "Light",
     "dark": "Dark"
+  },
+  "lastRead": {
+    "title": "Last Read",
+    "surah": "Surah",
+    "ayah": "Ayah"
   }
 }
