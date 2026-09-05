@@ -6,10 +6,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, spacing } from '../../theme';
 
 type Edge = 'top' | 'right' | 'bottom' | 'left';
@@ -31,7 +28,6 @@ export function Screen({
   children,
   padded = false,
   scroll = false,
-  edges = ['top'],
   style,
   contentContainerStyle,
   topSafeAreaStyle,
@@ -39,7 +35,7 @@ export function Screen({
   const theme = useTheme();
 
   const paddings = padded ? styles.padded : null;
-  const { bottom, top } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
   return (
     <View style={[styles.safe, { backgroundColor: theme.background.primary }]}>
@@ -61,7 +57,7 @@ export function Screen({
           {children}
         </ScrollView>
       ) : (
-        <View>{children}</View>
+        <View style={[styles.flex, paddings, style]}>{children}</View>
       )}
     </View>
   );
