@@ -10,5 +10,6 @@ export default (theme: AppTheme) =>
     lastReadCont: {
       marginTop: '-8%',
       paddingHorizontal: 16,
+      marginBottom: 16,
     },
   });

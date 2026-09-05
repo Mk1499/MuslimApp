@@ -6,6 +6,7 @@ import { useTheme } from '@/theme';
 import makeStyle from './styles';
 import DBBannerComponent from '../../components/DBBanner/DBBanner.comp';
 import FastAction from '../../components/FastAction/FastAction.comp';
+import TodayCarousel from '../../components/TodayCarousel/TodayCarousel.comp';
 
 export function DashboardScreen(): React.JSX.Element {
   const { t } = useTranslation();
@@ -16,8 +17,9 @@ export function DashboardScreen(): React.JSX.Element {
     <Screen topSafeAreaStyle={styles.safeContainer}>
       <DBBannerComponent />
       <View style={styles.lastReadCont}>
-        <FastAction />
+        <TodayCarousel />
       </View>
+      <FastAction />
     </Screen>
   );
 }

@@ -110,6 +110,7 @@ export type AppTheme = {
     hero: [string, string];
     primary: [string, string];
     scrim: [string, string];
+    banner: [string, string];
   };
   divider: string;
   overlay: string;
@@ -177,8 +178,9 @@ export const lightTheme: AppTheme = {
   },
   gradient: {
     hero: [palette.primary[500], palette.primary[800]],
-    primary: [palette.gold[500], palette.gold[600]],
-    scrim: ['rgba(15, 23, 42, 0)', 'rgba(15, 23, 42, 0.75)'],
+    primary: ['#87D1A4', '#065446'],
+    scrim: [palette.primary[500], palette.primary[700]],
+    banner: [palette.primary[700], palette.primary[500]],
   },
   divider: palette.neutral[200],
   overlay: 'rgba(15, 23, 42, 0.5)',
@@ -247,7 +249,8 @@ export const darkTheme: AppTheme = {
   gradient: {
     hero: [palette.primary[600], palette.primary[900]],
     primary: [palette.gold[600], palette.gold[700]],
-    scrim: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.85)'],
+    scrim: [palette.primary[500], palette.primary[700]],
+    banner: [palette.primary[700], palette.primary[500]],
   },
   divider: palette.neutral[700],
   overlay: 'rgba(0, 0, 0, 0.65)',

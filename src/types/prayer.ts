@@ -52,3 +52,10 @@ export type PrayerTimesResponse = {
     usage: string;
   };
 };
+
+export type PrayerType = {
+  name: string;
+  time?: string;
+  icon?: 'sunrise' | 'sunset';
+  timeUntilInMinutes?: number;
+};

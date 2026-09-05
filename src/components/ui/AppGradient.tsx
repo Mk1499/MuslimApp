@@ -27,6 +27,7 @@ export function AppGradient({
     <LinearGradient
       colors={colors ?? theme.gradient[preset]}
       style={style}
+      start={{ x: 0, y: 0 }}
       {...rest}
     />
   );

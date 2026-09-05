@@ -1,26 +1,50 @@
-import { View, FlatList, ImageBackground } from 'react-native';
-import React from 'react';
+import { View, FlatList, Image } from 'react-native';
+import type { PrayerType } from '@/types/prayer';
+import React, { useEffect, useState } from 'react';
 import { spacing, useTheme } from '@/theme';
 import makeStyle from './styles';
-import { AppIcon, AppText } from '@/components/ui';
+import { AppGradient, AppIcon, AppText } from '@/components/ui';
 import { MosqueImage } from '@/assets/images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useDateHook from '@/hooks/useDateHook';
 import { usePrayerTimes } from '@/hooks/queries/usePrayerTimes';
 import { useTranslation } from 'react-i18next';
+import CountDownTimer from '@/components/common/CountDownTimer/CountDownTimer.comp';
+import { useTodayHijriDate } from '@/hooks/queries/useHejriDate';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { top } = useSafeAreaInsets();
   const { t } = useTranslation();
-  const { getCurrentTime } = useDateHook();
+  const { isRTL } = useAppStore();
+  const { getCurrentTime, getFormattedTime } = useDateHook();
+  const [nextPrayer, setNextPrayer] = useState<PrayerType>();
+
+  const { data: hijriDateData } = useTodayHijriDate();
   const { data, isLoading } = usePrayerTimes({
     latitude: 24.7136,
     longitude: 46.6753,
-    date: '2026-08-26',
   });
   const { prayer_times, current_status } = data?.data ?? {};
+  const { hijri } = hijriDateData?.data ?? {};
+
+  useEffect(() => {
+    if (current_status) {
+      const nextPrayerData = current_status.next_prayer;
+      console.log('Next prayer data:', nextPrayerData, {
+        prayer_times,
+        current_status,
+      });
+      setNextPrayer({
+        name: nextPrayerData,
+        time: prayer_times?.[nextPrayerData] as string,
+        icon: nextPrayerData === 'fajr' ? 'sunrise' : 'sunset',
+        timeUntilInMinutes: current_status.minutes_until_next,
+      });
+    }
+  }, [current_status]);
 
   const prayers = Object.entries(prayer_times || {}).map(([key, value]) => ({
     name: key,
@@ -50,32 +74,52 @@ export default function DBBannerComponent() {
     );
   }
 
+  function renderHijriDate() {
+    if (!hijri) {
+      return null;
+    }
+    if (isRTL) {
+      return '' + hijri.day + ' ' + hijri.month_name_arabic + ' ' + hijri.year;
+    } else {
+      return '' + hijri.day + ' ' + hijri.month_name + ' ' + hijri.year;
+    }
+  }
+
   return (
-    <ImageBackground
-      source={MosqueImage}
+    <AppGradient
+      colors={theme.gradient.banner}
       style={[styles.upperCont, { paddingTop: top + spacing.lg }]}
-      tintColor={theme.basic.white}
-      imageStyle={styles.bgImg}
     >
+      <Image
+        source={MosqueImage}
+        style={styles.bgImg}
+        tintColor={theme.basic.white}
+      />
       <View style={styles.headerCont}>
-        <View style={styles.nextPrayerCont}>
-          <AppText style={styles.nextPlayerTime} variant="title">
-            {getCurrentTime()}
-          </AppText>
-          <View style={styles.nextPrayerRow}>
-            <AppIcon
-              name="time-outline"
-              size={spacing.xl}
-              color={theme.basic.white}
-            />
-            <AppText style={styles.nextPrayerTimeText}>Fajr in</AppText>
-            <AppText style={styles.nextPrayerTimeText}>05:30:00</AppText>
-          </View>
-        </View>
         <View style={styles.dayDataCont}>
           <AppText style={styles.hDate} variant="subtitle">
-            12 Ramadan 1445
+            {renderHijriDate()}
           </AppText>
+        </View>
+      </View>
+      <View style={styles.nextPrayerCont}>
+        <AppText variant="title" style={styles.nextPrayerLabel}>
+          {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
+        </AppText>
+        <AppText style={styles.nextPlayerTime} variant="title">
+          {getFormattedTime(nextPrayer?.time) ?? ''}
+        </AppText>
+        <View style={styles.nextPrayerRow}>
+          <AppIcon
+            name="time-outline"
+            size={spacing.xl}
+            color={theme.basic.white}
+          />
+          <AppText style={styles.nextPrayerTimeText}>
+            {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
+            {t('common.after')}
+          </AppText>
+          <CountDownTimer minutes={nextPrayer?.timeUntilInMinutes ?? 0} />
         </View>
       </View>
       {isLoading ? (
@@ -94,6 +138,6 @@ export default function DBBannerComponent() {
           renderItem={renderPrayerItem}
         />
       )}
-    </ImageBackground>
+    </AppGradient>
   );
 }

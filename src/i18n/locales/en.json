@@ -3,7 +3,9 @@
     "appName": "Muslim App",
     "ok": "OK",
     "cancel": "Cancel",
-    "continue": "Continue"
+    "continue": "Continue",
+    "in": "in",
+    "after": "after"
   },
   "tabs": {
     "home": "Home",

@@ -4,7 +4,7 @@ import { PrayerTimesResponse } from '@/types/prayer';
 export type GetPrayerTimesParams = {
   latitude: number;
   longitude: number;
-  date: string;
+  date?: string;
 };
 
 export async function getPrayerTimes(

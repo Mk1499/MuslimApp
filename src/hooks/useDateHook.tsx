@@ -9,5 +9,9 @@ export default function useDateHook() {
     return moment().format('HH:mm A');
   };
 
-  return { getCurrentDate, getCurrentTime };
+  const getFormattedTime = (time: string) => {
+    return moment(time, 'HH:mm').format('hh:mm A');
+  };
+
+  return { getCurrentDate, getCurrentTime, getFormattedTime };
 }
