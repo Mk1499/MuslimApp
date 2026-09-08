@@ -1,7 +1,7 @@
-/* eslint-disable prettier/prettier */
 import { AppTheme } from '@/theme';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const makeStyle = (themeColors: AppTheme) =>
   StyleSheet.create({
     container: {
@@ -18,12 +18,12 @@ const makeStyle = (themeColors: AppTheme) =>
 
       elevation: 2,
       overflow: 'hidden',
-      height: 0.15 * SCREEN_HEIGHT,
+      height: 0.25 * SCREEN_HEIGHT,
       justifyContent: 'center',
     },
     itemCont: {
       width: 0.92 * SCREEN_WIDTH,
-      height: 0.15 * SCREEN_HEIGHT,
+      height: 0.25 * SCREEN_HEIGHT,
       marginEnd: 3,
       paddingHorizontal: 16,
     },

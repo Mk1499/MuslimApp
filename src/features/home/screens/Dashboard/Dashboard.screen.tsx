@@ -14,7 +14,7 @@ export function DashboardScreen(): React.JSX.Element {
   const styles = makeStyle(theme);
 
   return (
-    <Screen topSafeAreaStyle={styles.safeContainer}>
+    <Screen topSafeAreaStyle={styles.safeContainer} scroll>
       <DBBannerComponent />
       <View style={styles.lastReadCont}>
         <TodayCarousel />

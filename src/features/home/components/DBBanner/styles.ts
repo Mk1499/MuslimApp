@@ -4,9 +4,7 @@ import { spacing, AppTheme, fontSize } from '@/theme';
 
 export default (theme: AppTheme) =>
   StyleSheet.create({
-    upperCont: {
-      padding: spacing.lg,
-    },
+    upperCont: {},
     headerCont: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -22,19 +20,17 @@ export default (theme: AppTheme) =>
       color: theme.basic.white,
       textAlign: 'left',
       fontSize: 40,
-      lineHeight: 40,
       fontWeight: 'bold',
     },
     nextPrayerRow: {
       flexDirection: 'row',
       gap: spacing.sm,
       justifyContent: 'center',
-      // alignSelf: 'flex-',
       paddingVertical: spacing.sm,
+      alignItems: 'center',
     },
     nextPrayerTimeText: {
       color: theme.basic.white,
-      lineHeight: 24,
     },
     dayDataCont: {},
     hDate: {
@@ -43,6 +39,7 @@ export default (theme: AppTheme) =>
       fontWeight: '100',
       textAlign: 'right',
       marginTop: spacing.lg,
+      marginStart: spacing.md,
     },
     paryersListCont: {
       flexDirection: 'row',

@@ -5,7 +5,6 @@ import { spacing, useTheme } from '@/theme';
 import makeStyle from './styles';
 import { AppGradient, AppIcon, AppText } from '@/components/ui';
 import { MosqueImage } from '@/assets/images';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useDateHook from '@/hooks/useDateHook';
 import { usePrayerTimes } from '@/hooks/queries/usePrayerTimes';
 import { useTranslation } from 'react-i18next';
@@ -16,10 +15,9 @@ import { useAppStore } from '@/store/useAppStore';
 export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
-  const { top } = useSafeAreaInsets();
   const { t } = useTranslation();
   const { isRTL } = useAppStore();
-  const { getCurrentTime, getFormattedTime } = useDateHook();
+  const { getFormattedTime } = useDateHook();
   const [nextPrayer, setNextPrayer] = useState<PrayerType>();
 
   const { data: hijriDateData } = useTodayHijriDate();
@@ -79,17 +77,14 @@ export default function DBBannerComponent() {
       return null;
     }
     if (isRTL) {
-      return '' + hijri.day + ' ' + hijri.month_name_arabic + ' ' + hijri.year;
+      return '' + hijri.day + ' ' + hijri.month_name_arabic;
     } else {
-      return '' + hijri.day + ' ' + hijri.month_name + ' ' + hijri.year;
+      return '' + hijri.day + ' ' + hijri.month_name;
     }
   }
 
   return (
-    <AppGradient
-      colors={theme.gradient.banner}
-      style={[styles.upperCont, { paddingTop: top + spacing.lg }]}
-    >
+    <AppGradient colors={theme.gradient.banner} style={[styles.upperCont]}>
       <Image
         source={MosqueImage}
         style={styles.bgImg}

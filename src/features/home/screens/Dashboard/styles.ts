@@ -1,15 +1,13 @@
 import { AppTheme } from '@/theme';
+import { SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
   StyleSheet.create({
     safeContainer: {
       backgroundColor: theme.banner.upperCont,
-      display: 'none',
     },
     lastReadCont: {
-      marginTop: '-8%',
-      paddingHorizontal: 16,
-      marginBottom: 16,
+      marginTop: -0.065 * SCREEN_HEIGHT,
     },
   });

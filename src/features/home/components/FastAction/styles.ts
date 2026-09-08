@@ -15,19 +15,19 @@ export default (theme: AppTheme) =>
 
       elevation: 2,
       borderRadius: radius.sm,
-      paddingVertical: spacing.lg,
-      paddingHorizontal: spacing.md,
       width: '90%',
       alignSelf: 'center',
     },
     lastReadCont: {
+      paddingVertical: spacing.lg,
+      paddingHorizontal: spacing.md,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
     lastReadData: {},
     lastReadLabel: {
-      color: theme.text.secondary,
+      color: theme.basic.white,
       textAlign: 'left',
     },
     lastReadRow: {
@@ -36,7 +36,9 @@ export default (theme: AppTheme) =>
       gap: spacing.sm,
     },
     lastReadIcon: {},
-    surahName: {},
+    surahName: {
+      color: theme.basic.white,
+    },
     juzCont: {
       backgroundColor: theme.accent.soft,
       paddingHorizontal: spacing.sm,
@@ -52,7 +54,7 @@ export default (theme: AppTheme) =>
       marginTop: spacing.lg,
     },
     continueBtnText: {
-      color: theme.button.primaryText,
+      color: theme.basic.white,
     },
     bgImg: {
       height: 100,

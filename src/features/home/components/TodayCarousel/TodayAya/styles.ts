@@ -19,5 +19,7 @@ export default (theme: AppTheme) =>
       textAlign: 'right',
       color: theme.accent.primary,
       fontFamily: fontFamily.bold,
+      position: 'absolute',
+      bottom: -0.02 * SCREEN_HEIGHT,
     },
   });

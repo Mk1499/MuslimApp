@@ -1,10 +1,10 @@
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import React from 'react';
 import makeStyle from './styles';
 import { useTheme } from '@/theme/ThemeProvider';
 import { AppGradient, AppIcon, AppText, AppTouchable } from '@/components/ui';
 import { useTranslation } from 'react-i18next';
-import { MinaretImage, QuranImage } from '@/assets/images';
+import { QuranImage } from '@/assets/images';
 
 export default function FastAction() {
   const theme = useTheme();
