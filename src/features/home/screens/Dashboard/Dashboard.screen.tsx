@@ -7,6 +7,7 @@ import makeStyle from './styles';
 import DBBannerComponent from '../../components/DBBanner/DBBanner.comp';
 import FastAction from '../../components/FastAction/FastAction.comp';
 import TodayCarousel from '../../components/TodayCarousel/TodayCarousel.comp';
+import QuickAccessFeature from '../../components/QuickAccessFeature/QuickAccessFeature.comp';
 
 export function DashboardScreen(): React.JSX.Element {
   const { t } = useTranslation();
@@ -24,6 +25,8 @@ export function DashboardScreen(): React.JSX.Element {
         <AppText style={styles.sectionHeader} variant="title">
           {t('home.quickAccess')}
         </AppText>
+
+        <QuickAccessFeature />
       </View>
 
       <FastAction />
