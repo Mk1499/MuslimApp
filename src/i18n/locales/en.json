@@ -17,7 +17,17 @@
     "greeting": "Assalamu Alaikum",
     "subtitle": "Have a blessed day",
     "nextPrayer": "Next Prayer",
-    "viewAllPrayers": "View all"
+    "viewAllPrayers": "View all",
+    "quickAccess": "Quick Access",
+    "features": {
+      "mutashabihat": "Mutashabihat",
+      "tafseer": "Tafseer",
+      "hadith": "Hadith",
+      "qibla": "Qibla",
+      "99Names": "99 Names",
+      "azkar": "Azkar",
+      "zakatCalc": "Zakat Calculation"
+    }
   },
   "quran": {
     "title": "Holy Quran"

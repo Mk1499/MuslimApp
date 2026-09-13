@@ -1,4 +1,4 @@
-import { AppTheme } from '@/theme';
+import { AppTheme, spacing } from '@/theme';
 import { SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
@@ -9,5 +9,11 @@ export default (theme: AppTheme) =>
     },
     lastReadCont: {
       marginTop: -0.065 * SCREEN_HEIGHT,
+    },
+    content: {
+      paddingHorizontal: spacing.lg,
+    },
+    sectionHeader: {
+      textAlign: 'left',
     },
   });

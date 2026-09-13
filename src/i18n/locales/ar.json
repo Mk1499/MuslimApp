@@ -17,7 +17,17 @@
     "greeting": "السلام عليكم",
     "subtitle": "أتمنى لك يوماً مباركاً",
     "nextPrayer": "الصلاة القادمة",
-    "viewAllPrayers": "عرض الكل"
+    "viewAllPrayers": "عرض الكل",
+    "quickAccess": "الوصول السريع",
+    "features": {
+      "mutashabihat": "متشابهات",
+      "tafseer": "تفسير",
+      "hadith": "حديث شريف",
+      "qibla": "القبلة",
+      "99Names": "أسماء الله الحسنى",
+      "azkar": "أذكار",
+      "zakatCalc": "حساب زكاة المال"
+    }
   },
   "quran": {
     "title": "القرآن الكريم"

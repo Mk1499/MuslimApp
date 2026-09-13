@@ -19,6 +19,13 @@ export function DashboardScreen(): React.JSX.Element {
       <View style={styles.lastReadCont}>
         <TodayCarousel />
       </View>
+
+      <View style={styles.content}>
+        <AppText style={styles.sectionHeader} variant="title">
+          {t('home.quickAccess')}
+        </AppText>
+      </View>
+
       <FastAction />
     </Screen>
   );
