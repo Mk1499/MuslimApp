@@ -16,7 +16,7 @@ export default (theme: AppTheme) =>
       top: 0,
     },
     aya: {
-      fontSize: 20,
+      fontSize: 14,
       textAlign: 'center',
       color: theme.basic.white,
     },
