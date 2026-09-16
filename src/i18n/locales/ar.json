@@ -5,7 +5,8 @@
     "cancel": "إلغاء",
     "continue": "متابعة",
     "in": "في",
-    "after": "بعد"
+    "after": "بعد",
+    "from": "منذ"
   },
   "tabs": {
     "home": "الرئيسية",
@@ -19,6 +20,7 @@
     "nextPrayer": "الصلاة القادمة",
     "viewAllPrayers": "عرض الكل",
     "quickAccess": "الوصول السريع",
+    "todayDuaa": "دعاء اليوم",
     "features": {
       "mutashabihat": "متشابهات",
       "tafseer": "تفسير",
@@ -59,5 +61,18 @@
     "title": "آخر قراءة",
     "surah": "السورة",
     "ayah": "الآية"
+  },
+  "hadith": {
+    "collection": {
+      "qudsi": "حديث قدسي",
+      "bukhari": "صحيح البخاري",
+      "muslim": "صحيح مسلم",
+      "tirmidhi": "جامع الترمذي",
+      "abudawud": "سنن أبي داود",
+      "nasai": "سنن النسائي",
+      "ibnmajah": "سنن ابن ماجه",
+      "malik": "موطأ مالك",
+      "nawawi": "رياض الصالحين للنواوي"
+    }
   }
 }

@@ -5,7 +5,12 @@ import makeStyle from './style';
 import { AppText } from '@/components/ui';
 import { useTheme } from '@/theme/ThemeProvider';
 
-export default function CountDownTimer({ minutes, onFinish, onTick }: IProps) {
+export default function CountDownTimer({
+  minutes,
+  onFinish,
+  onTick,
+  incMode,
+}: IProps) {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const [remainingTime, setRemainingTime] = React.useState(minutes * 60);
@@ -44,7 +49,7 @@ export default function CountDownTimer({ minutes, onFinish, onTick }: IProps) {
           onFinish?.();
           return 0;
         }
-        const newTime = prevTime - 1;
+        const newTime = incMode ? prevTime + 1 : prevTime - 1;
         onTick?.(newTime);
         return newTime;
       });

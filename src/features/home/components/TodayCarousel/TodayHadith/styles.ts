@@ -8,6 +8,7 @@ export default (theme: AppTheme) =>
       width: '100%',
       height: '80%',
       paddingHorizontal: 16,
+      borderRadius: 8,
     },
     basmala: {
       fontSize: 20,
@@ -16,9 +17,12 @@ export default (theme: AppTheme) =>
       top: 0,
     },
     aya: {
-      fontSize: 20,
+      flex: 1,
       textAlign: 'center',
       color: theme.basic.white,
+      width: '100%',
+      fontSize: 12,
+      lineHeight: 24,
     },
     surah: {
       color: theme.accent.primary,
@@ -26,5 +30,7 @@ export default (theme: AppTheme) =>
       position: 'absolute',
       bottom: 0,
       textAlign: 'right',
+      start: 10,
+      textTransform: 'capitalize',
     },
   });

@@ -5,7 +5,8 @@
     "cancel": "Cancel",
     "continue": "Continue",
     "in": "in",
-    "after": "after"
+    "after": "after",
+    "from": "from"
   },
   "tabs": {
     "home": "Home",
@@ -19,6 +20,7 @@
     "nextPrayer": "Next Prayer",
     "viewAllPrayers": "View all",
     "quickAccess": "Quick Access",
+    "todayDuaa": "Today's Duaa",
     "features": {
       "mutashabihat": "Mutashabihat",
       "tafseer": "Tafseer",
@@ -59,5 +61,18 @@
     "title": "Last Read",
     "surah": "Surah",
     "ayah": "Ayah"
+  },
+  "hadith": {
+    "collection": {
+      "qudsi": "Hadith Qudsi",
+      "bukhari": "Sahih Bukhari",
+      "muslim": "Sahih Muslim",
+      "tirmidhi": "Jami` at-Tirmidhi",
+      "abudawud": "Sunan Abu Dawood",
+      "nasai": "Sunan an-Nasa'i",
+      "ibnmajah": "Sunan Ibn Majah",
+      "malik": "Muwatta Malik",
+      "nawawi": "Riyadh as-Salihin by An-Nawawi"
+    }
   }
 }

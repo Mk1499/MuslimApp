@@ -18,7 +18,7 @@ const makeStyle = (themeColors: AppTheme) =>
 
       elevation: 2,
       overflow: 'hidden',
-      height: 0.25 * SCREEN_HEIGHT,
+      height: 0.28 * SCREEN_HEIGHT,
       justifyContent: 'center',
     },
     itemCont: {

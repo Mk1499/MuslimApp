@@ -48,13 +48,14 @@ export default function DBBannerComponent() {
       const nextPrayerName =
         current_status.next_prayer !== 'none'
           ? current_status.next_prayer
-          : 'imsak';
+          : 'isha';
+
       setNextPrayer({
         name: nextPrayerName,
         time: prayer_times?.[nextPrayerName] as string,
         icon: nextPrayerName === 'fajr' ? 'sunrise' : 'sunset',
         timeUntilInMinutes:
-          current_status.minutes_until_next ??
+          current_status?.minutes_until_next ??
           moment().diff(moment(prayer_datetimes?.[nextPrayerName]), 'minutes'),
       });
     }
@@ -122,13 +123,16 @@ export default function DBBannerComponent() {
           />
           <AppText style={styles.nextPrayerTimeText}>
             {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
-            {t('common.after')}
+            {current_status?.next_prayer !== 'none'
+              ? t('common.after')
+              : t('common.from')}
           </AppText>
           <CountDownTimer
             minutes={nextPrayer?.timeUntilInMinutes ?? 0}
             onFinish={() => {
               checkCurrentStatus();
             }}
+            incMode={current_status?.next_prayer === 'none'}
           />
         </View>
       </View>

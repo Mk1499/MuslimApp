@@ -1,24 +1,30 @@
 import { View } from 'react-native';
 import React from 'react';
 import { AppText } from '@/components/ui/AppText';
-import { useRandomAya } from '@/hooks/queries/useRandomAya';
+import useRandomData from '@/hooks/queries/useRandomData';
 import { useTheme } from '@/theme/ThemeProvider';
 import makeStyle from './styles';
+import useFormatter from '@/hooks/useFormatter';
 
 export default function TodayAya() {
-  const { data } = useRandomAya();
+  const { getLocalizedText } = useFormatter();
+  const { randomAyaQuery } = useRandomData();
+
+  const { data } = randomAyaQuery;
   const { surah, verse } = data?.data ?? {};
-  const { arabic } = verse ?? {};
+  const { arabic, ayah } = verse ?? {};
   const theme = useTheme();
   const styles = makeStyle(theme);
 
   return (
     <View style={styles.container}>
-      <AppText style={styles.aya} adjustsFontSizeToFit numberOfLines={3}>
+      <AppText style={styles.basmala}>{'بسم الله الرحمن الرحيم'}</AppText>
+      <AppText style={styles.aya} adjustsFontSizeToFit numberOfLines={4}>
         {arabic}
       </AppText>
       <AppText style={styles.surah} adjustsFontSizeToFit numberOfLines={1}>
-        {surah?.name_arabic} {verse?.ayah}
+        {getLocalizedText(surah?.name_arabic ?? '', surah?.name_english ?? '')}{' '}
+        {verse?.ayah}
       </AppText>
     </View>
   );

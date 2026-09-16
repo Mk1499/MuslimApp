@@ -53,6 +53,7 @@ export function Screen({
             styles.scrollContent,
             contentContainerStyle,
           ]}
+          showsVerticalScrollIndicator={false}
         >
           {children}
         </ScrollView>
