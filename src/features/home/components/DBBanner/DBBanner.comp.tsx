@@ -1,6 +1,6 @@
 import { View, FlatList, Image } from 'react-native';
 import type { PrayerType } from '@/types/prayer';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { spacing, useTheme } from '@/theme';
 import makeStyle from './styles';
 import { AppGradient, AppIcon, AppText } from '@/components/ui';
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import CountDownTimer from '@/components/common/CountDownTimer/CountDownTimer.comp';
 import { useTodayHijriDate } from '@/hooks/queries/useHejriDate';
 import { useAppStore } from '@/store/useAppStore';
+import moment from 'moment';
 
 export default function DBBannerComponent() {
   const theme = useTheme();
@@ -25,30 +26,39 @@ export default function DBBannerComponent() {
     latitude: 24.7136,
     longitude: 46.6753,
   });
-  const { prayer_times, current_status } = data?.data ?? {};
+  const { prayer_times, current_status, prayer_datetimes } = data?.data ?? {};
   const { hijri } = hijriDateData?.data ?? {};
 
+  const prayers = useMemo(
+    () =>
+      Object.entries(prayer_times || {}).map(([key, value]) => ({
+        name: key,
+        time: value,
+        icon: key === 'fajr' ? 'sunrise' : 'sunset',
+      })),
+    [prayer_times],
+  );
+
   useEffect(() => {
-    if (current_status) {
-      const nextPrayerData = current_status.next_prayer;
-      console.log('Next prayer data:', nextPrayerData, {
-        prayer_times,
-        current_status,
-      });
-      setNextPrayer({
-        name: nextPrayerData,
-        time: prayer_times?.[nextPrayerData] as string,
-        icon: nextPrayerData === 'fajr' ? 'sunrise' : 'sunset',
-        timeUntilInMinutes: current_status.minutes_until_next,
-      });
-    }
+    checkCurrentStatus();
   }, [current_status]);
 
-  const prayers = Object.entries(prayer_times || {}).map(([key, value]) => ({
-    name: key,
-    time: value,
-    icon: key === 'fajr' ? 'sunrise' : 'sunset',
-  }));
+  function checkCurrentStatus() {
+    if (current_status) {
+      const nextPrayerName =
+        current_status.next_prayer !== 'none'
+          ? current_status.next_prayer
+          : 'imsak';
+      setNextPrayer({
+        name: nextPrayerName,
+        time: prayer_times?.[nextPrayerName] as string,
+        icon: nextPrayerName === 'fajr' ? 'sunrise' : 'sunset',
+        timeUntilInMinutes:
+          current_status.minutes_until_next ??
+          moment().diff(moment(prayer_datetimes?.[nextPrayerName]), 'minutes'),
+      });
+    }
+  }
 
   function renderPrayerItem({ item }: { item: (typeof prayers)[0] }) {
     return (
@@ -102,7 +112,7 @@ export default function DBBannerComponent() {
           {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
         </AppText>
         <AppText style={styles.nextPlayerTime} variant="title">
-          {getFormattedTime(nextPrayer?.time) ?? ''}
+          {getFormattedTime(nextPrayer?.time ?? '') ?? ''}
         </AppText>
         <View style={styles.nextPrayerRow}>
           <AppIcon
@@ -114,7 +124,12 @@ export default function DBBannerComponent() {
             {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
             {t('common.after')}
           </AppText>
-          <CountDownTimer minutes={nextPrayer?.timeUntilInMinutes ?? 0} />
+          <CountDownTimer
+            minutes={nextPrayer?.timeUntilInMinutes ?? 0}
+            onFinish={() => {
+              checkCurrentStatus();
+            }}
+          />
         </View>
       </View>
       {isLoading ? (
