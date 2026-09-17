@@ -16,4 +16,7 @@ export default (theme: AppTheme) =>
     sectionHeader: {
       textAlign: 'left',
     },
+    section: {
+      marginVertical: spacing.lg,
+    },
   });

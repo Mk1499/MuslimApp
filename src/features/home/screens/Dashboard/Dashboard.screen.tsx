@@ -22,11 +22,13 @@ export function DashboardScreen(): React.JSX.Element {
       </View>
 
       <View style={styles.content}>
-        <AppText style={styles.sectionHeader} variant="title">
+        <AppText style={styles.sectionHeader} variant="subtitle">
           {t('home.quickAccess')}
         </AppText>
 
-        <QuickAccessFeature />
+        <View style={styles.section}>
+          <QuickAccessFeature />
+        </View>
       </View>
 
       <FastAction />
