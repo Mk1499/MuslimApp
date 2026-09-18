@@ -15,7 +15,7 @@ export default (theme: AppTheme) =>
 
       elevation: 2,
       borderRadius: radius.sm,
-      width: '90%',
+      width: '100%',
       alignSelf: 'center',
     },
     lastReadCont: {

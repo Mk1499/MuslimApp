@@ -5,7 +5,7 @@ import { AppText, Screen } from '@/components/ui';
 import { useTheme } from '@/theme';
 import makeStyle from './styles';
 import DBBannerComponent from '../../components/DBBanner/DBBanner.comp';
-import FastAction from '../../components/FastAction/FastAction.comp';
+import LastReadQuran from '../../components/LastReadQuran/LastReadQuran.comp';
 import TodayCarousel from '../../components/TodayCarousel/TodayCarousel.comp';
 import QuickAccessFeature from '../../components/QuickAccessFeature/QuickAccessFeature.comp';
 
@@ -17,7 +17,7 @@ export function DashboardScreen(): React.JSX.Element {
   return (
     <Screen topSafeAreaStyle={styles.safeContainer} scroll>
       <DBBannerComponent />
-      <View style={styles.lastReadCont}>
+      <View style={styles.carouselCont}>
         <TodayCarousel />
       </View>
 
@@ -29,9 +29,9 @@ export function DashboardScreen(): React.JSX.Element {
         <View style={styles.section}>
           <QuickAccessFeature />
         </View>
-      </View>
 
-      <FastAction />
+        <LastReadQuran />
+      </View>
     </Screen>
   );
 }

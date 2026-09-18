@@ -33,7 +33,8 @@
     }
   },
   "quran": {
-    "title": "Holy Quran"
+    "title": "Holy Quran",
+    "searchPlaceholder": "Search in the Quran"
   },
   "prayerTimes": {
     "title": "Prayer Times",

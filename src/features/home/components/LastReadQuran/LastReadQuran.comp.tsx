@@ -6,7 +6,7 @@ import { AppGradient, AppIcon, AppText, AppTouchable } from '@/components/ui';
 import { useTranslation } from 'react-i18next';
 import { QuranImage } from '@/assets/images';
 
-export default function FastAction() {
+export default function LastReadQuran() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { t } = useTranslation();

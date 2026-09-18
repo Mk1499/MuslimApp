@@ -33,7 +33,8 @@
     }
   },
   "quran": {
-    "title": "القرآن الكريم"
+    "title": "القرآن الكريم",
+    "searchPlaceholder": "ابحث في القرآن الكريم"
   },
   "prayerTimes": {
     "title": "مواقيت الصلاة",

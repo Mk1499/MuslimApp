@@ -7,7 +7,7 @@ export default (theme: AppTheme) =>
     safeContainer: {
       backgroundColor: theme.banner.upperCont,
     },
-    lastReadCont: {
+    carouselCont: {
       marginTop: -0.065 * SCREEN_HEIGHT,
     },
     content: {
@@ -18,5 +18,8 @@ export default (theme: AppTheme) =>
     },
     section: {
       marginVertical: spacing.lg,
+    },
+    lastReadCont: {
+      marginHorizontal: spacing.lg,
     },
   });
