@@ -34,7 +34,12 @@
   },
   "quran": {
     "title": "Holy Quran",
-    "searchPlaceholder": "Search in the Quran"
+    "searchPlaceholder": "Search in the Quran",
+    "ayahs": "Ayahs",
+    "loadError": "Failed to load Surahs. Please try again.",
+    "empty": "No Surahs found.",
+    "makkah": "In Mecca",
+    "madinah": "In Medina"
   },
   "prayerTimes": {
     "title": "Prayer Times",

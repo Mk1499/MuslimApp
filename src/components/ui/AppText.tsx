@@ -1,4 +1,10 @@
-import { StyleSheet, Text, type TextProps, type TextStyle } from 'react-native';
+import {
+  I18nManager,
+  StyleSheet,
+  Text,
+  type TextProps,
+  type TextStyle,
+} from 'react-native';
 import React from 'react';
 import {
   fontFamily,
@@ -92,5 +98,7 @@ function resolveTextColor(token: TextColorToken, theme: AppTheme): string {
 }
 
 const styles = StyleSheet.create({
-  base: {},
+  base: {
+    textAlign: !I18nManager.isRTL ? 'right' : 'left',
+  },
 });

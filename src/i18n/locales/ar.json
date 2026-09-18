@@ -34,7 +34,12 @@
   },
   "quran": {
     "title": "القرآن الكريم",
-    "searchPlaceholder": "ابحث في القرآن الكريم"
+    "searchPlaceholder": "ابحث في القرآن الكريم",
+    "ayahs": "آيات",
+    "loadError": "تعذر تحميل السور. حاول مرة أخرى.",
+    "empty": "لا توجد سور.",
+    "makkah": "مكية",
+    "madinah": "مدنية"
   },
   "prayerTimes": {
     "title": "مواقيت الصلاة",
