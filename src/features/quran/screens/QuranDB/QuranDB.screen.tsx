@@ -5,7 +5,6 @@ import ListSurahsView from './Views/SurahsList/SurahList.view';
 import LastReadQuran from '@/features/home/components/LastReadQuran/LastReadQuran.comp';
 import { useTheme } from '@/theme';
 import makeStyle from './styles';
-import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
 import { View } from 'react-native';
 
 export function QuranScreen(): React.JSX.Element {
@@ -18,10 +17,7 @@ export function QuranScreen(): React.JSX.Element {
       <AppText style={styles.screenTitle} variant="title">
         {t('quran.title')}
       </AppText>
-      {/* <SearchInput
-        containerStyle={styles.searchInputContainer}
-        placeholder={t('quran.searchPlaceholder')}
-      /> */}
+
       <LastReadQuran />
 
       <View style={styles.listCont}>

@@ -2,6 +2,8 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  Pressable,
+  Keyboard,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
@@ -58,7 +60,12 @@ export function Screen({
           {children}
         </ScrollView>
       ) : (
-        <View style={[styles.flex, paddings, style]}>{children}</View>
+        <Pressable
+          onPress={Keyboard.dismiss}
+          style={[styles.flex, paddings, style]}
+        >
+          {children}
+        </Pressable>
       )}
     </View>
   );

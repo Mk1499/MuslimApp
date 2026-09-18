@@ -16,31 +16,7 @@ export default function SurahListView() {
   const styles = makeStyle(theme);
   const { t } = useTranslation();
 
-  if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator color={theme.tabBar.active} />
-      </View>
-    );
-  }
-
-  if (isError) {
-    return (
-      <View style={styles.centered}>
-        <AppText color="secondary">{t('quran.loadError')}</AppText>
-      </View>
-    );
-  }
-
   const surahs = surahsList?.data.surahs ?? [];
-
-  if (surahs.length === 0) {
-    return (
-      <View style={styles.centered}>
-        <AppText color="secondary">{t('quran.empty')}</AppText>
-      </View>
-    );
-  }
 
   const filteredSurahs = useMemo(
     () =>
@@ -57,17 +33,42 @@ export default function SurahListView() {
     [searchQuery, surahs],
   );
 
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator color={theme.tabBar.active} />
+      </View>
+    );
+  }
+
+  if (isError) {
+    return (
+      <View style={styles.centered}>
+        <AppText color="secondary">{t('quran.loadError')}</AppText>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.list}>
+    <View style={styles.container}>
       <SearchInput
         placeholder={t('quran.searchPlaceholder')}
         onChangeText={setSearchQuery}
       />
-      <FlatList
-        data={filteredSurahs}
-        keyExtractor={item => item.number.toString()}
-        renderItem={({ item }) => <SurahListItem surah={item} />}
-      />
+      {filteredSurahs.length === 0 ? (
+        <View style={styles.centered}>
+          <AppText color="secondary">{t('quran.empty')}</AppText>
+        </View>
+      ) : (
+        <FlatList
+          style={styles.flatList}
+          contentContainerStyle={styles.listContent}
+          data={filteredSurahs}
+          keyExtractor={item => item.number.toString()}
+          renderItem={({ item }) => <SurahListItem surah={item} />}
+          keyboardShouldPersistTaps="handled"
+        />
+      )}
     </View>
   );
 }

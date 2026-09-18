@@ -1,5 +1,4 @@
 import { AppTheme } from '@/theme';
-import { SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
@@ -15,7 +14,7 @@ export default (theme: AppTheme) =>
       marginBottom: 16,
     },
     listCont: {
+      flex: 1,
       marginTop: 16,
-      marginBottom: 0.15 * SCREEN_HEIGHT,
     },
   });
