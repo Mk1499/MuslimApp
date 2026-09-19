@@ -6,3 +6,4 @@ export * from './Screen';
 export * from './AppIcon';
 export * from './AppGradient';
 export * from './AppBottomSheet';
+export * from './Header';

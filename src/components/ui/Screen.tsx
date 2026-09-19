@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, spacing } from '../../theme';
+import { Header } from './Header';
 
 type Edge = 'top' | 'right' | 'bottom' | 'left';
 
@@ -24,6 +25,10 @@ interface ScreenProps {
   contentContainerStyle?: StyleProp<ViewStyle>;
   topSafeAreaStyle?: StyleProp<ViewStyle>;
   bottomSafeAreaStyle?: StyleProp<ViewStyle>;
+  /** Shows the header back button when the screen was pushed on top of others. */
+  isInnerPage?: boolean;
+  /** Title shown in the header; renders the header even without `isInnerPage`. */
+  screenTitle?: string;
 }
 
 export function Screen({
@@ -33,6 +38,8 @@ export function Screen({
   style,
   contentContainerStyle,
   topSafeAreaStyle,
+  isInnerPage = false,
+  screenTitle,
 }: ScreenProps): React.JSX.Element {
   const theme = useTheme();
 
@@ -47,6 +54,9 @@ export function Screen({
           topSafeAreaStyle,
         ]}
       />
+      {(isInnerPage || screenTitle) && (
+        <Header showBackButton={isInnerPage} title={screenTitle} />
+      )}
       {scroll ? (
         <ScrollView
           style={[styles.flex, style]}

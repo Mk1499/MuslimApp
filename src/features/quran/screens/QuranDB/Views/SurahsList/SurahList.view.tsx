@@ -1,4 +1,5 @@
 import { View, ActivityIndicator, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useQuranData from '@/hooks/queries/useQuranData';
@@ -7,6 +8,8 @@ import { useTheme } from '@/theme';
 import SurahListItem from './SurahListItem/SurahListItem.comp';
 import makeStyle from './styles';
 import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
+import ScreenNames from '@/navigation/ScreenNames';
+import StackNames from '@/navigation/StackNames';
 
 export default function SurahListView() {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -15,6 +18,7 @@ export default function SurahListView() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { t } = useTranslation();
+  const { navigate } = useNavigation<any>();
 
   const surahs = surahsList?.data.surahs ?? [];
 
@@ -65,7 +69,19 @@ export default function SurahListView() {
           contentContainerStyle={styles.listContent}
           data={filteredSurahs}
           keyExtractor={item => item.number.toString()}
-          renderItem={({ item }) => <SurahListItem surah={item} />}
+          renderItem={({ item }) => (
+            <SurahListItem
+              surah={item}
+              onPress={() =>
+                navigate(StackNames.Quran, {
+                  screen: ScreenNames.Mushaf,
+                  params: {
+                    surahNumber: item.number,
+                  },
+                })
+              }
+            />
+          )}
           keyboardShouldPersistTaps="handled"
         />
       )}

@@ -4,4 +4,5 @@ export default {
   PrayerTimes: 'prayerTimes',
   About: 'about',
   MainTabs: 'MainTabs',
+  Mushaf: 'mushaf',
 };

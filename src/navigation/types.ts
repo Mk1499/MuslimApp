@@ -1,4 +1,5 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
+import StackNames from './StackNames';
 
 /** Screens inside the bottom tab bar. */
 export type MainTabParamList = {
@@ -11,7 +12,7 @@ export type MainTabParamList = {
 /** Stack screens rendered above the tabs (push full-screen pages here). */
 export type AppStackParamList = {
   MainTabs: NavigatorScreenParams<MainTabParamList>;
-  About: undefined;
+  [StackNames.Main]: undefined;
 };
 
 /**
