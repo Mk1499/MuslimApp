@@ -7,15 +7,19 @@ import quranPages from '@/assets/offline-res/quran-pages.json';
 import { QuranPageData, QuranWord, MushafLine } from '@/types/quran';
 
 // The asset is keyed by page number as a string, e.g. { "177": { success, service, data } }
-type QuranPagesAsset = Record<
-  string,
-  { success: boolean; service: string; data: QuranPageData }
->;
+type QuranPagesAsset = {
+  pages: Record<
+    string,
+    { success: boolean; service: string; data: QuranPageData }
+  >;
+};
 
 const PAGES = quranPages as unknown as QuranPagesAsset;
+console.log(PAGES);
 
 export function useQuranPage(pageNumber: number) {
-  const entry = PAGES[String(pageNumber)];
+  const entry = PAGES.pages[pageNumber];
+  console.log(entry);
   const pageData = entry?.data ?? null;
 
   const lines = useMemo<MushafLine[]>(() => {

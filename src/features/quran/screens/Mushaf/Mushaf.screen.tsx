@@ -8,13 +8,22 @@ import BismillahLine from '@/features/quran/components/BismillahLine/BismillahLi
 import PageHeader from '@/features/quran/components/PageHeader/PageHeader.comp';
 import PageFooter from '@/features/quran/components/PageFooter/PageFooter.comp';
 import { Screen } from '@/components/ui';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { QuranStackParamList } from '@/navigation/stacks/quranStack';
+import { ScreenNames } from '@/navigation/screenNames';
 
 interface Props {
   pageNumber: number;
   onWordPress?: (word: QuranWord) => void;
 }
 
-export default function MushafPage({ pageNumber, onWordPress }: Props) {
+export default function MushafPage() {
+  const { params } =
+    useRoute<RouteProp<QuranStackParamList, ScreenNames.Mushaf>>();
+  const { surah } = params;
+  const { pages } = surah ?? {};
+  const pageNumber = pages?.[0] ?? 1;
+
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
 
   if (loading) {
@@ -51,7 +60,7 @@ export default function MushafPage({ pageNumber, onWordPress }: Props) {
           <MushafLine
             key={line.lineNumber}
             words={line.words}
-            onWordPress={onWordPress}
+            onWordPress={() => {}}
           />
         );
       })}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { QuranWord } from '@/types/quran';
 import AyahEndBadge from '@/features/quran/components/AyahEndBadge/AyahEndBadge.comp';
+import { fontFamily } from '@/theme';
 
 interface Props {
   words: QuranWord[];
@@ -37,7 +38,7 @@ export default function MushafLine({ words, onWordPress }: Props) {
 
 const styles = StyleSheet.create({
   lineRow: {
-    flexDirection: 'row-reverse', // Arabic reads right-to-left
+    flexDirection: 'row', // Arabic reads right-to-left
     flexWrap: 'nowrap',
     // Approximates mushaf justification by spreading words to fill the width.
     // Real Madani-mushaf apps achieve true kashida justification with a
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   word: {
-    fontFamily: 'UthmanicHafs', // see README for font setup
-    fontSize: 24,
+    fontFamily: fontFamily.uthmani, // see README for font setup
+    fontSize: 18,
     lineHeight: 46,
     color: '#EDEDED',
     includeFontPadding: false,

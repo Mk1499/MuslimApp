@@ -1,3 +1,4 @@
+import { fontFamily } from '@/theme';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -34,5 +35,6 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: 10,
     color: '#C9A24B',
+    fontFamily: fontFamily.uthmani, // see README for font setup
   },
 });

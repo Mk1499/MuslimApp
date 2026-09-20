@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageBackground, Text, StyleSheet } from 'react-native';
+import { SurahNameBannerImage } from '@/assets/images';
 
 export default function SurahHeaderBanner({
   surahName,
@@ -8,7 +9,7 @@ export default function SurahHeaderBanner({
 }) {
   return (
     <ImageBackground
-      source={require('../assets/surah-banner-frame.png')} // ornament asset, bundle your own
+      source={SurahNameBannerImage} // ornament asset, bundle your own
       style={styles.banner}
       resizeMode="stretch"
     >
