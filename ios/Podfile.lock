@@ -1388,6 +1388,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - react-native-segmented-control (2.5.7):
+    - React-Core
   - React-NativeModulesApple (0.87.0):
     - hermes-engine
     - React-bridging
@@ -2089,6 +2091,7 @@ DEPENDENCIES:
   - React-mutationobservernativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-segmented-control (from `../node_modules/@react-native-segmented-control/segmented-control`)"
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-networking (from `../node_modules/react-native/ReactCommon/react/networking`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
@@ -2244,6 +2247,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-segmented-control:
+    :path: "../node_modules/@react-native-segmented-control/segmented-control"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-networking:
@@ -2387,6 +2392,7 @@ SPEC CHECKSUMS:
   React-mutationobservernativemodule: 2c5abeb9a4ae316ba6d9420ef8d9baa81faa9d56
   react-native-restart: 16398a9801f3fbee953ffb5c76201f6d07e66f8a
   react-native-safe-area-context: f17f4ec987ecdd130820a4a850498b874fb70388
+  react-native-segmented-control: bf6e0032726727498e18dd437ae88afcdbc18e99
   React-NativeModulesApple: 22b2f3e1538ceb1aab1ab182ccb0666ea2ec36ad
   React-networking: b58b3098d4a626f88bbaeaf6bf5e67b18ff39089
   React-oscompat: 72573ceb65b6c6c6bc34e51e0df8f44c91081a6d

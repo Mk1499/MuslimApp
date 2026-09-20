@@ -1564,6 +1564,11 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
+"@react-native-segmented-control/segmented-control@^2.5.7":
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/@react-native-segmented-control/segmented-control/-/segmented-control-2.5.7.tgz#7c91ef7dede8752796a234321fafa2c604fc82af"
+  integrity sha512-l84YeVX8xAU3lvOJSvV4nK/NbGhIm2gBfveYolwaoCbRp+/SLXtc6mYrQmM9ScXNwU14mnzjQTpTHWl5YPnkzQ==
+
 "@react-native/asset-utils@0.87.0":
   version "0.87.0"
   resolved "https://registry.yarnpkg.com/@react-native/asset-utils/-/asset-utils-0.87.0.tgz#5ea5a7c604c38f44ea46adc5edd40797e71d2bc4"

@@ -45,6 +45,7 @@
 		<string>Cairo-Bold.ttf</string>
 		<string>Ionicons.ttf</string>
 		<string>Feather.ttf</string>
+		<string>Uthmani.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

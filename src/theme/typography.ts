@@ -7,6 +7,7 @@ export const fontFamily = {
   medium: 'Cairo-Medium',
   semiBold: 'Cairo-SemiBold',
   bold: 'Cairo-Bold',
+  uthmani: 'Uthmani',
 };
 
 export const fontSize = {

@@ -76,7 +76,7 @@ export default function SurahListView() {
                 navigate(StackNames.Quran, {
                   screen: ScreenNames.Mushaf,
                   params: {
-                    surahNumber: item.number,
+                    surah: item,
                   },
                 })
               }
