@@ -1,11 +1,13 @@
 import React from 'react';
 import { ImageBackground, Text, StyleSheet } from 'react-native';
 import { SurahNameBannerImage } from '@/assets/images';
+import { AppText } from '@/components/ui';
+import quranSurahs from '@/assets/offline-res/quran-surahs.json';
 
 export default function SurahHeaderBanner({
-  surahName,
+  surahNumber,
 }: {
-  surahName: string;
+  surahNumber: number;
 }) {
   return (
     <ImageBackground
@@ -13,7 +15,9 @@ export default function SurahHeaderBanner({
       style={styles.banner}
       resizeMode="stretch"
     >
-      <Text style={styles.title}>{surahName}</Text>
+      <AppText style={styles.title}>
+        {quranSurahs[surahNumber - 1].name_arabic}
+      </AppText>
     </ImageBackground>
   );
 }
@@ -26,8 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontFamily: 'UthmanicHafs',
     fontSize: 22,
-    color: '#EDEDED',
+    fontWeight: 'bold',
   },
 });

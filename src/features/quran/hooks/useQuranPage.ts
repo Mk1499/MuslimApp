@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 // .json files directly. Point this at wherever you saved the file, e.g.
 // assets/quran-pages.json — see README for the "one big file vs one file per
 // page" options.
+// import quranPages from '@/assets/offline-res/quran-pages.json';
 import quranPages from '@/assets/offline-res/quran-pages.json';
 import { QuranPageData, QuranWord, MushafLine } from '@/types/quran';
 

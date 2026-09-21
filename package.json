@@ -28,6 +28,7 @@
     "react-native-localize": "^3.7.0",
     "react-native-mmkv": "^4.3.2",
     "react-native-nitro-modules": "^0.37.0",
+    "react-native-pager-view": "^9.0.4",
     "react-native-reanimated": "^4.6.0",
     "react-native-restart": "^0.0.29",
     "react-native-safe-area-context": "^5.5.2",

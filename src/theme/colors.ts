@@ -104,7 +104,7 @@ export type AppTheme = {
     infoSoft: string;
   };
   /** Brand accent highlights. */
-  accent: { primary: string; soft: string };
+  accent: { primary: string; soft: string; secondary: string };
   /** Gradient fills (use via AppGradient). */
   gradient: {
     hero: [string, string];
@@ -175,6 +175,7 @@ export const lightTheme: AppTheme = {
   accent: {
     primary: palette.gold[300],
     soft: palette.gold[700],
+    secondary: palette.primary[900],
   },
   gradient: {
     hero: [palette.primary[500], palette.primary[800]],
@@ -245,6 +246,7 @@ export const darkTheme: AppTheme = {
   accent: {
     primary: palette.gold[300],
     soft: palette.gold[700],
+    secondary: palette.gold[300],
   },
   gradient: {
     hero: [palette.primary[600], palette.primary[900]],

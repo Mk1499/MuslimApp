@@ -4,8 +4,8 @@ import { useQuranPage } from '@/features/quran/hooks/useQuranPage';
 import MushafLine from '@/features/quran/components/MushafLine/MushafLine.comp';
 import SurahHeaderBanner from '@/features/quran/components/SurahHeaderBanner/SurahHeaderBanner.comp';
 import BismillahLine from '@/features/quran/components/BismillahLine/BismillahLine.comp';
-import PageHeader from '@/features/quran/components/PageHeader/PageHeader.comp';
 import PageFooter from '@/features/quran/components/PageFooter/PageFooter.comp';
+import { SCREEN_HEIGHT } from '@/utils/constants';
 
 export default function MushafPage({ pageNumber }: { pageNumber: number }) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
@@ -17,26 +17,35 @@ export default function MushafPage({ pageNumber }: { pageNumber: number }) {
     return <Text style={styles.error}>تعذّر تحميل الصفحة</Text>;
   }
 
+  console.log('MK DATA', { pageData, lines });
+
   return (
     <View style={styles.page}>
-      {/* <PageHeader juzNumber={9} surahName={pageData.surah.name_arabic} /> */}
-
       {lines.map(line => {
         if (line.words.length === 0) return null;
         const first = line.words[0];
         console.log({ first, line });
 
-        if (first.char_type_name === 'surah_name') {
+        if (first.ayah_number === 1 && first?.position === 1) {
           return (
-            <SurahHeaderBanner
-              key={line.lineNumber}
-              surahName={first.text_uthmani}
-            />
+            <View>
+              <SurahHeaderBanner
+                key={line.lineNumber + 'SurahHeaderBanner'}
+                surahNumber={+first?.surah_number}
+              />
+              <BismillahLine
+                key={line.lineNumber + '-Basmala'}
+                surahNumber={+first?.surah_number}
+              />
+              <MushafLine
+                key={line.lineNumber + '-MushafLine'}
+                words={line.words}
+                onWordPress={() => {}}
+              />
+            </View>
           );
         }
-        if (first.char_type_name === 'basmallah') {
-          return <BismillahLine key={line.lineNumber} />;
-        }
+
         return (
           <MushafLine
             key={line.lineNumber}
@@ -53,8 +62,9 @@ export default function MushafPage({ pageNumber }: { pageNumber: number }) {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
     paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    height: 0.8 * SCREEN_HEIGHT,
   },
   center: { flex: 1, justifyContent: 'center' },
   error: { color: 'red', textAlign: 'center', marginTop: 40 },

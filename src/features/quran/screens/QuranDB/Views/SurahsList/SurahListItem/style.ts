@@ -28,7 +28,7 @@ export default (theme: AppTheme) =>
       justifyContent: 'center',
     },
     badgeText: {
-      color: theme.accent.primary,
+      color: theme.accent.secondary,
       fontFamily: fontFamily.semiBold,
       fontSize: fontSize.sm,
     },

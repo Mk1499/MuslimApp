@@ -23,11 +23,10 @@ export default function MushafLine({ words, onWordPress }: Props) {
         if (w.char_type_name === 'end') {
           return (
             <Text
-              key={`${w.verse_key}-${w.position}-${idx}`}
               style={{
                 fontFamily: fontFamily.uthmani,
                 fontSize: 28,
-                color: theme.accent.primary,
+                color: theme.accent.secondary,
                 includeFontPadding: false,
               }}
             >
@@ -52,8 +51,6 @@ const styles = StyleSheet.create({
   word: {
     fontFamily: fontFamily.hafs, // see README for font setup
     fontSize: 28,
-    lineHeight: 46,
-    color: '#EDEDED',
-    includeFontPadding: false,
+    textAlign: 'center', // Arabic reads right-to-left
   },
 });

@@ -1,13 +1,10 @@
 export interface QuranWord {
-  position: number;
   text_uthmani: string;
   text_uthmani_tajweed?: string;
   line_number: number;
   // 'word' | 'end' (ayah-end ornament) | 'surah_name' | 'basmallah'
   char_type_name: 'word' | 'end' | 'surah_name' | 'basmallah' | string;
-  verse_key: string;
   surah_number: number;
-  ayah_number: number;
 }
 
 export interface QuranPageData {

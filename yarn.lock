@@ -5847,6 +5847,11 @@ react-native-nitro-modules@^0.37.0:
   resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.37.0.tgz#9ded1451fb517176bf388436c7c52dbed6b6e9b9"
   integrity sha512-ULS2CBZcdwGw5d4Y35EV/tbCOsNsQOnQ9LC9CehMhDNm5c90lwF/LxRamzKuFpjI547G7teTQgD0peqYSGnP9g==
 
+react-native-pager-view@^9.0.4:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-9.0.4.tgz#fa6a87e6534eb2fdf18d4c7caaa53e0a874eeb75"
+  integrity sha512-FoGi40losOaXNj/bGzr0O6rvJY3KOkQKtTXGtfElo/rV66KUcXV0UegDKzhoK4Fg+rChbPJRlyhtro8qUG9abQ==
+
 react-native-reanimated@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-4.6.0.tgz#ee6fe5f0dab85f5e746a83669da04acbda1c71d6"

@@ -1,3 +1,4 @@
+import { AppText } from '@/components/ui';
 import useFormatter from '@/hooks/useFormatter';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -13,9 +14,8 @@ export default function PageFooter({
 
   return (
     <View style={styles.row}>
-      <Text style={styles.label}>{hizbLabel}</Text>
       <View style={styles.pageBadge}>
-        <Text style={styles.pageNum}>{toArabicIndic(pageNumber)}</Text>
+        <AppText style={styles.pageNum}>{toArabicIndic(pageNumber)}</AppText>
       </View>
     </View>
   );
@@ -23,19 +23,16 @@ export default function PageFooter({
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginTop: 10,
     alignItems: 'center',
-    paddingTop: 12,
   },
   label: {
-    fontFamily: 'UthmanicHafs',
     fontSize: 14,
     color: '#EDEDED',
   },
   pageBadge: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
     borderRadius: 15,
     borderWidth: 1,
     borderColor: '#C9A24B',
@@ -43,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pageNum: {
-    color: '#C9A24B',
     fontSize: 12,
+    textAlign: 'center',
   },
 });
