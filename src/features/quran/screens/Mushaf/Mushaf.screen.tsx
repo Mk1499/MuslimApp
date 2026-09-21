@@ -1,71 +1,22 @@
 import React from 'react';
-import { Text, ActivityIndicator, StyleSheet } from 'react-native';
-import { useQuranPage } from '@/features/quran/hooks/useQuranPage';
-import { QuranWord } from '@/types/quran';
-import MushafLine from '@/features/quran/components/MushafLine/MushafLine.comp';
-import SurahHeaderBanner from '@/features/quran/components/SurahHeaderBanner/SurahHeaderBanner.comp';
-import BismillahLine from '@/features/quran/components/BismillahLine/BismillahLine.comp';
-import PageHeader from '@/features/quran/components/PageHeader/PageHeader.comp';
-import PageFooter from '@/features/quran/components/PageFooter/PageFooter.comp';
+import { StyleSheet } from 'react-native';
 import { Screen } from '@/components/ui';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { QuranStackParamList } from '@/navigation/stacks/quranStack';
-import { ScreenNames } from '@/navigation/screenNames';
+import MushafPage from '../../components/MushafPage/MushafPage.comp';
 
-interface Props {
-  pageNumber: number;
-  onWordPress?: (word: QuranWord) => void;
-}
-
-export default function MushafPage() {
+export default function MushafScreen() {
   const { params } =
     useRoute<RouteProp<QuranStackParamList, ScreenNames.Mushaf>>();
   const { surah } = params;
   const { pages } = surah ?? {};
   const pageNumber = pages?.[0] ?? 1;
 
-  const { pageData, lines, loading, error } = useQuranPage(pageNumber);
-
-  if (loading) {
-    return <ActivityIndicator style={styles.center} color="#C9A24B" />;
-  }
-  if (error || !pageData) {
-    return <Text style={styles.error}>تعذّر تحميل الصفحة</Text>;
-  }
-
   // Derive current surah name/juz from the first "word"-type entry on the page.
-  const firstWord = pageData.words.find(w => w.char_type_name === 'word');
-  const surahName = firstWord ? `سورة ${firstWord.surah_number}` : '';
 
   return (
-    <Screen style={styles.page}>
-      <PageHeader juzNumber={9} surahName={surahName} />
-
-      {lines.map(line => {
-        if (line.words.length === 0) return null;
-        const first = line.words[0];
-
-        if (first.char_type_name === 'surah_name') {
-          return (
-            <SurahHeaderBanner
-              key={line.lineNumber}
-              surahName={first.text_uthmani}
-            />
-          );
-        }
-        if (first.char_type_name === 'basmallah') {
-          return <BismillahLine key={line.lineNumber} />;
-        }
-        return (
-          <MushafLine
-            key={line.lineNumber}
-            words={line.words}
-            onWordPress={() => {}}
-          />
-        );
-      })}
-
-      <PageFooter hizbLabel="نصف الحزب ١٨" pageNumber={pageData.page} />
+    <Screen style={styles.page} isInnerPage>
+      <MushafPage pageNumber={pageNumber} />
     </Screen>
   );
 }
@@ -73,10 +24,6 @@ export default function MushafPage() {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: '#111111',
     paddingHorizontal: 16,
-    paddingVertical: 20,
   },
-  center: { flex: 1, justifyContent: 'center' },
-  error: { color: 'red', textAlign: 'center', marginTop: 40 },
 });

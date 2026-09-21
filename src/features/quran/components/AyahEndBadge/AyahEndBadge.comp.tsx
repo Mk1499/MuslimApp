@@ -14,26 +14,20 @@ function toArabicIndic(num: number): string {
 export default function AyahEndBadge({ ayahNumber }: { ayahNumber: number }) {
   return (
     <View style={styles.badge}>
-      <Text style={styles.badgeText}>{toArabicIndic(ayahNumber)}</Text>
+      <Text style={styles.badgeText}>{`${toArabicIndic(ayahNumber)}`}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  // Simple circle approximation of the ornate mushaf ayah-end flower.
-  // Swap for an SVG/PNG ornament asset for a pixel-accurate look.
   badge: {
-    width: 24,
-    height: 24,
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#C9A24B',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 3,
   },
   badgeText: {
-    fontSize: 10,
+    fontSize: 34,
     color: '#C9A24B',
     fontFamily: fontFamily.uthmani, // see README for font setup
   },

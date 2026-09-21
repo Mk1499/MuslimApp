@@ -1,4 +1,4 @@
-export default {
+const ScreenNames = {
   Home: 'home',
   Quran: 'quran',
   PrayerTimes: 'prayerTimes',
@@ -6,3 +6,5 @@ export default {
   MainTabs: 'MainTabs',
   Mushaf: 'mushaf',
 };
+
+export default ScreenNames;

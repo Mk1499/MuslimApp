@@ -7,7 +7,8 @@ export const fontFamily = {
   medium: 'Cairo-Medium',
   semiBold: 'Cairo-SemiBold',
   bold: 'Cairo-Bold',
-  uthmani: 'Uthmani',
+  uthmani: 'KFGQPC Uthmanic Script HAFS',
+  hafs: 'KFGQPC HAFS Uthmanic Script',
 };
 
 export const fontSize = {

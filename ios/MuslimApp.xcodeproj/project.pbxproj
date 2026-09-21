@@ -17,6 +17,7 @@
 		94A11F67AB32462095FBA837 /* Uthmani.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0436B7513FE24573BD2786F8 /* Uthmani.ttf */; };
 		ACD9E73556A847DE87350584 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95354C5EAB9445FEA771B8EA /* Cairo-Bold.ttf */; };
 		DEDC3626A08751CB685DA051 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		5E527E6CAD1444B39E26FFCB /* hafs.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACE3D61854474C598A09F71C /* hafs.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		D2A93483A14D4340B526F601 /* Cairo-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Medium.ttf"; path = "../src/assets/fonts/Cairo-Medium.ttf"; sourceTree = "<group>"; };
 		DE6C121509034CE3AF62ABF8 /* Cairo-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-SemiBold.ttf"; path = "../src/assets/fonts/Cairo-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		ACE3D61854474C598A09F71C /* hafs.ttf */ = {isa = PBXFileReference; name = "hafs.ttf"; path = "../src/assets/fonts/hafs.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				258EB83D5FEB471098CF76DB /* Cairo-Regular.ttf */,
 				95354C5EAB9445FEA771B8EA /* Cairo-Bold.ttf */,
 				0436B7513FE24573BD2786F8 /* Uthmani.ttf */,
+				ACE3D61854474C598A09F71C /* hafs.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				7AF509D6D70E4D0DA12D57A5 /* Cairo-Regular.ttf in Resources */,
 				ACD9E73556A847DE87350584 /* Cairo-Bold.ttf in Resources */,
 				94A11F67AB32462095FBA837 /* Uthmani.ttf in Resources */,
+				5E527E6CAD1444B39E26FFCB /* hafs.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

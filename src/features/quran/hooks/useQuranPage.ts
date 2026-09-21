@@ -19,13 +19,14 @@ console.log(PAGES);
 
 export function useQuranPage(pageNumber: number) {
   const entry = PAGES.pages[pageNumber];
-  console.log(entry);
   const pageData = entry?.data ?? null;
 
   const lines = useMemo<MushafLine[]>(() => {
     if (!pageData) return [];
-    return groupWordsIntoLines(pageData.words, pageData.lines_per_page);
+    return groupWordsIntoLines(pageData.words);
   }, [pageData]);
+
+  console.log({ lines });
 
   return {
     pageData,
@@ -36,23 +37,20 @@ export function useQuranPage(pageNumber: number) {
   };
 }
 
-function groupWordsIntoLines(
-  words: QuranWord[],
-  linesPerPage: number,
-): MushafLine[] {
+/** Groups words by line_number, preserving the order words appear in the source array. */
+function groupWordsIntoLines(words: QuranWord[]): MushafLine[] {
   const byLine = new Map<number, QuranWord[]>();
 
-  for (const w of words) {
-    if (!byLine.has(w.line_number)) byLine.set(w.line_number, []);
-    byLine.get(w.line_number)!.push(w);
+  for (const word of words) {
+    const lineWords = byLine.get(word.line_number);
+    if (lineWords) {
+      lineWords.push(word);
+    } else {
+      byLine.set(word.line_number, [word]);
+    }
   }
 
-  const lines: MushafLine[] = [];
-  for (let n = 1; n <= linesPerPage; n++) {
-    const lineWords = (byLine.get(n) ?? []).sort(
-      (a, b) => a.position - b.position,
-    );
-    lines.push({ lineNumber: n, words: lineWords });
-  }
-  return lines;
+  return Array.from(byLine.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([lineNumber, lineWords]) => ({ lineNumber, words: lineWords }));
 }
