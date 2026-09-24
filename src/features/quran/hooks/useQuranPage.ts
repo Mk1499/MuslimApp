@@ -16,7 +16,6 @@ type QuranPagesAsset = {
 };
 
 const PAGES = quranPages as unknown as QuranPagesAsset;
-console.log(PAGES);
 
 export function useQuranPage(pageNumber: number) {
   const entry = PAGES.pages[pageNumber];
@@ -26,8 +25,6 @@ export function useQuranPage(pageNumber: number) {
     if (!pageData) return [];
     return groupWordsIntoLines(pageData.words);
   }, [pageData]);
-
-  console.log({ lines });
 
   return {
     pageData,

@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { Screen } from '@/components/ui';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { QuranStackParamList } from '@/navigation/stacks/quranStack';
@@ -8,6 +8,7 @@ import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from 'react-native-pager-view';
 import MushafPage from '../../components/MushafPage/MushafPage.comp';
+import { SCREEN_HEIGHT } from '@/utils/constants';
 
 const TOTAL_MUSHAF_PAGES = 604;
 const RENDER_WINDOW = 1; // pages on each side of the current page to keep mounted
@@ -17,15 +18,49 @@ function clampPageNumber(page: number): number {
   return Math.min(Math.max(page, 1), TOTAL_MUSHAF_PAGES);
 }
 
+// Isolated + memoized so only the pages whose props actually change re-render.
+const PagerItem = React.memo(function PagerItem({
+  pageNumber,
+  isReady,
+}: {
+  pageNumber: number;
+  isReady: boolean;
+}) {
+  if (!isReady) {
+    return (
+      <View style={styles.placeholder}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  return <MushafPage pageNumber={pageNumber} />;
+});
+
 export default function MushafScreen() {
   const { params } =
     useRoute<RouteProp<QuranStackParamList, ScreenNames.Mushaf>>();
   const { surah } = params;
   const { pages } = surah ?? {};
 
-  // Mushaf pages are 1-based; PagerView positions are 0-based.
   const initialPageNumber = clampPageNumber(pages?.[0] ?? 1);
   const [currentPageNumber, setCurrentPageNumber] = useState(initialPageNumber);
+
+  // false لحد ما الـ screen transition/animations تخلص خالص
+  const [isContentReady, setIsContentReady] = useState(false);
+
+  useEffect(() => {
+    let raf2: number;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        setIsContentReady(true);
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
+  }, []);
 
   const allPageNumbers = useMemo(
     () => Array.from({ length: TOTAL_MUSHAF_PAGES }, (_, i) => i + 1),
@@ -34,7 +69,6 @@ export default function MushafScreen() {
 
   const handlePageSelected = useCallback(
     (event: PagerViewOnPageSelectedEvent) => {
-      // event.nativeEvent.position is 0-based -> convert back to 1-based page number
       setCurrentPageNumber(event.nativeEvent.position + 1);
     },
     [],
@@ -48,6 +82,7 @@ export default function MushafScreen() {
         initialPage={initialPageNumber - 1}
         onPageSelected={handlePageSelected}
         testID="mushaf-pager"
+        layoutDirection={'rtl'}
       >
         {allPageNumbers.map(pageNumber => {
           const isNearCurrentPage =
@@ -56,10 +91,9 @@ export default function MushafScreen() {
           return (
             <View key={pageNumber} collapsable={false}>
               {isNearCurrentPage ? (
-                <MushafPage pageNumber={pageNumber} />
+                <PagerItem pageNumber={pageNumber} isReady={isContentReady} />
               ) : (
-                // Cheap placeholder keeps PagerView's child indices stable
-                // without paying to mount every real page up front.
+                // برّه النافذة: view فاضي بس، عشان نحافظ على ثبات الـ indices
                 <View style={styles.placeholder} />
               )}
             </View>
@@ -72,9 +106,12 @@ export default function MushafScreen() {
 
 const styles = StyleSheet.create({
   page: {
-    flex: 1,
+    height: SCREEN_HEIGHT * 0.8,
+    // backgroundColor: 'gold',
   },
   placeholder: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -51,7 +51,7 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
         );
       })}
 
-      <PageFooter hizbLabel="نصف الحزب ١٨" pageNumber={pageData.page} />
+      <PageFooter pageNumber={pageData.page} />
     </View>
   );
 }
@@ -59,8 +59,8 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
 const styles = StyleSheet.create({
   page: {
     paddingHorizontal: 16,
+    flex: 1,
     justifyContent: 'space-between',
-    height: 0.8 * SCREEN_HEIGHT,
   },
   center: { flex: 1, justifyContent: 'center' },
   error: { color: 'red', textAlign: 'center', marginTop: 40 },

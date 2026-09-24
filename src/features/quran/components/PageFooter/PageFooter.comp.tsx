@@ -3,13 +3,7 @@ import useFormatter from '@/hooks/useFormatter';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function PageFooter({
-  hizbLabel,
-  pageNumber,
-}: {
-  hizbLabel: string;
-  pageNumber: number;
-}) {
+export default function PageFooter({ pageNumber }: { pageNumber: number }) {
   const { toArabicIndic } = useFormatter();
 
   return (
