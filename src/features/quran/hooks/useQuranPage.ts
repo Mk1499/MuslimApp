@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 // assets/quran-pages.json — see README for the "one big file vs one file per
 // page" options.
 // import quranPages from '@/assets/offline-res/quran-pages.json';
-import quranPages from '@/assets/offline-res/quran-pages.json';
+import quranPages from '@/assets/offline-res/quran-pages.min.json';
 import { QuranPageData, QuranWord, MushafLine } from '@/types/quran';
 
 // The asset is keyed by page number as a string, e.g. { "177": { success, service, data } }
