@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 
 import { IProps } from './type';
@@ -17,16 +17,30 @@ export default function CommonListItem({
   const styles = useStyles(theme);
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <View>
-        <AppText style={styles.title} variant="subtitle">
+        <AppText
+          style={styles.title}
+          variant="subtitle"
+          numberOfLines={1}
+          adjustsFontSizeToFit
+        >
           {title}
         </AppText>
-        {subtitle && <AppText style={styles.subtitle}>{subtitle}</AppText>}
+        {subtitle && (
+          <AppText
+            style={styles.subtitle}
+            variant="caption"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
+            {subtitle}
+          </AppText>
+        )}
       </View>
       {withChevron && (
         <AppIcon name={isRTL ? 'chevron-back' : 'chevron-forward'} />
       )}
-    </View>
+    </Pressable>
   );
 }

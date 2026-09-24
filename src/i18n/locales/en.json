@@ -82,6 +82,20 @@
       "malik": "Muwatta Malik",
       "nawawi": "Riyadh as-Salihin by An-Nawawi"
     },
-    "collectionScreenTitle": "Hadith Collection"
+    "collectionScreenTitle": "Hadith Collection",
+    "rawy": "Rawy",
+    "rawyAuthor": {
+      "bukhari": "Imam Bukhari",
+      "muslim": "Imam Muslim",
+      "tirmidhi": "Imam Tirmidhi",
+      "abudawud": "Imam Abu Dawood",
+      "nasai": "Imam an-Nasa'i",
+      "ibnmajah": "Imam Ibn Majah",
+      "malik": "Imam Malik",
+      "nawawi": "Imam An-Nawawi",
+      "qudsi": "Hadith Qudsi",
+      "dehlawi": "Shah Waliullah Dehlawi"
+    },
+    "sahih": "Sahih"
   }
 }

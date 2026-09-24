@@ -28,6 +28,7 @@ interface ScreenProps {
   screenTitle?: string;
   isLoading?: boolean;
   withBottomSafeArea?: boolean;
+  keyboardDismissOnPress?: boolean;
 }
 
 export function Screen({
@@ -41,6 +42,7 @@ export function Screen({
   screenTitle,
   isLoading = false,
   withBottomSafeArea = true,
+  keyboardDismissOnPress,
 }: ScreenProps): React.JSX.Element {
   const theme = useTheme();
 
@@ -70,13 +72,15 @@ export function Screen({
         >
           {children}
         </ScrollView>
-      ) : (
+      ) : keyboardDismissOnPress ? (
         <Pressable
           onPress={Keyboard.dismiss}
           style={[styles.flex, paddings, style]}
         >
-          <View style={[styles.flex, paddings, style]}>{children}</View>
+          {children}
         </Pressable>
+      ) : (
+        <View style={[styles.flex, paddings, style]}>{children}</View>
       )}
       {withBottomSafeArea && <View style={{ height: bottom }} />}
       {isLoading && <LoaderOverlay />}
