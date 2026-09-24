@@ -6,7 +6,8 @@
     "continue": "Continue",
     "in": "in",
     "after": "after",
-    "from": "from"
+    "from": "from",
+    "total": "Total"
   },
   "tabs": {
     "home": "Home",
@@ -80,6 +81,7 @@
       "ibnmajah": "Sunan Ibn Majah",
       "malik": "Muwatta Malik",
       "nawawi": "Riyadh as-Salihin by An-Nawawi"
-    }
+    },
+    "collectionScreenTitle": "Hadith Collection"
   }
 }

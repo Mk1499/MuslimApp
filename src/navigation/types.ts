@@ -1,5 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import StackNames from './StackNames';
+import type { HomeStackParamList } from './stacks/homeStack';
+import type { QuranStackParamList } from './stacks/quranStack';
 
 /** Screens inside the bottom tab bar. */
 export type MainTabParamList = {
@@ -13,6 +15,8 @@ export type MainTabParamList = {
 export type AppStackParamList = {
   MainTabs: NavigatorScreenParams<MainTabParamList>;
   [StackNames.Main]: undefined;
+  [StackNames.HomeStack]: NavigatorScreenParams<HomeStackParamList>;
+  [StackNames.Quran]: NavigatorScreenParams<QuranStackParamList>;
 };
 
 /**

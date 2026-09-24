@@ -5,6 +5,7 @@ const ScreenNames = {
   About: 'about',
   MainTabs: 'MainTabs',
   Mushaf: 'mushaf',
-};
+  HadithCollections: 'hadithCollections',
+} as const;
 
 export default ScreenNames;

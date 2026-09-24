@@ -7,6 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import LoaderOverlay from '@/components/common/LoaderOverlay/LoaderOverlay.comp';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, spacing } from '../../theme';
@@ -16,19 +17,17 @@ type Edge = 'top' | 'right' | 'bottom' | 'left';
 
 interface ScreenProps {
   children: React.ReactNode;
-  /** Applies standard horizontal + bottom padding. */
   padded?: boolean;
-  /** Renders content inside a ScrollView instead of a static View. */
   scroll?: boolean;
   edges?: Edge[];
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   topSafeAreaStyle?: StyleProp<ViewStyle>;
   bottomSafeAreaStyle?: StyleProp<ViewStyle>;
-  /** Shows the header back button when the screen was pushed on top of others. */
   isInnerPage?: boolean;
-  /** Title shown in the header; renders the header even without `isInnerPage`. */
   screenTitle?: string;
+  isLoading?: boolean;
+  withBottomSafeArea?: boolean;
 }
 
 export function Screen({
@@ -40,11 +39,13 @@ export function Screen({
   topSafeAreaStyle,
   isInnerPage = false,
   screenTitle,
+  isLoading = false,
+  withBottomSafeArea = true,
 }: ScreenProps): React.JSX.Element {
   const theme = useTheme();
 
   const paddings = padded ? styles.padded : null;
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
 
   return (
     <View style={[styles.safe, { backgroundColor: theme.background.primary }]}>
@@ -74,9 +75,11 @@ export function Screen({
           onPress={Keyboard.dismiss}
           style={[styles.flex, paddings, style]}
         >
-          {children}
+          <View style={[styles.flex, paddings, style]}>{children}</View>
         </Pressable>
       )}
+      {withBottomSafeArea && <View style={{ height: bottom }} />}
+      {isLoading && <LoaderOverlay />}
     </View>
   );
 }

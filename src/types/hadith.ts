@@ -9,3 +9,18 @@ export type RandomHadithResponse = {
     grade: string;
   };
 };
+
+export type HadithCollectionResponse = {
+  data: {
+    collections: [
+      {
+        key: string;
+        name: string;
+        arabic_name: string;
+        author: string;
+        reliability: string;
+        total_hadiths: number;
+      },
+    ];
+  };
+};

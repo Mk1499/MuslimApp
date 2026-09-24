@@ -1,5 +1,6 @@
 import { View, Image, Pressable } from 'react-native';
 import React from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import {
   AzkarImage,
@@ -13,10 +14,15 @@ import {
 } from '@/assets/images';
 import { AppCard, AppText } from '@/components/ui';
 import makeStyles from './styles';
+import type { HomeStackParamList } from '@/navigation/stacks/homeStack';
+import type { AppStackParamList } from '@/navigation/types';
+import ScreenNames from '@/navigation/ScreenNames';
+import StackNames from '@/navigation/StackNames';
 
 export default function QuickAccessFeature() {
   const { t } = useTranslation();
   const styles = makeStyles();
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const features = [
     {
       id: 1,
@@ -59,6 +65,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.hadith'),
       imgIcon: HadithImage,
       bgColor: '#FCE4EC',
+      relatedScreen: ScreenNames.HadithCollections,
     },
     {
       id: 8,
@@ -73,14 +80,25 @@ export default function QuickAccessFeature() {
     title,
     imgIcon,
     bgColor,
+    relatedScreen,
   }: {
     id: number;
     title: string;
     imgIcon: any;
     bgColor: string;
+    relatedScreen?: keyof HomeStackParamList;
   }) {
     return (
-      <Pressable style={styles.featureItem}>
+      <Pressable
+        style={styles.featureItem}
+        onPress={() => {
+          if (relatedScreen !== undefined) {
+            navigate(StackNames.HomeStack, {
+              screen: relatedScreen,
+            });
+          }
+        }}
+      >
         <Image
           source={imgIcon}
           style={[styles.featureImage, { backgroundColor: bgColor }]}

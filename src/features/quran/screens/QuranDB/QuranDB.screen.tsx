@@ -14,7 +14,7 @@ export function QuranScreen(): React.JSX.Element {
   const styles = makeStyle(theme);
 
   return (
-    <Screen padded>
+    <Screen padded withBottomSafeArea={false}>
       <AppText style={styles.screenTitle} variant="title">
         {t('quran.title')}
       </AppText>
