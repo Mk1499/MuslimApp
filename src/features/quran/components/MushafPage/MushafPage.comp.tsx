@@ -7,7 +7,7 @@ import BismillahLine from '@/features/quran/components/BismillahLine/BismillahLi
 import PageFooter from '@/features/quran/components/PageFooter/PageFooter.comp';
 import { SCREEN_HEIGHT } from '@/utils/constants';
 
-export default function MushafPage({ pageNumber }: { pageNumber: number }) {
+function MushafPage({ pageNumber }: { pageNumber: number }) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
 
   if (loading) {
@@ -17,15 +17,11 @@ export default function MushafPage({ pageNumber }: { pageNumber: number }) {
     return <Text style={styles.error}>تعذّر تحميل الصفحة</Text>;
   }
 
-  console.log('MK DATA', { pageData, lines });
-
   return (
     <View style={styles.page}>
       {lines.map(line => {
         if (line.words.length === 0) return null;
         const first = line.words[0];
-        console.log({ first, line });
-
         if (first.ayah_number === 1 && first?.position === 1) {
           return (
             <View>
@@ -69,3 +65,5 @@ const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center' },
   error: { color: 'red', textAlign: 'center', marginTop: 40 },
 });
+
+export default React.memo(MushafPage);
