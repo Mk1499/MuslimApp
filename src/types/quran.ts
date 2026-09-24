@@ -5,6 +5,8 @@ export interface QuranWord {
   // 'word' | 'end' (ayah-end ornament) | 'surah_name' | 'basmallah'
   char_type_name: 'word' | 'end' | 'surah_name' | 'basmallah' | string;
   surah_number: number;
+  ayah_number: number;
+  position: number;
 }
 
 export interface QuranPageData {

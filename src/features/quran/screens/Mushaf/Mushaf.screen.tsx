@@ -38,7 +38,7 @@ const PagerItem = React.memo(function PagerItem({
 
 export default function MushafScreen() {
   const { params } =
-    useRoute<RouteProp<QuranStackParamList, ScreenNames.Mushaf>>();
+    useRoute<RouteProp<QuranStackParamList, typeof ScreenNames.Mushaf>>();
   const { surah } = params;
   const { pages } = surah ?? {};
 
