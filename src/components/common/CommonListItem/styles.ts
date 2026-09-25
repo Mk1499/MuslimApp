@@ -12,6 +12,11 @@ export default (theme: AppTheme) =>
       borderBottomWidth: 1,
       borderBottomColor: theme.divider,
     },
+    dataCont: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
     title: {
       textAlign: 'left',
     },
@@ -20,4 +25,13 @@ export default (theme: AppTheme) =>
       color: theme.text.muted,
     },
     chevron: {},
+    iconCont: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 40,
+      height: 40,
+      borderRadius: 5,
+      backgroundColor: theme.background.secondary,
+      borderWidth: 1,
+    },
   });

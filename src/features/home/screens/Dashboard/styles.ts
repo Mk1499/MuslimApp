@@ -1,5 +1,5 @@
 import { AppTheme, spacing } from '@/theme';
-import { SCREEN_HEIGHT } from '@/utils/constants';
+import { isAndroid, SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
@@ -8,7 +8,7 @@ export default (theme: AppTheme) =>
       backgroundColor: theme.banner.upperCont,
     },
     carouselCont: {
-      marginTop: -0.065 * SCREEN_HEIGHT,
+      marginTop: isAndroid ? '-5%' : '-10%',
     },
     content: {
       paddingHorizontal: spacing.lg,

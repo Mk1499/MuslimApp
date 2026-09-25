@@ -2,7 +2,7 @@ import { FlatList } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import useHadithData from '@/hooks/queries/useHadithData';
-import { Screen } from '@/components/ui';
+import { AppIcon, Screen } from '@/components/ui';
 import CommonListItem from '@/components/common/CommonListItem/CommonListItem.comp';
 import { useTranslation } from 'react-i18next';
 import useFormatter from '@/hooks/useFormatter';
@@ -55,6 +55,7 @@ export default function HadithCollectionsScreen() {
             subtitle={`${t('common.total')}: ${item.total_hadiths}`}
             onPress={() => handleItemPress(item)}
             withChevron={true}
+            icon={<AppIcon name="book" as="Feather" />}
           />
         )}
       />

@@ -12,31 +12,35 @@ export default function CommonListItem({
   subtitle,
   onPress,
   withChevron,
+  icon,
 }: IProps) {
   const theme = useTheme();
   const styles = useStyles(theme);
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <View>
-        <AppText
-          style={styles.title}
-          variant="subtitle"
-          numberOfLines={1}
-          adjustsFontSizeToFit
-        >
-          {title}
-        </AppText>
-        {subtitle && (
+      <View style={styles.dataCont}>
+        {icon && <View style={styles.iconCont}>{icon}</View>}
+        <View>
           <AppText
-            style={styles.subtitle}
-            variant="caption"
+            style={styles.title}
+            variant="subtitle"
             numberOfLines={1}
             adjustsFontSizeToFit
           >
-            {subtitle}
+            {title}
           </AppText>
-        )}
+          {subtitle && (
+            <AppText
+              style={styles.subtitle}
+              variant="caption"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              {subtitle}
+            </AppText>
+          )}
+        </View>
       </View>
       {withChevron && (
         <AppIcon name={isRTL ? 'chevron-back' : 'chevron-forward'} />

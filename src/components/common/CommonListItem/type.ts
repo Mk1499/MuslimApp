@@ -3,4 +3,5 @@ export type IProps = {
   subtitle?: string;
   onPress?: () => void;
   withChevron?: boolean;
+  icon?: React.ReactNode;
 };

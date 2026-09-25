@@ -90,6 +90,7 @@ export default function QuickAccessFeature() {
   }) {
     return (
       <Pressable
+        key={'quick-access-feature' + id}
         style={styles.featureItem}
         onPress={() => {
           if (relatedScreen !== undefined) {
@@ -99,10 +100,9 @@ export default function QuickAccessFeature() {
           }
         }}
       >
-        <Image
-          source={imgIcon}
-          style={[styles.featureImage, { backgroundColor: bgColor }]}
-        />
+        <View style={[styles.featureImageCont, { backgroundColor: bgColor }]}>
+          <Image source={imgIcon} style={styles.featureImage} />
+        </View>
         <AppText style={[styles.featureTitle]}>{title}</AppText>
       </Pressable>
     );

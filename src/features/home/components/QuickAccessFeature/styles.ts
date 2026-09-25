@@ -10,13 +10,20 @@ const Styles = () =>
       alignItems: 'center',
       flex: 1,
     },
-    featureImage: {
+
+    featureImageCont: {
+      padding: 10,
       width: 50,
       height: 50,
-      padding: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
       borderRadius: 8,
       borderWidth: 1,
       borderColor: '#E0E0E0',
+    },
+    featureImage: {
+      width: '100%',
+      height: '100%',
     },
     featureTitle: {
       fontSize: 12,

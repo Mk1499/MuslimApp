@@ -1,13 +1,14 @@
 import { AppTheme } from '@/theme';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants';
+import { isIOS, SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const makeStyle = (themeColors: AppTheme) =>
   StyleSheet.create({
     container: {
-      paddingVertical: 16,
-      borderRadius: 16,
       marginHorizontal: 16,
+      height: 0.28 * SCREEN_HEIGHT,
+      justifyContent: 'center',
+    },
+    gradientCont: {
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -15,17 +16,46 @@ const makeStyle = (themeColors: AppTheme) =>
       },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
+      paddingTop: !isIOS ? 16 : 0,
 
       elevation: 2,
-      overflow: 'hidden',
-      height: 0.28 * SCREEN_HEIGHT,
-      justifyContent: 'center',
+      borderRadius: 16,
+      height: '100%',
+    },
+    pager: {
+      flex: 1,
+      paddingTop: isIOS ? 16 : 0,
     },
     itemCont: {
-      width: 0.92 * SCREEN_WIDTH,
-      height: 0.25 * SCREEN_HEIGHT,
-      marginEnd: 3,
+      flex: 1,
       paddingHorizontal: 16,
+    },
+    pagination: {
+      flex: 0.1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      position: 'absolute',
+      bottom: 10,
+      left: 0,
+      right: 0,
+    },
+    dotButton: {
+      width: 24,
+      height: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    dot: {
+      width: 6,
+      height: 6,
+      borderRadius: 3,
+      backgroundColor: themeColors.basic.black,
+      opacity: 0.45,
+    },
+    selectedDot: {
+      width: 18,
+      opacity: 1,
+      backgroundColor: themeColors.accent.primary,
     },
   });
 export default makeStyle;

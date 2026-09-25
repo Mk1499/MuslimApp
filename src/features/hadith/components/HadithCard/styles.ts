@@ -33,6 +33,7 @@ const makeStyle = (theme: AppTheme) =>
     patchText: {
       fontSize: 14,
       fontFamily: fontFamily.regular,
+      color: theme.basic.white,
     },
   });
 export default makeStyle;
