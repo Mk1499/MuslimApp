@@ -16,9 +16,10 @@ export default (theme: AppTheme) =>
       top: 0,
     },
     aya: {
-      fontSize: 14,
+      fontSize: 30,
       textAlign: 'center',
       color: theme.basic.white,
+      fontFamily: fontFamily.hafs,
     },
     surah: {
       color: theme.accent.primary,

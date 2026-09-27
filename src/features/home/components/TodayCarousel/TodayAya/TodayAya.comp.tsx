@@ -19,7 +19,7 @@ export default function TodayAya() {
   return (
     <View style={styles.container}>
       <AppText style={styles.basmala}>{'بسم الله الرحمن الرحيم'}</AppText>
-      <AppText style={styles.aya} adjustsFontSizeToFit numberOfLines={4}>
+      <AppText style={styles.aya} adjustsFontSizeToFit numberOfLines={3}>
         {arabic}
       </AppText>
       <AppText style={styles.surah} adjustsFontSizeToFit numberOfLines={1}>
