@@ -35,6 +35,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.tafseer'),
       imgIcon: TafseerImage,
       bgColor: '#FFF3E0',
+      relatedScreen: ScreenNames.TafseerCollections,
     },
     {
       id: 3,

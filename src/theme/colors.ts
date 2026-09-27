@@ -63,9 +63,15 @@ export type ThemePreference = ThemeMode | 'system';
 export type AppTheme = {
   mode: ThemeMode;
   /** Screen backgrounds. */
-  background: { primary: string; secondary: string };
+  background: { primary: string; secondary: string; brand: string };
   /** Typography colors (use via AppText). */
-  text: { primary: string; secondary: string; muted: string; inverse: string };
+  text: {
+    primary: string;
+    secondary: string;
+    muted: string;
+    inverse: string;
+    brand: string;
+  };
   /** Card surfaces (use via AppCard). */
   card: { primary: string; secondary: string; border: string };
   /** Text inputs (use via AppTextInput). */
@@ -129,12 +135,14 @@ export const lightTheme: AppTheme = {
   background: {
     primary: palette.neutral[50],
     secondary: palette.neutral[100],
+    brand: palette.primary[600],
   },
   text: {
     primary: palette.neutral[900],
     secondary: palette.neutral[600],
     muted: palette.neutral[400],
     inverse: palette.neutral[0],
+    brand: palette.primary[600],
   },
   card: {
     primary: palette.neutral[0],
@@ -200,12 +208,14 @@ export const darkTheme: AppTheme = {
   background: {
     primary: palette.neutral[900],
     secondary: palette.neutral[800],
+    brand: palette.primary[600],
   },
   text: {
     primary: palette.neutral[50],
     secondary: palette.neutral[300],
     muted: palette.neutral[500],
     inverse: palette.neutral[900],
+    brand: palette.primary[600],
   },
   card: {
     primary: palette.neutral[800],

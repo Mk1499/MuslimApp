@@ -6,7 +6,7 @@ export default (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       width: '100%',
-      height: '80%',
+      height: '90%',
       paddingHorizontal: 16,
     },
     basmala: {

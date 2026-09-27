@@ -33,5 +33,6 @@ export default (theme: AppTheme) =>
       borderRadius: 5,
       backgroundColor: theme.background.secondary,
       borderWidth: 1,
+      borderColor: theme.text.primary,
     },
   });

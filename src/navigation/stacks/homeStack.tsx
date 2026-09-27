@@ -3,6 +3,7 @@ import ScreenNames from '../ScreenNames';
 import HadithColletionScreen from '@/features/hadith/screens/HadithCollections/HadithColletions.screens';
 import CollectionsDetails from '@/features/hadith/screens/CollectionsDetails/CollectionsDetails.screen';
 import { HadithCollection } from '@/types/hadith';
+import TafseerCollections from '@/features/tafseer/screens/TafseerCollections/TafseerCollections.screen';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -17,6 +18,10 @@ export default function HomeStack() {
         name={ScreenNames.CollectionsDetails}
         component={CollectionsDetails}
       />
+      <Stack.Screen
+        name={ScreenNames.TafseerCollections}
+        component={TafseerCollections}
+      />
     </Stack.Navigator>
   );
 }
@@ -26,4 +31,5 @@ export type HomeStackParamList = {
   [ScreenNames.CollectionsDetails]: {
     collection: HadithCollection;
   };
+  [ScreenNames.TafseerCollections]: undefined;
 };

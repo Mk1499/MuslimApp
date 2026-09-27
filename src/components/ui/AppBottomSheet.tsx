@@ -33,27 +33,35 @@ function ThemedBackdrop(props: BottomSheetBackdropProps): React.JSX.Element {
   );
 }
 
-export const AppBottomSheet = forwardRef<AppBottomSheetRef, AppBottomSheetProps>(
-  function AppBottomSheetBase(
-    { snapPoints, contentContainerStyle, children, ...rest },
-    ref,
-  ): React.JSX.Element {
-    const theme = useTheme();
+export const AppBottomSheet = forwardRef<
+  AppBottomSheetRef,
+  AppBottomSheetProps & {
+    scrollable?: boolean;
+  }
+>(function AppBottomSheetBase(
+  { snapPoints, contentContainerStyle, children, scrollable = false, ...rest },
+  ref,
+): React.JSX.Element {
+  const theme = useTheme();
 
-    return (
-      <BottomSheetModal
-        ref={ref}
-        snapPoints={snapPoints}
-        enableDynamicSizing={!snapPoints}
-        enablePanDownToClose
-        backdropComponent={ThemedBackdrop}
-        backgroundStyle={{ backgroundColor: theme.card.primary }}
-        handleIndicatorStyle={{ backgroundColor: theme.text.muted }}
-        {...rest}>
+  return (
+    <BottomSheetModal
+      ref={ref}
+      snapPoints={snapPoints}
+      enableDynamicSizing={!snapPoints}
+      enablePanDownToClose
+      backdropComponent={ThemedBackdrop}
+      backgroundStyle={{ backgroundColor: theme.card.primary }}
+      handleIndicatorStyle={{ backgroundColor: theme.text.muted }}
+      {...rest}
+    >
+      {scrollable ? (
+        children
+      ) : (
         <BottomSheetView style={contentContainerStyle}>
           {children}
         </BottomSheetView>
-      </BottomSheetModal>
-    );
-  },
-);
+      )}
+    </BottomSheetModal>
+  );
+});
