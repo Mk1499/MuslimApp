@@ -2,6 +2,7 @@ import { View, ActivityIndicator, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IProps } from './types';
 import useQuranData from '@/hooks/queries/useQuranData';
 import { AppText } from '@/components/ui';
 import { useTheme } from '@/theme';
@@ -11,7 +12,7 @@ import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
 import ScreenNames from '@/navigation/ScreenNames';
 import StackNames from '@/navigation/StackNames';
 
-export default function SurahListView() {
+export default function SurahListView({ onPressItem }: IProps) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const { listSurahsQuery } = useQuranData();
   const { data: surahsList, isLoading, isError } = listSurahsQuery;
@@ -72,14 +73,18 @@ export default function SurahListView() {
           renderItem={({ item }) => (
             <SurahListItem
               surah={item}
-              onPress={() =>
-                navigate(StackNames.Quran, {
-                  screen: ScreenNames.Mushaf,
-                  params: {
-                    surah: item,
-                  },
-                })
-              }
+              onPress={() => {
+                if (onPressItem) {
+                  onPressItem(item);
+                } else {
+                  navigate(StackNames.Quran, {
+                    screen: ScreenNames.Mushaf,
+                    params: {
+                      surah: item,
+                    },
+                  });
+                }
+              }}
             />
           )}
           keyboardShouldPersistTaps="handled"

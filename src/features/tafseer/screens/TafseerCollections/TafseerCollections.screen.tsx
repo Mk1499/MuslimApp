@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -18,6 +18,8 @@ import { Tafseer } from '@/types/tafseer.types';
 import { isRTL } from '@/utils/constants';
 import makeStyles from './styles';
 import { useTheme } from '@/theme';
+import SurahListView from '@/features/quran/screens/QuranDB/Views/SurahsList/SurahList.view';
+import { Surah } from '@/types/surah';
 
 export default function TafseerCollectionsScreen() {
   const theme = useTheme();
@@ -58,19 +60,18 @@ export default function TafseerCollectionsScreen() {
   function handleItemPress(item: Tafseer) {
     setSelectedCollection(item);
     bottomSheetRef.current?.dismiss();
-    // navigate(StackNames.HomeStack, {
-    //   screen: ScreenNames.CollectionsDetails,
-    //   params: {
-    //     collection: item,
-    //   },
-    // });
+  }
+
+  function handleChooseSurah(surah: Surah) {
+    console.log('Chosen Surah: ', surah);
+    alert(`Chosen Surah: ${surah.name_english ?? surah.name_arabic ?? ''}`);
   }
 
   return (
     <Screen
       isInnerPage
       isLoading={isLoading}
-      scroll
+      //   scroll
       screenTitle={t('tafseer.screenName')}
     >
       <AppGradient style={styles.tafseerHead}>
@@ -89,6 +90,9 @@ export default function TafseerCollectionsScreen() {
           />
         </Pressable>
       </AppGradient>
+      <View style={styles.surahListView}>
+        <SurahListView onPressItem={handleChooseSurah} />
+      </View>
 
       <AppBottomSheet
         ref={bottomSheetRef}

@@ -22,5 +22,10 @@ const makeStyle = (theme: AppTheme) =>
       fontWeight: '600',
     },
     tafseerIcon: {},
+    surahListView: {
+      marginTop: 16,
+      paddingHorizontal: 16,
+      flex: 1,
+    },
   });
 export default makeStyle;
