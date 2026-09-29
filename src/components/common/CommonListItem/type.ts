@@ -1,4 +1,5 @@
-export type IProps = {
+export type CommonListItemProps = {
+  id?: string;
   title: string;
   subtitle?: string;
   onPress?: () => void;

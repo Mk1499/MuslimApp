@@ -8,6 +8,7 @@ const ScreenNames = {
   HadithCollections: 'hadithCollections',
   CollectionsDetails: 'collectionsDetails',
   TafseerCollections: 'tafseerCollections',
+  TafseerDetails: 'tafseerDetails',
 } as const;
 
 export default ScreenNames;

@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 
-import { IProps } from './type';
+import { CommonListItemProps } from './type';
 import useStyles from './styles';
 import { useTheme } from '@/theme';
 import { AppIcon, AppText } from '@/components/ui';
@@ -13,7 +13,7 @@ export default function CommonListItem({
   onPress,
   withChevron,
   icon,
-}: IProps) {
+}: CommonListItemProps) {
   const theme = useTheme();
   const styles = useStyles(theme);
 

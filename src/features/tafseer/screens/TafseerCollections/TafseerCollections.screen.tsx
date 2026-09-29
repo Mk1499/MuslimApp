@@ -20,6 +20,10 @@ import makeStyles from './styles';
 import { useTheme } from '@/theme';
 import SurahListView from '@/features/quran/screens/QuranDB/Views/SurahsList/SurahList.view';
 import { Surah } from '@/types/surah';
+import StackNames from '@/navigation/StackNames';
+import ScreenNames from '@/navigation/ScreenNames';
+import { TafseerStackParamList } from '@/navigation/stacks/tafseerStack';
+import { HomeStackParamList } from '@/navigation/stacks/homeStack';
 
 export default function TafseerCollectionsScreen() {
   const theme = useTheme();
@@ -43,7 +47,8 @@ export default function TafseerCollectionsScreen() {
   const bottomSheetRef = React.useRef<AppBottomSheetRef>(null);
 
   const { t } = useTranslation();
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { navigate } =
+    useNavigation<NavigationProp<HomeStackParamList, 'TafseerStack'>>();
 
   useEffect(() => {
     if (isError) {
@@ -63,15 +68,22 @@ export default function TafseerCollectionsScreen() {
   }
 
   function handleChooseSurah(surah: Surah) {
-    console.log('Chosen Surah: ', surah);
-    alert(`Chosen Surah: ${surah.name_english ?? surah.name_arabic ?? ''}`);
+    if (!selectedCollection) {
+      return;
+    }
+    navigate(StackNames.Tafseer, {
+      screen: ScreenNames.TafseerDetails,
+      params: {
+        surah,
+        tafseer: selectedCollection,
+      },
+    });
   }
 
   return (
     <Screen
       isInnerPage
       isLoading={isLoading}
-      //   scroll
       screenTitle={t('tafseer.screenName')}
     >
       <AppGradient style={styles.tafseerHead}>
