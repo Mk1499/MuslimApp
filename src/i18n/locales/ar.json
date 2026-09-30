@@ -7,7 +7,8 @@
     "in": "في",
     "after": "بعد",
     "from": "منذ",
-    "total": "المجموع"
+    "total": "المجموع",
+    "surah": "سورة"
   },
   "tabs": {
     "home": "الرئيسية",
@@ -99,6 +100,10 @@
     "sahih": "حديث صحيح"
   },
   "tafseer": {
-    "screenName": "تفسير القرآن الكريم"
+    "screenName": "تفسير القرآن الكريم",
+    "selectSurah": "اختر السورة",
+    "selectTafseer": "اختر التفسير",
+    "noTafseerFound": "لم يتم العثور على تفسير",
+    "loadingTafseer": "جاري تحميل التفسير..."
   }
 }

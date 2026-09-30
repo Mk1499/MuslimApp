@@ -7,7 +7,8 @@
     "in": "in",
     "after": "after",
     "from": "from",
-    "total": "Total"
+    "total": "Total",
+    "surah": "Surah"
   },
   "tabs": {
     "home": "Home",
@@ -99,6 +100,10 @@
     "sahih": "Sahih"
   },
   "tafseer": {
-    "screenName": "Tafseer Quran Kareem"
+    "screenName": "Tafseer Quran Kareem",
+    "selectSurah": "Select Surah",
+    "selectTafseer": "Select Tafseer",
+    "noTafseerFound": "No Tafseer found",
+    "loadingTafseer": "Loading Tafseer..."
   }
 }

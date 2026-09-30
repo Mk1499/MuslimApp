@@ -12,8 +12,10 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { TafseerStackParamList } from '@/navigation/stacks/tafseerStack';
 import useTafseerData from '@/hooks/queries/useTafseetData';
 import { isRTL } from '@/utils/constants';
+import { useTranslation } from 'react-i18next';
 
 export default function TafseerDetailsScreen() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = makeStyles();
   const { params } =
@@ -50,11 +52,12 @@ export default function TafseerDetailsScreen() {
     );
   }, [collections]);
 
-  return (
-    <Screen isInnerPage padded>
+  function renderHeader() {
+    return (
       <View style={styles.headCont}>
         <AppDropDown
-          placeholder="Select Surah"
+          preLabel={t('common.surah')}
+          placeholder={t('tafseer.selectSurah')}
           options={surahs ?? []}
           preSelectedOption={{
             id: surah.number?.toString(),
@@ -63,7 +66,7 @@ export default function TafseerDetailsScreen() {
           }}
         />
         <AppDropDown
-          placeholder="Select Tafseer"
+          placeholder={t('tafseer.selectTafseer')}
           options={tafseerCollections ?? []}
           preSelectedOption={{
             id: tafseer.id?.toLocaleString(),
@@ -72,6 +75,12 @@ export default function TafseerDetailsScreen() {
           }}
         />
       </View>
+    );
+  }
+
+  return (
+    <Screen isInnerPage padded screenTitle={t('tafseer.screenName')}>
+      {renderHeader()}
     </Screen>
   );
 }

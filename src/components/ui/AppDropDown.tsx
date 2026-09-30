@@ -16,6 +16,7 @@ type IProps = {
   options: CommonListItemProps[];
   preSelectedOption?: CommonListItemProps;
   placeholder?: string;
+  preLabel?: string;
   onSelectOption?: (option: CommonListItemProps) => void;
 };
 
@@ -24,6 +25,7 @@ export default function AppDropDown({
   preSelectedOption,
   placeholder,
   onSelectOption,
+  preLabel,
 }: IProps) {
   const [selectedOption, setSelectedOption] = React.useState<
     CommonListItemProps | undefined
@@ -38,7 +40,10 @@ export default function AppDropDown({
         style={styles.headCont}
         onPress={() => bottomSheetRef.current?.present()}
       >
-        <AppText>{selectedOption?.title ?? placeholder}</AppText>
+        <AppText>
+          {preLabel ? preLabel + ' ' : ''}
+          {selectedOption?.title ?? placeholder}
+        </AppText>
         <AppIcon name="chevron-down" size={24} color={theme.background.brand} />
       </Pressable>
     );
@@ -51,6 +56,7 @@ export default function AppDropDown({
         ref={bottomSheetRef}
         snapPoints={['50%']}
       >
+        <AppText style={styles.title}>{placeholder}</AppText>
         <BottomSheetFlatList
           data={options}
           renderItem={({ item }) => (
@@ -95,5 +101,10 @@ const makeStyles = (theme: AppTheme) =>
       justifyContent: 'space-between',
       alignItems: 'flex-end',
       gap: 8,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginStart: 16,
     },
   });
