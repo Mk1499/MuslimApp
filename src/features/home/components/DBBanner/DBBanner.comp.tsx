@@ -41,6 +41,7 @@ export default function DBBannerComponent() {
 
   useEffect(() => {
     checkCurrentStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current_status]);
 
   function checkCurrentStatus() {

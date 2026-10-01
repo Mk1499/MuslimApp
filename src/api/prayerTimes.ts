@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { apiClient } from './clients/client';
 import { PrayerTimesResponse } from '@/types/prayer';
 
 export type GetPrayerTimesParams = {

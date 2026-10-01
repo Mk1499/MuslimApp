@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, Text, StyleSheet } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 import { SurahNameBannerImage } from '@/assets/images';
 import { AppText } from '@/components/ui';
 import quranSurahs from '@/assets/offline-res/quran-surahs.json';

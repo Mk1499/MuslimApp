@@ -1,4 +1,4 @@
-import { tafseerClient } from './tafsirClient';
+import { tafseerClient } from './clients/tafsirClient';
 import { Tafseer } from '@/types/tafseer.types';
 
 export async function getTafseerCollections(): Promise<Tafseer[]> {
