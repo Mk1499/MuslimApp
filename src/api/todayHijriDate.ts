@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { apiClient } from '@/api/APIClients';
 import { HijriDateResponse } from '@/types/hijri';
 
 export async function getTodayHijriDate(): Promise<HijriDateResponse> {

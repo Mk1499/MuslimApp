@@ -2,7 +2,7 @@ import {
   HadithCollectionResponse,
   HadithCollectionByKeyResponse,
 } from '@/types/hadith';
-import { apiClient } from './client';
+import { apiClient } from './APIClients';
 
 export async function getHadithCollections(): Promise<HadithCollectionResponse> {
   const response = await apiClient.get<HadithCollectionResponse>(

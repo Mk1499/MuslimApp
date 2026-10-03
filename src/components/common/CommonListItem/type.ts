@@ -5,4 +5,5 @@ export type CommonListItemProps = {
   onPress?: () => void;
   withChevron?: boolean;
   icon?: React.ReactNode;
+  value?: string | number;
 };

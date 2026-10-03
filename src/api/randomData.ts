@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { apiClient } from '@/api/APIClients';
 import { RandomAyaResponse } from '@/types/aya';
 import { RandomDuaaResponse } from '@/types/dua';
 import { RandomHadithResponse } from '@/types/hadith';
