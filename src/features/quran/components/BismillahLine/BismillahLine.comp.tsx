@@ -9,7 +9,8 @@ export default function BismillahLine({
 }: {
   surahNumber: number;
 }) {
-  if (quranSurahs[surahNumber - 1].bismillah_pre)
+  const surah = quranSurahs.find(s => s.id === surahNumber);
+  if (surah?.bismillah_pre)
     return (
       <AppText style={styles.text}>
         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ

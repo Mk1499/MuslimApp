@@ -9,15 +9,14 @@ export default function SurahHeaderBanner({
 }: {
   surahNumber: number;
 }) {
+  const surah = quranSurahs.find(s => s.id === surahNumber);
   return (
     <ImageBackground
       source={SurahNameBannerImage} // ornament asset, bundle your own
       style={styles.banner}
       resizeMode="stretch"
     >
-      <AppText style={styles.title}>
-        {quranSurahs[surahNumber - 1].name_arabic}
-      </AppText>
+      <AppText style={styles.title}>{surah?.name_arabic}</AppText>
     </ImageBackground>
   );
 }

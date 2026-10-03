@@ -24,7 +24,7 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
         const first = line.words[0];
         if (first.ayah_number === 1 && first?.position === 1) {
           return (
-            <View>
+            <View key={line.lineNumber + '-SurahStart'}>
               <SurahHeaderBanner
                 key={line.lineNumber + 'SurahHeaderBanner'}
                 surahNumber={+first?.surah_number}

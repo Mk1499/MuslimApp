@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { QuranWord } from '@/types/quran';
-import AyahEndBadge from '@/features/quran/components/AyahEndBadge/AyahEndBadge.comp';
 import { fontFamily, useTheme } from '@/theme';
 
 interface Props {
@@ -18,17 +17,12 @@ export default function MushafLine({ words, onWordPress }: Props) {
       adjustsFontSizeToFit
       numberOfLines={1}
     >
-      {/* {w.text_uthmani} */}
       {words.map((w, idx) => {
         if (w.char_type_name === 'end') {
           return (
             <Text
-              style={{
-                fontFamily: fontFamily.uthmani,
-                fontSize: 28,
-                color: theme.accent.secondary,
-                includeFontPadding: false,
-              }}
+              key={`${w.surah_number}-${w.ayah_number}-${idx}`}
+              style={[styles.ayahEnd, { color: theme.accent.secondary }]}
             >
               {w.text_uthmani + ' '}
             </Text>
@@ -52,5 +46,10 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.hafs, // see README for font setup
     fontSize: 28,
     textAlign: 'center', // Arabic reads right-to-left
+  },
+  ayahEnd: {
+    fontFamily: fontFamily.uthmani,
+    fontSize: 28,
+    includeFontPadding: false,
   },
 });

@@ -1,7 +1,7 @@
 import { AppText } from '@/components/ui';
 import useFormatter from '@/hooks/useFormatter';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 export default function PageFooter({ pageNumber }: { pageNumber: number }) {
   const { toArabicIndic } = useFormatter();
