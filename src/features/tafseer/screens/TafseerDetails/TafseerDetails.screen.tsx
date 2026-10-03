@@ -1,7 +1,7 @@
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import AppDropDown from '@/components/ui/AppDropDown';
 import { AppIcon } from '@/components/ui/AppIcon';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import makeStyles from './styles';
 import { Screen } from '@/components/ui';
 import useQuranData from '@/hooks/queries/useQuranData';
@@ -27,15 +27,29 @@ export default function TafseerDetailsScreen() {
   const [selectedSurah, setSelectedSurah] = React.useState<Surah>(surah);
   const [selectedTafseer, setSelectedTafseer] =
     React.useState<Tafseer>(tafseer);
-  const [fullSurahTafseer, setFullSurahTafseer] = React.useState<any[]>([]);
-  const [tafseerLoading, setTafseerLoading] = React.useState(false);
 
   const { getLocalizedText } = useFormatter();
   const { listSurahsQuery } = useQuranData();
   const { data: surahsData } = listSurahsQuery ?? {};
-  const { tafseerCollectionsQuery, getFullSurahTafseer } = useTafseerData();
+  const { tafseerCollectionsQuery, surahTafseerPagesQuery } = useTafseerData({
+    surahId: selectedSurah.number,
+    surahNumsOfAyat: selectedSurah.verses_count ?? 1,
+    tafseerId: selectedTafseer.id,
+  });
   const { data: tafseerCollectionsData, isLoading: tafseerCollectionsLoading } =
     tafseerCollectionsQuery ?? {};
+  const {
+    data: tafseerPages,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: tafseerPagesLoading,
+  } = surahTafseerPagesQuery;
+
+  const fullSurahTafseer = useMemo(
+    () => tafseerPages?.pages.flatMap(page => page.items) ?? [],
+    [tafseerPages],
+  );
 
   const surahs: CommonListItemProps[] = useMemo(() => {
     return (
@@ -61,19 +75,6 @@ export default function TafseerDetailsScreen() {
       })) ?? []
     );
   }, [collections]);
-
-  useEffect(() => {
-    const fetchFullSurahTafseer = async () => {
-      setTafseerLoading(true);
-      const fullSurahTafseerData = await getFullSurahTafseer(
-        selectedSurah.number,
-        selectedSurah.verses_count ?? 1,
-        selectedTafseer.id,
-      )?.finally(() => setTafseerLoading(false));
-      setFullSurahTafseer(fullSurahTafseerData as any[]);
-    };
-    fetchFullSurahTafseer();
-  }, [selectedSurah.number, selectedSurah.verses_count, selectedTafseer.id]);
 
   function renderHeader() {
     return (
@@ -114,7 +115,7 @@ export default function TafseerDetailsScreen() {
     );
   }
 
-  const isLoading = tafseerCollectionsLoading || tafseerLoading;
+  const isLoading = tafseerCollectionsLoading || tafseerPagesLoading;
   return (
     <Screen
       isInnerPage
@@ -129,6 +130,17 @@ export default function TafseerDetailsScreen() {
         renderItem={({ item }) => (
           <TafseerCard text={item.text} tafsir={item.tafsir} />
         )}
+        onEndReached={() => {
+          if (hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <ActivityIndicator style={styles.footerLoader} />
+          ) : null
+        }
         style={styles.list}
       />
     </Screen>

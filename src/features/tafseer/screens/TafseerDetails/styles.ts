@@ -13,4 +13,7 @@ export default () =>
     list: {
       paddingTop: 8,
     },
+    footerLoader: {
+      paddingVertical: 16,
+    },
   });

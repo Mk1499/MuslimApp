@@ -1,13 +1,15 @@
 import { getSurahTafseer, getTafseerCollections } from '@/api/tafseer';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import * as surahsList from '@/assets/offline-res/quran-surahs.json';
 
 interface SurahTafseerParams {
   surahId: number;
   surahNumsOfAyat: number;
   tafseerId: number;
 }
+
+// Number of ayat fetched per tafseer request; keeps each response small enough to avoid crashes on long surahs.
+const TAFSEER_CHUNK_SIZE = 20;
 
 export default function useTafseerData(surahParams?: SurahTafseerParams) {
   const tafseerCollectionsQuery = useQuery({
@@ -45,15 +47,10 @@ export default function useTafseerData(surahParams?: SurahTafseerParams) {
   };
 
   const mergeAyaTafsir = (ayatArr: any[], tafsirArr: any[]) => {
-    let newAyat = ayatArr.map((aya, index) => {
-      let tafsir = tafsirArr.find(t => {
-        return t.ayah_number === aya.numberInSurah;
-      });
-      aya['tafsir'] = tafsir.text;
-      return aya;
+    return ayatArr.map(aya => {
+      const tafsir = tafsirArr.find(t => t.ayah_number === aya.numberInSurah);
+      return { ...aya, tafsir: tafsir?.text };
     });
-
-    return newAyat;
   };
 
   const getFullSurahTafseer = async (
@@ -79,9 +76,63 @@ export default function useTafseerData(surahParams?: SurahTafseerParams) {
     });
   };
 
+  // Fetches only the tafsir text for the [from, to] ayah range, keeping each network response small.
+  const getSurahTafseerChunk = async (
+    surahID: number,
+    tafsirID: number,
+    from: number,
+    to: number,
+  ) => {
+    const url = `http://api.quran-tafseer.com/tafseer/${tafsirID}/${surahID}/${from}/${to}`;
+    const { data } = await axios.get(url);
+    return data;
+  };
+
+  const surahAyatQuery = useQuery({
+    queryKey: ['surah-ayat', surahParams?.surahId],
+    queryFn: async () => {
+      const data: any = await getSurahAyat(surahParams!.surahId);
+      return data.data.ayahs as any[];
+    },
+    enabled: !!surahParams,
+  });
+
+  const surahTafseerPagesQuery = useInfiniteQuery({
+    queryKey: ['tafseer-pages', surahParams?.surahId, surahParams?.tafseerId],
+    queryFn: async ({ pageParam }) => {
+      const ayahs = surahAyatQuery.data ?? [];
+      const from = pageParam;
+      const to = Math.min(
+        from + TAFSEER_CHUNK_SIZE - 1,
+        surahParams!.surahNumsOfAyat,
+      );
+      const tafsirChunk = await getSurahTafseerChunk(
+        surahParams!.surahId,
+        surahParams!.tafseerId,
+        from,
+        to,
+      );
+      const ayahChunk = ayahs.filter(
+        aya => aya.numberInSurah >= from && aya.numberInSurah <= to,
+      );
+      return {
+        items: mergeAyaTafsir(ayahChunk, tafsirChunk),
+        nextFrom: to + 1,
+      };
+    },
+    initialPageParam: 1,
+    getNextPageParam: lastPage =>
+      lastPage.nextFrom <= (surahParams?.surahNumsOfAyat ?? 0)
+        ? lastPage.nextFrom
+        : undefined,
+    enabled: !!surahParams && !!surahAyatQuery.data,
+  });
+
   return {
     tafseerCollectionsQuery,
     tafseerSurahQuery,
     getFullSurahTafseer,
+    surahAyatQuery,
+    surahTafseerPagesQuery,
   };
 }
