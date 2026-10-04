@@ -4,4 +4,5 @@ export default {
   HomeStack: 'HomeStack',
   Tafseer: 'TafseerStack',
   Azkar: 'AzkarStack',
+  Mutashabihat: 'MutashabihatStack',
 } as const;

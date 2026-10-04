@@ -1,6 +1,7 @@
 import StackNames from '../StackNames';
 import QuranStack from './quranStack';
 import HomeStack from './homeStack';
+import MutashabihatStack from './mutashabihatStack';
 
 export default [
   {

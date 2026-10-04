@@ -29,6 +29,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.mutashabihat'),
       imgIcon: MutashabihatImage,
       bgColor: '#E0F7FA',
+      relatedScreen: StackNames.Mutashabihat,
     },
     {
       id: 2,

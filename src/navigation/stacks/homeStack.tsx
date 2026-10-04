@@ -1,5 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import MutashabihatStack, {
+  MutashabihatStackParamList,
+} from './mutashabihatStack';
 import ScreenNames from '../ScreenNames';
 import HadithColletionScreen from '@/features/hadith/screens/HadithCollections/HadithColletions.screens';
 import CollectionsDetails from '@/features/hadith/screens/CollectionsDetails/CollectionsDetails.screen';
@@ -27,6 +30,10 @@ export default function HomeStack() {
       <Stack.Screen name={StackNames.Azkar} component={AzkarStack} />
       <Stack.Screen name={ScreenNames.Qibla} component={QiblaScreen} />
       <Stack.Screen name={ScreenNames.Asmaa99} component={Asmaa99} />
+      <Stack.Screen
+        name={StackNames.Mutashabihat}
+        component={MutashabihatStack}
+      />
     </Stack.Navigator>
   );
 }
@@ -40,4 +47,5 @@ export type HomeStackParamList = {
   [StackNames.Azkar]: NavigatorScreenParams<AzkarStackParamList>;
   [ScreenNames.Qibla]: undefined;
   [ScreenNames.Asmaa99]: undefined;
+  [StackNames.Mutashabihat]: NavigatorScreenParams<MutashabihatStackParamList>;
 };
