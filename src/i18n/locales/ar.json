@@ -4,6 +4,7 @@
     "ok": "حسناً",
     "cancel": "إلغاء",
     "continue": "متابعة",
+    "retry": "إعادة المحاولة",
     "in": "في",
     "after": "بعد",
     "from": "منذ",
@@ -109,5 +110,22 @@
   "azkar": {
     "screenName": "مجمع الأذكار",
     "repeat": "كرر"
+  },
+  "qibla": {
+    "title": "القبلة",
+    "north": "شمال",
+    "east": "شرق",
+    "south": "جنوب",
+    "west": "غرب",
+    "locating": "جاري تحديد موقعك...",
+    "locationError": "تعذر تحديد موقعك",
+    "permissionDenied": "فعّل إذن الموقع لتحديد اتجاه القبلة",
+    "noCompass": "هاتفك لا يدعم هذه الخاصية",
+    "aligned": "أنت الآن في اتجاه القبلة",
+    "turnRight": "لف هاتفك {{degrees}}° إلى اليمين",
+    "turnLeft": "لف هاتفك {{degrees}}° إلى اليسار",
+    "bearing": "اتجاه القبلة {{degrees}}°",
+    "distance": "{{distance}} كم من الكعبة",
+    "dialLabel": "بوصلة توضح اتجاه القبلة"
   }
 }

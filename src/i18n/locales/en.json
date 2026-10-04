@@ -4,6 +4,7 @@
     "ok": "OK",
     "cancel": "Cancel",
     "continue": "Continue",
+    "retry": "Retry",
     "in": "in",
     "after": "after",
     "from": "from",
@@ -109,5 +110,22 @@
   "azkar": {
     "screenName": "Azkar Collection",
     "repeat": "Repeat"
+  },
+  "qibla": {
+    "title": "Qibla Direction",
+    "north": "North",
+    "east": "East",
+    "south": "South",
+    "west": "West",
+    "locating": "Locating your position...",
+    "locationError": "Failed to determine your location",
+    "permissionDenied": "Enable location permission to determine the Qibla direction",
+    "noCompass": "Your device does not support this feature",
+    "aligned": "You are now facing the Qibla",
+    "turnRight": "Turn your device {{degrees}}° to the right",
+    "turnLeft": "Turn your device {{degrees}}° to the left",
+    "bearing": "Qibla direction {{degrees}}°",
+    "distance": "{{distance}} km from the Kaaba",
+    "dialLabel": "Compass showing the Qibla direction"
   }
 }

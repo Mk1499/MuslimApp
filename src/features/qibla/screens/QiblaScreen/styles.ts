@@ -1,15 +1,12 @@
 import { StyleSheet } from 'react-native';
+import { spacing } from '@/theme';
 
 export default () =>
   StyleSheet.create({
-    container: {
+    dialArea: {
       flex: 1,
-      justifyContent: 'center',
       alignItems: 'center',
-    },
-    compassImage: {
-      width: 200,
-      height: 200,
-      resizeMode: 'contain',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.lg,
     },
   });
