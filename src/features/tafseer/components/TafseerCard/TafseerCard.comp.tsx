@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable } from 'react-native';
 import React, { ReactNode } from 'react';
 import Animated, {
   SharedValue,

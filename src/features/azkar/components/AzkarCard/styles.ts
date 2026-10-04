@@ -8,7 +8,7 @@ const makeStyle = (theme: AppTheme) =>
       marginVertical: 8,
     },
     hadithText: {
-      fontSize: 18,
+      fontSize: 20,
       fontFamily: fontFamily.hafs,
     },
     rawyAuthorText: {
@@ -17,13 +17,13 @@ const makeStyle = (theme: AppTheme) =>
       color: theme.accent.primary,
     },
     headerRow: {
-      flexDirection: 'row',
+      flexDirection: 'row-reverse',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 8,
+      marginVertical: 8,
     },
     patchCont: {
-      backgroundColor: theme.accent.primary,
+      backgroundColor: theme.accent.soft,
       paddingHorizontal: 8,
       paddingVertical: 4,
       borderRadius: 4,
@@ -31,7 +31,7 @@ const makeStyle = (theme: AppTheme) =>
     patchText: {
       fontSize: 14,
       fontFamily: fontFamily.regular,
-      color: theme.text.inverse,
+      color: theme.basic.white,
     },
   });
 export default makeStyle;

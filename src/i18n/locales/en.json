@@ -107,6 +107,7 @@
     "loadingTafseer": "Loading Tafseer..."
   },
   "azkar": {
-    "screenName": "Azkar Collection"
+    "screenName": "Azkar Collection",
+    "repeat": "Repeat"
   }
 }

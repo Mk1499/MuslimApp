@@ -107,6 +107,7 @@
     "loadingTafseer": "جاري تحميل التفسير..."
   },
   "azkar": {
-    "screenName": "مجمع الأذكار"
+    "screenName": "مجمع الأذكار",
+    "repeat": "كرر"
   }
 }

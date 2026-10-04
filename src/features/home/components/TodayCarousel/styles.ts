@@ -55,7 +55,7 @@ const makeStyle = (themeColors: AppTheme) =>
     selectedDot: {
       width: 18,
       opacity: 1,
-      backgroundColor: themeColors.accent.primary,
+      backgroundColor: themeColors.accent.soft,
     },
   });
 export default makeStyle;

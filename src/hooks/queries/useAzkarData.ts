@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAzkarCollections } from '@/api/azkar';
+import { getAzkarCollections, getAzkarDetailsByID } from '@/api/azkar';
 
 export default function useAzkarData() {
   const useAzkarCollectionQuery = () =>
@@ -8,5 +8,11 @@ export default function useAzkarData() {
       queryFn: () => getAzkarCollections(),
     });
 
-  return { useAzkarCollectionQuery };
+  const useAzkarDetailsByID = (id: string) =>
+    useQuery({
+      queryKey: ['azkar-details', id],
+      queryFn: () => getAzkarDetailsByID(id),
+    });
+
+  return { useAzkarCollectionQuery, useAzkarDetailsByID };
 }

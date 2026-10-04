@@ -12,7 +12,7 @@ export default (theme: AppTheme) =>
     basmala: {
       fontSize: 20,
       textAlign: 'center',
-      color: theme.accent.primary,
+      color: theme.accent.soft,
       top: 0,
     },
     aya: {
@@ -22,7 +22,7 @@ export default (theme: AppTheme) =>
       fontFamily: fontFamily.hafs,
     },
     surah: {
-      color: theme.accent.primary,
+      color: theme.accent.soft,
       fontFamily: fontFamily.bold,
       position: 'absolute',
       bottom: 0,

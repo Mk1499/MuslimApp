@@ -1,11 +1,11 @@
 import { FlatList } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { AzkarStackParamList } from '@/navigation/stacks/azkarStack';
 import { AppIcon, Screen } from '@/components/ui';
 import CommonListItem from '@/components/common/CommonListItem/CommonListItem.comp';
 import { useTranslation } from 'react-i18next';
 import ScreenNames from '@/navigation/ScreenNames';
-import { AppStackParamList } from '@/navigation/types';
 import { AzkarCollection } from '@/types/azkar';
 import useAzkarData from '@/hooks/queries/useAzkarData';
 
@@ -21,7 +21,8 @@ export default function AzkarCollectionsScreen() {
     : [];
   console.log('MK COLLECTIONS: ', collections);
   const { t } = useTranslation();
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { navigate } =
+    useNavigation<NavigationProp<AzkarStackParamList, 'azkarCollections'>>();
 
   useEffect(() => {
     if (isError) {
@@ -30,25 +31,21 @@ export default function AzkarCollectionsScreen() {
   }, [isError]);
 
   function handleItemPress(item: AzkarCollection) {
-    // navigate(StackNames.HomeStack, {
-    //   screen: ScreenNames.CollectionsDetails,
-    //   params: {
-    //     collection: item,
-    //   },
-    // });
+    navigate(ScreenNames.AzkarDetails, {
+      item,
+    });
   }
 
   return (
     <Screen
       isInnerPage
       isLoading={isLoading}
-      scroll
       screenTitle={t('azkar.screenName')}
+      scroll={false}
     >
       <FlatList
         data={collections}
         keyExtractor={item => item.ID + '-ssd'}
-        scrollEnabled={false}
         renderItem={({ item }) => (
           <CommonListItem
             title={item?.TITLE ?? ''}

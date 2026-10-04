@@ -66,7 +66,7 @@ export default (theme: AppTheme) =>
       justifyContent: 'center',
     },
     tafseer: {
-      color: theme.accent.soft,
+      color: theme.accent.tertiary,
       fontSize: 16,
       paddingTop: 8,
     },
