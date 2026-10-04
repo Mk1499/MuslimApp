@@ -8,6 +8,7 @@ import StackNames from '../StackNames';
 import TafseerStack, { TafseerStackParamList } from './tafseerStack';
 import AzkarStack, { AzkarStackParamList } from './azkarStack';
 import QiblaScreen from '@/features/qibla/screens/QiblaScreen/Qibla.screen';
+import Asmaa99 from '@/features/asmaa99/screens/Asmaa99/Asmaa99.screen';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -25,6 +26,7 @@ export default function HomeStack() {
       <Stack.Screen name={StackNames.Tafseer} component={TafseerStack} />
       <Stack.Screen name={StackNames.Azkar} component={AzkarStack} />
       <Stack.Screen name={ScreenNames.Qibla} component={QiblaScreen} />
+      <Stack.Screen name={ScreenNames.Asmaa99} component={Asmaa99} />
     </Stack.Navigator>
   );
 }
@@ -37,4 +39,5 @@ export type HomeStackParamList = {
   [StackNames.Tafseer]: NavigatorScreenParams<TafseerStackParamList>;
   [StackNames.Azkar]: NavigatorScreenParams<AzkarStackParamList>;
   [ScreenNames.Qibla]: undefined;
+  [ScreenNames.Asmaa99]: undefined;
 };

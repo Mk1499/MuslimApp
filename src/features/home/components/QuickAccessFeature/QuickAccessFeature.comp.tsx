@@ -42,6 +42,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.99Names'),
       imgIcon: Name99Image,
       bgColor: '#E8F5E9',
+      relatedScreen: ScreenNames.Asmaa99,
     },
     {
       id: 4,

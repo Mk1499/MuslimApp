@@ -16,8 +16,6 @@ export default function SplashScreen() {
 
   function initApp() {
     if (!userLocation) {
-      alert('Getting current location...');
-
       getCurrentLocation()
         .catch(error => {
           console.log('Error getting current location:', error);

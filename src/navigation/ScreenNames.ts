@@ -12,6 +12,7 @@ const ScreenNames = {
   AzkarCollections: 'azkarCollections',
   AzkarDetails: 'azkarDetails',
   Qibla: 'qibla',
+  Asmaa99: 'asmaa99',
 } as const;
 
 export default ScreenNames;
