@@ -105,5 +105,8 @@
     "selectTafseer": "Select Tafseer",
     "noTafseerFound": "No Tafseer found",
     "loadingTafseer": "Loading Tafseer..."
+  },
+  "azkar": {
+    "screenName": "Azkar Collection"
   }
 }

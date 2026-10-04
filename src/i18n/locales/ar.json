@@ -105,5 +105,8 @@
     "selectTafseer": "اختر التفسير",
     "noTafseerFound": "لم يتم العثور على تفسير",
     "loadingTafseer": "جاري تحميل التفسير..."
+  },
+  "azkar": {
+    "screenName": "مجمع الأذكار"
   }
 }

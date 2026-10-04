@@ -48,6 +48,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.azkar'),
       imgIcon: AzkarImage,
       bgColor: '#FFFDE7',
+      relatedScreen: StackNames.Azkar,
     },
     {
       id: 5,

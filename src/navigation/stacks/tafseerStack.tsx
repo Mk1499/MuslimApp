@@ -1,7 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ScreenNames from '../ScreenNames';
-import HadithColletionScreen from '@/features/hadith/screens/HadithCollections/HadithColletions.screens';
-import CollectionsDetails from '@/features/hadith/screens/CollectionsDetails/CollectionsDetails.screen';
 import TafseerCollections from '@/features/tafseer/screens/TafseerCollections/TafseerCollections.screen';
 import TafseerDetailsScreen from '@/features/tafseer/screens/TafseerDetails/TafseerDetails.screen';
 import { Surah } from '@/types/surah';

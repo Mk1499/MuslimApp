@@ -1,26 +1,26 @@
 import { FlatList } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import useHadithData from '@/hooks/queries/useHadithData';
 import { AppIcon, Screen } from '@/components/ui';
 import CommonListItem from '@/components/common/CommonListItem/CommonListItem.comp';
 import { useTranslation } from 'react-i18next';
-import useFormatter from '@/hooks/useFormatter';
-import StackNames from '@/navigation/StackNames';
 import ScreenNames from '@/navigation/ScreenNames';
 import { AppStackParamList } from '@/navigation/types';
-import { HadithCollection } from '@/types/hadith';
+import { AzkarCollection } from '@/types/azkar';
+import useAzkarData from '@/hooks/queries/useAzkarData';
 
 export default function AzkarCollectionsScreen() {
-  const { hadithCollectionsQuery } = useHadithData();
+  const { useAzkarCollectionQuery } = useAzkarData();
   const {
-    data: hadithCollectionsData,
+    data: azkarCollectionsData,
     isLoading,
     isError,
-  } = hadithCollectionsQuery;
-  const { collections = [] } = hadithCollectionsData?.data ?? {};
+  } = useAzkarCollectionQuery();
+  const collections = azkarCollectionsData
+    ? azkarCollectionsData[Object.keys(azkarCollectionsData)?.[0]]
+    : [];
+  console.log('MK COLLECTIONS: ', collections);
   const { t } = useTranslation();
-  const { getLocalizedText } = useFormatter();
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
   useEffect(() => {
@@ -29,13 +29,13 @@ export default function AzkarCollectionsScreen() {
     }
   }, [isError]);
 
-  function handleItemPress(item: HadithCollection) {
-    navigate(StackNames.HomeStack, {
-      screen: ScreenNames.CollectionsDetails,
-      params: {
-        collection: item,
-      },
-    });
+  function handleItemPress(item: AzkarCollection) {
+    // navigate(StackNames.HomeStack, {
+    //   screen: ScreenNames.CollectionsDetails,
+    //   params: {
+    //     collection: item,
+    //   },
+    // });
   }
 
   return (
@@ -43,16 +43,15 @@ export default function AzkarCollectionsScreen() {
       isInnerPage
       isLoading={isLoading}
       scroll
-      screenTitle={t('hadith.collectionScreenTitle')}
+      screenTitle={t('azkar.screenName')}
     >
       <FlatList
         data={collections}
-        keyExtractor={item => item.key}
+        keyExtractor={item => item.ID + '-ssd'}
         scrollEnabled={false}
         renderItem={({ item }) => (
           <CommonListItem
-            title={getLocalizedText(item?.arabic_name ?? '', item.name)}
-            subtitle={`${t('common.total')}: ${item.total_hadiths}`}
+            title={item?.TITLE ?? ''}
             onPress={() => handleItemPress(item)}
             withChevron={true}
             icon={<AppIcon name="book" as="Feather" />}
