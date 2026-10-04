@@ -1297,6 +1297,50 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - react-native-compass-heading (2.0.2):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-bridging
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
+  - react-native-geolocation (3.4.0):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-bridging
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - react-native-pager-view (9.0.4):
     - hermes-engine
     - RCTRequired
@@ -2113,6 +2157,8 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - React-mutationobservernativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver`)
+  - react-native-compass-heading (from `../node_modules/react-native-compass-heading`)
+  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2269,6 +2315,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   React-mutationobservernativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver"
+  react-native-compass-heading:
+    :path: "../node_modules/react-native-compass-heading"
+  react-native-geolocation:
+    :path: "../node_modules/@react-native-community/geolocation"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-restart:
@@ -2418,6 +2468,8 @@ SPEC CHECKSUMS:
   React-Mapbuffer: acf4ac61f163f15ced7dfad7308957816b2d7abd
   React-microtasksnativemodule: 512d9f7c6b66574d90832a6b10b6102d4a8fdf30
   React-mutationobservernativemodule: 2c5abeb9a4ae316ba6d9420ef8d9baa81faa9d56
+  react-native-compass-heading: d77d3baeb758ce3f24a281f82325764cc50fcaae
+  react-native-geolocation: 4df18d46fa149833c615b98082a9598c2f0521a1
   react-native-pager-view: 58a07dda0ab632882334a2b26a7829886590a21f
   react-native-restart: 16398a9801f3fbee953ffb5c76201f6d07e66f8a
   react-native-safe-area-context: f17f4ec987ecdd130820a4a850498b874fb70388

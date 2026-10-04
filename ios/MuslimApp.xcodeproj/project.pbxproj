@@ -302,7 +302,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V2T9RAR6S9;
+				DEVELOPMENT_TEAM = CMA868KP5U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MuslimApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
@@ -316,7 +316,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim1111;
 				PRODUCT_NAME = MuslimApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -336,7 +336,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V2T9RAR6S9;
+				DEVELOPMENT_TEAM = CMA868KP5U;
 				INFOPLIST_FILE = MuslimApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -349,7 +349,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim1111;
 				PRODUCT_NAME = MuslimApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

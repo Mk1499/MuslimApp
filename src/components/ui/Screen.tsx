@@ -118,5 +118,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: '100%',
     height: '100%',
+    opacity: 0.7,
   },
 });

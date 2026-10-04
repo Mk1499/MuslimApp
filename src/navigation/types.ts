@@ -14,6 +14,7 @@ export type MainTabParamList = {
 /** Stack screens rendered above the tabs (push full-screen pages here). */
 export type AppStackParamList = {
   MainTabs: NavigatorScreenParams<MainTabParamList>;
+  Splash: undefined;
   [StackNames.Main]: undefined;
   [StackNames.HomeStack]: NavigatorScreenParams<HomeStackParamList>;
   [StackNames.Quran]: NavigatorScreenParams<QuranStackParamList>;

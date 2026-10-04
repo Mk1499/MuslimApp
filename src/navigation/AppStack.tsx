@@ -5,6 +5,7 @@ import { BottomTabs } from './BottomTabs';
 import { fontFamily, useTheme } from '../theme';
 import type { AppStackParamList } from './types';
 import Stacks from './stacks';
+import SplashScreen from '@/features/splash/screens/SplashScreen/Splash.screen';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -25,6 +26,11 @@ export function AppStack(): React.JSX.Element {
         contentStyle: { backgroundColor: theme.background.primary },
       }}
     >
+      <Stack.Screen
+        name="Splash"
+        component={SplashScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="MainTabs"
         component={BottomTabs}

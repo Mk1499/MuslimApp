@@ -1,4 +1,4 @@
-import { View, FlatList, Image } from 'react-native';
+import { View, FlatList, Image, Pressable } from 'react-native';
 import type { PrayerType } from '@/types/prayer';
 import React, { useEffect, useMemo, useState } from 'react';
 import { spacing, useTheme } from '@/theme';
@@ -12,6 +12,7 @@ import CountDownTimer from '@/components/common/CountDownTimer/CountDownTimer.co
 import { useTodayHijriDate } from '@/hooks/queries/useHejriDate';
 import { useAppStore } from '@/store/useAppStore';
 import moment from 'moment';
+import useLocation from '@/hooks/useLocation';
 
 export default function DBBannerComponent() {
   const theme = useTheme();
@@ -20,15 +21,17 @@ export default function DBBannerComponent() {
   const { isRTL } = useAppStore();
   const { getFormattedTime } = useDateHook();
   const [nextPrayer, setNextPrayer] = useState<PrayerType>();
+  const { getCurrentLocation } = useLocation();
+  const { userLocation, userAddress } = useAppStore();
 
   const { data: hijriDateData } = useTodayHijriDate();
   const { data, isLoading } = usePrayerTimes({
-    latitude: 24.7136,
-    longitude: 46.6753,
+    latitude: userLocation?.latitude ?? 0,
+    longitude: userLocation?.longitude ?? 0,
   });
   const { prayer_times, current_status, prayer_datetimes } = data?.data ?? {};
   const { hijri } = hijriDateData?.data ?? {};
-
+  console.log({ userAddress });
   const prayers = useMemo(
     () =>
       Object.entries(prayer_times || {}).map(([key, value]) => ({
@@ -108,6 +111,19 @@ export default function DBBannerComponent() {
             {renderHijriDate()}
           </AppText>
         </View>
+        <Pressable onPress={getCurrentLocation} style={styles.addressCont}>
+          <AppText style={styles.address}>
+            {(userAddress && userAddress?.name) ??
+              userAddress?.address?.city ??
+              ''}
+          </AppText>
+          <AppIcon
+            name="map-pin"
+            size={spacing.xl}
+            color={theme.basic.white}
+            as="Feather"
+          />
+        </Pressable>
       </View>
       <View style={styles.nextPrayerCont}>
         <AppText variant="title" style={styles.nextPrayerLabel}>

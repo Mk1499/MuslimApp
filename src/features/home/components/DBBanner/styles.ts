@@ -41,6 +41,13 @@ export default (theme: AppTheme) =>
       marginTop: spacing.lg,
       marginStart: spacing.md,
     },
+    address: {
+      textAlign: 'right',
+      color: theme.basic.white,
+      fontSize: fontSize.lg,
+      paddingTop: spacing.lg,
+      fontWeight: '100',
+    },
     paryersListCont: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -74,5 +81,12 @@ export default (theme: AppTheme) =>
       bottom: 0,
       top: '-20%',
       alignSelf: 'center',
+    },
+    addressCont: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
+      gap: spacing.sm,
+      paddingHorizontal: spacing.md,
     },
   });
