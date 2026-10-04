@@ -7,6 +7,7 @@ import { HadithCollection } from '@/types/hadith';
 import StackNames from '../StackNames';
 import TafseerStack, { TafseerStackParamList } from './tafseerStack';
 import AzkarStack, { AzkarStackParamList } from './azkarStack';
+import QiblaScreen from '@/features/qibla/screens/QiblaScreen/Qibla.screen';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -23,6 +24,7 @@ export default function HomeStack() {
       />
       <Stack.Screen name={StackNames.Tafseer} component={TafseerStack} />
       <Stack.Screen name={StackNames.Azkar} component={AzkarStack} />
+      <Stack.Screen name={ScreenNames.Qibla} component={QiblaScreen} />
     </Stack.Navigator>
   );
 }
@@ -34,4 +36,5 @@ export type HomeStackParamList = {
   };
   [StackNames.Tafseer]: NavigatorScreenParams<TafseerStackParamList>;
   [StackNames.Azkar]: NavigatorScreenParams<AzkarStackParamList>;
+  [ScreenNames.Qibla]: undefined;
 };

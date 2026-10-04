@@ -6,12 +6,14 @@ import {
   Keyboard,
   type StyleProp,
   type ViewStyle,
+  Image,
 } from 'react-native';
 import LoaderOverlay from '@/components/common/LoaderOverlay/LoaderOverlay.comp';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, spacing } from '../../theme';
 import { Header } from './Header';
+import { BGPatternImage } from '@/assets/images';
 
 type Edge = 'top' | 'right' | 'bottom' | 'left';
 
@@ -29,6 +31,7 @@ interface ScreenProps {
   isLoading?: boolean;
   withBottomSafeArea?: boolean;
   keyboardDismissOnPress?: boolean;
+  withBGPattern?: boolean;
 }
 
 export function Screen({
@@ -43,6 +46,7 @@ export function Screen({
   isLoading = false,
   withBottomSafeArea = true,
   keyboardDismissOnPress,
+  withBGPattern = true,
 }: ScreenProps): React.JSX.Element {
   const theme = useTheme();
 
@@ -51,6 +55,9 @@ export function Screen({
 
   return (
     <View style={[styles.safe, { backgroundColor: theme.background.primary }]}>
+      {withBGPattern && (
+        <Image style={styles.bgPattern} source={BGPatternImage} />
+      )}
       <View
         style={[
           { height: top, backgroundColor: theme.background.primary },
@@ -101,5 +108,15 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+  },
+  bgPattern: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    resizeMode: 'cover',
+    width: '100%',
+    height: '100%',
   },
 });

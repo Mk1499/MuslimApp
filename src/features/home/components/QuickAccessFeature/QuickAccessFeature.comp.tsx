@@ -61,6 +61,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.qibla'),
       imgIcon: QiblaImage,
       bgColor: '#E1F5FE',
+      relatedScreen: ScreenNames.Qibla,
     },
     {
       id: 7,
