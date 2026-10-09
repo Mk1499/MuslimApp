@@ -31,7 +31,6 @@ export default function DBBannerComponent() {
   });
   const { prayer_times, current_status, prayer_datetimes } = data?.data ?? {};
   const { hijri } = hijriDateData?.data ?? {};
-  console.log({ userAddress });
   const prayers = useMemo(
     () =>
       Object.entries(prayer_times || {}).map(([key, value]) => ({

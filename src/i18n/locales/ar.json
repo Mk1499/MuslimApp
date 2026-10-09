@@ -9,7 +9,8 @@
     "after": "بعد",
     "from": "منذ",
     "total": "المجموع",
-    "surah": "سورة"
+    "surah": "سورة",
+    "noData": "لا توجد بيانات متاحة"
   },
   "tabs": {
     "home": "الرئيسية",
@@ -127,5 +128,10 @@
     "bearing": "اتجاه القبلة {{degrees}}°",
     "distance": "{{distance}} كم من الكعبة",
     "dialLabel": "بوصلة توضح اتجاه القبلة"
+  },
+  "mutashabihat": {
+    "screenName": "متشابهات سور {{surah}}",
+    "similarAyahs": "آيات متشابهة",
+    "noSimilarAyahs": "لم يتم العثور على آيات متشابهة"
   }
 }

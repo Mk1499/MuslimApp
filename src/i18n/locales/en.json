@@ -9,7 +9,8 @@
     "after": "after",
     "from": "from",
     "total": "Total",
-    "surah": "Surah"
+    "surah": "Surah",
+    "noData": "No data available"
   },
   "tabs": {
     "home": "Home",
@@ -127,5 +128,10 @@
     "bearing": "Qibla direction {{degrees}}°",
     "distance": "{{distance}} km from the Kaaba",
     "dialLabel": "Compass showing the Qibla direction"
+  },
+  "mutashabihat": {
+    "screenName": "Mutashabihat Surah {{surah}}",
+    "similarAyahs": "Similar Ayahs",
+    "noSimilarAyahs": "No similar Ayahs found"
   }
 }
