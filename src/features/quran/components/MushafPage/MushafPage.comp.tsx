@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useQuranPage } from '@/features/quran/hooks/useQuranPage';
 import MushafLine from '@/features/quran/components/MushafLine/MushafLine.comp';
@@ -9,6 +9,7 @@ import { SCREEN_HEIGHT } from '@/utils/constants';
 
 function MushafPage({ pageNumber }: { pageNumber: number }) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
+  const [selectedWordAya, setSelectedWordAya] = useState<number | null>(null);
 
   if (loading) {
     return <ActivityIndicator style={styles.center} color="#C9A24B" />;
@@ -36,7 +37,10 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
               <MushafLine
                 key={line.lineNumber + '-MushafLine'}
                 words={line.words}
-                onWordPress={() => {}}
+                onWordPress={word => {
+                  setSelectedWordAya(word.ayah_number);
+                }}
+                selectedWordAya={selectedWordAya}
               />
             </View>
           );
@@ -46,7 +50,10 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
           <MushafLine
             key={line.lineNumber}
             words={line.words}
-            onWordPress={() => {}}
+            onWordPress={word => {
+              setSelectedWordAya(word.ayah_number);
+            }}
+            selectedWordAya={selectedWordAya}
           />
         );
       })}

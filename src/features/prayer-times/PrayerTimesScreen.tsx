@@ -1,27 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
 import { AppIcon, AppText, Screen } from '../../components/ui';
-import { spacing } from '../../theme';
+import { useTheme } from '../../theme';
+import makeStyles from './styles';
+import { Pressable } from 'react-native';
+import moment from 'moment';
 
 export function PrayerTimesScreen(): React.JSX.Element {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const styles = makeStyles(theme);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
-    <Screen padded style={styles.container}>
-      <AppIcon name="time" size={48} color="status.success" />
-      <AppText variant="title">{t('prayerTimes.title')}</AppText>
-      <AppText variant="caption" color="muted">
-        {t('common.appName')}
-      </AppText>
+    <Screen isInnerPage padded style={styles.container}>
+      <Pressable>
+        <AppText style={styles.dateText}>
+          {moment(selectedDate).format('LL')}
+        </AppText>
+      </Pressable>
     </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.md,
-  },
-});

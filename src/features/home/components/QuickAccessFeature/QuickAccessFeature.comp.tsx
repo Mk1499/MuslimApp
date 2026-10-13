@@ -57,6 +57,7 @@ export default function QuickAccessFeature() {
       title: t('home.features.prayerTimes'),
       imgIcon: SalahImage,
       bgColor: '#EDE7F6',
+      relatedScreen: ScreenNames.PrayerTimes,
     },
     {
       id: 6,

@@ -12,6 +12,7 @@ import TafseerStack, { TafseerStackParamList } from './tafseerStack';
 import AzkarStack, { AzkarStackParamList } from './azkarStack';
 import QiblaScreen from '@/features/qibla/screens/QiblaScreen/Qibla.screen';
 import Asmaa99 from '@/features/asmaa99/screens/Asmaa99/Asmaa99.screen';
+import { PrayerTimesScreen } from '@/features/prayer-times/PrayerTimesScreen';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -34,6 +35,10 @@ export default function HomeStack() {
         name={StackNames.Mutashabihat}
         component={MutashabihatStack}
       />
+      <Stack.Screen
+        name={ScreenNames.PrayerTimes}
+        component={PrayerTimesScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -48,4 +53,5 @@ export type HomeStackParamList = {
   [ScreenNames.Qibla]: undefined;
   [ScreenNames.Asmaa99]: undefined;
   [StackNames.Mutashabihat]: NavigatorScreenParams<MutashabihatStackParamList>;
+  [ScreenNames.PrayerTimes]: undefined;
 };

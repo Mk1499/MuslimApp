@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { QuranWord } from '@/types/quran';
 import { fontFamily, useTheme } from '@/theme';
@@ -6,9 +6,14 @@ import { fontFamily, useTheme } from '@/theme';
 interface Props {
   words: QuranWord[];
   onWordPress?: (word: QuranWord) => void;
+  selectedWordAya?: number | null;
 }
 
-export default function MushafLine({ words, onWordPress }: Props) {
+export default function MushafLine({
+  words,
+  onWordPress,
+  selectedWordAya,
+}: Props) {
   const theme = useTheme();
 
   return (
@@ -22,13 +27,29 @@ export default function MushafLine({ words, onWordPress }: Props) {
           return (
             <Text
               key={`${w.surah_number}-${w.ayah_number}-${idx}`}
-              style={[styles.ayahEnd, { color: theme.accent.secondary }]}
+              style={[
+                styles.ayahEnd,
+                { color: theme.accent.secondary },
+                selectedWordAya === w.ayah_number && styles.selectedWordAya,
+              ]}
+              onLongPress={() => onWordPress?.(w)}
             >
               {w.text_uthmani + ' '}
             </Text>
           );
         }
-        return w.text_uthmani + ' ';
+        return (
+          <Text
+            key={`${w.surah_number}-${w.ayah_number}-${idx}`}
+            style={[
+              styles.word,
+              selectedWordAya === w.ayah_number && styles.selectedWordAya,
+            ]}
+            onLongPress={() => onWordPress?.(w)}
+          >
+            {w.text_uthmani + ' '}
+          </Text>
+        );
       })}
     </Text>
   );
@@ -44,12 +65,15 @@ const styles = StyleSheet.create({
   },
   word: {
     fontFamily: fontFamily.hafs, // see README for font setup
-    fontSize: 28,
+    fontSize: 38,
     textAlign: 'center', // Arabic reads right-to-left
   },
   ayahEnd: {
     fontFamily: fontFamily.uthmani,
-    fontSize: 28,
+    fontSize: 38,
     includeFontPadding: false,
+  },
+  selectedWordAya: {
+    backgroundColor: 'rgba(0,0,0,0.1)',
   },
 });

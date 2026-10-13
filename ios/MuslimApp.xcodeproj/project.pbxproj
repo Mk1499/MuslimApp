@@ -308,7 +308,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim1111;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim1;
 				PRODUCT_NAME = MuslimApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -341,7 +341,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim1111;
+				PRODUCT_BUNDLE_IDENTIFIER = com.scorpion.muslim1;
 				PRODUCT_NAME = MuslimApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
