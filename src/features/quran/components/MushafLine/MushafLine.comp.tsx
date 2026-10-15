@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   word: {
     fontFamily: fontFamily.hafs, // see README for font setup
-    fontSize: 38,
+    fontSize: 30,
     textAlign: 'center', // Arabic reads right-to-left
   },
   ayahEnd: {

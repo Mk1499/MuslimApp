@@ -55,6 +55,7 @@
 		<string>Feather.ttf</string>
 		<string>Uthmani.ttf</string>
 		<string>hafs.ttf</string>
+		<string>Hafs01.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

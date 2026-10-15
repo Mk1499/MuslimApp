@@ -10,6 +10,7 @@
 		0C80B921A6F3F58F76C31292 /* libPods-MuslimApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-MuslimApp.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		5E527E6CAD1444B39E26FFCB /* hafs.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACE3D61854474C598A09F71C /* hafs.ttf */; };
+		60CADE4B2DDD48E4AF848BC8 /* Hafs01.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F96939A89A2243D4AA7E29A0 /* Hafs01.ttf */; };
 		74706215B2DA44B1B32CF2E3 /* Cairo-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE6C121509034CE3AF62ABF8 /* Cairo-SemiBold.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		7AF509D6D70E4D0DA12D57A5 /* Cairo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 258EB83D5FEB471098CF76DB /* Cairo-Regular.ttf */; };
@@ -37,6 +38,7 @@
 		D2A93483A14D4340B526F601 /* Cairo-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Medium.ttf"; path = "../src/assets/fonts/Cairo-Medium.ttf"; sourceTree = "<group>"; };
 		DE6C121509034CE3AF62ABF8 /* Cairo-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-SemiBold.ttf"; path = "../src/assets/fonts/Cairo-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F96939A89A2243D4AA7E29A0 /* Hafs01.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Hafs01.ttf; path = ../src/assets/fonts/Hafs01.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				95354C5EAB9445FEA771B8EA /* Cairo-Bold.ttf */,
 				0436B7513FE24573BD2786F8 /* Uthmani.ttf */,
 				ACE3D61854474C598A09F71C /* hafs.ttf */,
+				F96939A89A2243D4AA7E29A0 /* Hafs01.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				ACD9E73556A847DE87350584 /* Cairo-Bold.ttf in Resources */,
 				94A11F67AB32462095FBA837 /* Uthmani.ttf in Resources */,
 				5E527E6CAD1444B39E26FFCB /* hafs.ttf in Resources */,
+				60CADE4B2DDD48E4AF848BC8 /* Hafs01.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
