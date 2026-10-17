@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Text, ActivityIndicator, StyleSheet, View } from 'react-native';
+import { QuranWord } from '@/types/quran';
 import { useQuranPage } from '@/features/quran/hooks/useQuranPage';
 import MushafLine from '@/features/quran/components/MushafLine/MushafLine.comp';
 import SurahHeaderBanner from '@/features/quran/components/SurahHeaderBanner/SurahHeaderBanner.comp';
@@ -7,9 +8,27 @@ import BismillahLine from '@/features/quran/components/BismillahLine/BismillahLi
 import PageFooter from '@/features/quran/components/PageFooter/PageFooter.comp';
 import { SCREEN_HEIGHT } from '@/utils/constants';
 
-function MushafPage({ pageNumber }: { pageNumber: number }) {
+function MushafPage({
+  pageNumber,
+  playingAya,
+  onWordPress,
+}: {
+  pageNumber: number;
+  playingAya: string | null;
+  onWordPress: (word: QuranWord) => void;
+}) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
   const [selectedWordAya, setSelectedWordAya] = useState<number | null>(null);
+
+  const handleWordPress = useCallback(
+    (word: QuranWord) => {
+      setSelectedWordAya(word.ayah_number);
+      onWordPress(word);
+    },
+    [onWordPress],
+  );
+
+  const playingAyaNumber = playingAya ? Number(playingAya.split(':')[1]) : null;
 
   if (loading) {
     return <ActivityIndicator style={styles.center} color="#C9A24B" />;
@@ -42,10 +61,9 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
                 <MushafLine
                   key={line.lineNumber + '-MushafLine'}
                   words={line.words}
-                  onWordPress={word => {
-                    setSelectedWordAya(word.ayah_number);
-                  }}
+                  onWordPress={handleWordPress}
                   selectedWordAya={selectedWordAya}
+                  playingAya={playingAyaNumber}
                 />
               </View>
             );
@@ -55,10 +73,9 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
             <View key={line.lineNumber} style={styles.shrinkableItem}>
               <MushafLine
                 words={line.words}
-                onWordPress={word => {
-                  setSelectedWordAya(word.ayah_number);
-                }}
+                onWordPress={handleWordPress}
                 selectedWordAya={selectedWordAya}
+                playingAya={playingAyaNumber}
               />
             </View>
           );

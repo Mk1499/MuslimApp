@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { QuranWord } from '@/types/quran';
 import { fontFamily, useTheme } from '@/theme';
@@ -7,12 +7,14 @@ interface Props {
   words: QuranWord[];
   onWordPress?: (word: QuranWord) => void;
   selectedWordAya?: number | null;
+  playingAya?: number | null;
 }
 
 export default function MushafLine({
   words,
   onWordPress,
   selectedWordAya,
+  playingAya,
 }: Props) {
   const theme = useTheme();
 
@@ -33,6 +35,9 @@ export default function MushafLine({
                 selectedWordAya === w.ayah_number && {
                   color: theme.background.brand,
                 },
+                playingAya === w.ayah_number && {
+                  color: theme.accent.soft,
+                },
               ]}
               onPress={() => onWordPress?.(w)}
             >
@@ -47,6 +52,9 @@ export default function MushafLine({
               styles.word,
               selectedWordAya === w.ayah_number && {
                 color: theme.background.brand,
+              },
+              playingAya === w.ayah_number && {
+                color: theme.accent.soft,
               },
             ]}
             onPress={() => onWordPress?.(w)}
