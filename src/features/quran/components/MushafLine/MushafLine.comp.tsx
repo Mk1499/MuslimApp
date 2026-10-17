@@ -37,11 +37,9 @@ export default function MushafLine({
               style={[
                 styles.ayahEnd,
                 { color: theme.accent.secondary },
-                selectedKey === wordKey && {
-                  color: theme.background.brand,
-                },
                 playingKey === wordKey && {
-                  color: theme.accent.soft,
+                  color: theme.text.highlight,
+                  fontWeight: 'bold',
                 },
               ]}
               onPress={() => onWordPress?.(w)}
@@ -55,11 +53,8 @@ export default function MushafLine({
             key={`${wordKey}-${idx}`}
             style={[
               styles.word,
-              selectedKey === wordKey && {
-                color: theme.background.brand,
-              },
               playingKey === wordKey && {
-                color: theme.accent.soft,
+                color: theme.text.highlight,
               },
             ]}
             onPress={() => onWordPress?.(w)}

@@ -71,6 +71,7 @@ export type AppTheme = {
     muted: string;
     inverse: string;
     brand: string;
+    highlight: string;
   };
   /** Card surfaces (use via AppCard). */
   card: { primary: string; secondary: string; border: string };
@@ -148,6 +149,7 @@ export const lightTheme: AppTheme = {
     muted: palette.neutral[400],
     inverse: palette.neutral[0],
     brand: palette.primary[600],
+    highlight: palette.primary[600],
   },
   card: {
     primary: palette.neutral[0],
@@ -222,6 +224,7 @@ export const darkTheme: AppTheme = {
     muted: palette.neutral[500],
     inverse: palette.neutral[900],
     brand: palette.primary[600],
+    highlight: palette.gold[300],
   },
   card: {
     primary: palette.neutral[800],
