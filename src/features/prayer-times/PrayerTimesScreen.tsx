@@ -216,9 +216,9 @@ export function PrayerTimesScreen(): React.JSX.Element {
             </View>
             <View style={styles.countdownRow}>
               <AppIcon
-                name="clock-time-four-outline"
-                as="MaterialCommunityIcons"
-                size={16}
+                name="time-outline"
+                as="Ionicons"
+                size={24}
                 color={theme.basic.white}
               />
               <CountDownTimer

@@ -14,6 +14,7 @@ export default (theme: AppTheme) =>
       paddingHorizontal: spacing.lg,
     },
     sectionHeader: {
+      marginTop: spacing.md,
       textAlign: 'left',
     },
     section: {

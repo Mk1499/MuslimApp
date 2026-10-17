@@ -74,8 +74,9 @@ export default (theme: AppTheme) =>
     countdownRow: {
       flexDirection: 'row',
       alignItems: 'center',
+
       gap: spacing.sm,
-      marginTop: spacing.xxs,
+      // marginTop: spacing.xxs,
       marginBottom: spacing.lg,
     },
 
