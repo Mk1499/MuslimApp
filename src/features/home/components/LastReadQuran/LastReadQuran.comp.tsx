@@ -1,15 +1,43 @@
 import { View, Image } from 'react-native';
 import React from 'react';
+import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import makeStyle from './styles';
 import { useTheme } from '@/theme/ThemeProvider';
 import { AppGradient, AppIcon, AppText, AppTouchable } from '@/components/ui';
 import { useTranslation } from 'react-i18next';
 import { QuranImage } from '@/assets/images';
+import { useAppStore } from '@/store/useAppStore';
+import { getSurahByNumber } from '@/features/quran/player/ayahSequence';
+import ScreenNames from '@/navigation/ScreenNames';
+import StackNames from '@/navigation/StackNames';
+import type { AppStackParamList } from '@/navigation/types';
 
 export default function LastReadQuran() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { t } = useTranslation();
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const language = useAppStore(state => state.language);
+  const lastPlayedAyah = useAppStore(state => state.lastPlayedAyah);
+
+  const surah = lastPlayedAyah
+    ? getSurahByNumber(lastPlayedAyah.surah)
+    : undefined;
+
+  // Nothing has been recited yet — there is nothing to continue.
+  if (!lastPlayedAyah || !surah) {
+    return null;
+  }
+
+  const surahName = language === 'ar' ? surah.name_arabic : surah.name_english;
+
+  // Open the mushaf on the page the last-played ayah is on and resume audio.
+  const handleContinue = () => {
+    navigate(StackNames.Quran, {
+      screen: ScreenNames.Mushaf,
+      params: { surah, resumeAyah: lastPlayedAyah.ayah },
+    });
+  };
 
   return (
     <AppGradient
@@ -22,12 +50,16 @@ export default function LastReadQuran() {
           <AppText style={styles.lastReadLabel}>{t('lastRead.title')}</AppText>
           <View style={styles.lastReadRow}>
             <AppIcon name="book" size={24} color={theme.tabBar.active} />
-            <AppText style={styles.surahName}>Al Baqara : 120</AppText>
-            <View style={styles.juzCont}>
-              <AppText style={styles.juzName}>Juz 2</AppText>
+            <AppText
+              style={styles.surahName}
+            >{`${surahName} : ${lastPlayedAyah.ayah}`}</AppText>
+            <View style={styles.pageCont}>
+              <AppText
+                style={styles.pageName}
+              >{`${t('lastRead.page')} ${lastPlayedAyah.page}`}</AppText>
             </View>
           </View>
-          <AppTouchable style={styles.continueBtn} onPress={() => {}}>
+          <AppTouchable style={styles.continueBtn} onPress={handleContinue}>
             <AppText style={styles.continueBtnText}>
               {t('common.continue')}
             </AppText>

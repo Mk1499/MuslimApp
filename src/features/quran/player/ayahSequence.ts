@@ -1,6 +1,7 @@
 import quranPages from '@/assets/offline-res/quran-pages.min.json';
 import quranSurahs from '@/assets/offline-res/quran-surahs.json';
 import { QuranWord } from '@/types/quran';
+import { Surah } from '@/types/surah';
 
 /**
  * Global reading-order sequence of every ayah in the mushaf, derived from
@@ -16,6 +17,17 @@ interface QuranPagesAsset {
 }
 
 const PAGES = quranPages as unknown as QuranPagesAsset;
+
+/** Shape of the bundled `quran-surahs.json` entries. */
+interface BundledSurah {
+  id: number;
+  name_simple: string;
+  name_arabic: string;
+  verses_count?: number;
+  pages?: number[];
+}
+
+const SURAHS = quranSurahs as unknown as BundledSurah[];
 
 export interface AyahRef {
   surah: number;
@@ -82,8 +94,28 @@ export const TOTAL_AYATS = SEQUENCE.list.length;
 /** Surah number -> Arabic name, from the bundled surah metadata. */
 export const SURAH_NAMES: Record<number, string> = (() => {
   const map: Record<number, string> = {};
-  for (const s of quranSurahs as unknown as Array<{ id: number; name_arabic: string }>) {
+  for (const s of SURAHS) {
     map[s.id] = s.name_arabic;
   }
   return map;
 })();
+
+/**
+ * Full metadata for a surah by number, built from the bundled surah list.
+ * Used to open a surah directly (e.g. "Continue" from the home screen's
+ * last-read card) without going through the surahs list first.
+ */
+export function getSurahByNumber(surahNumber: number): Surah | undefined {
+  const found = SURAHS.find(s => s.id === surahNumber);
+  if (!found) {
+    return undefined;
+  }
+
+  return {
+    number: found.id,
+    name_arabic: found.name_arabic,
+    name_english: found.name_simple,
+    verses_count: found.verses_count,
+    pages: found.pages,
+  };
+}

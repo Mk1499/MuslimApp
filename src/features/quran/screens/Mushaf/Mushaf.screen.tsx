@@ -58,10 +58,18 @@ const PagerItem = React.memo(function PagerItem({
 export default function MushafScreen() {
   const { params } =
     useRoute<RouteProp<QuranStackParamList, typeof ScreenNames.Mushaf>>();
-  const { surah } = params;
+  const { surah, resumeAyah } = params;
   const { pages } = surah ?? {};
 
-  const initialPageNumber = clampPageNumber(pages?.[0] ?? 1);
+  // "Continue" from the home screen's last-read card points at a specific
+  // ayah — open on the page that ayah lives on instead of the surah's first
+  // page, so the user lands right where they left off.
+  const resumePage =
+    resumeAyah != null && surah?.number != null
+      ? AYAH_TO_PAGE.get(`${surah.number}:${resumeAyah}`)
+      : undefined;
+
+  const initialPageNumber = clampPageNumber(resumePage ?? pages?.[0] ?? 1);
   // Unique identity for the surah — two surahs can share a start page (short
   // surahs near the end), so the surah number is the reliable key.
   const surahId = surah?.number ?? initialPageNumber;
@@ -129,6 +137,24 @@ export default function MushafScreen() {
       }
     };
   }, []);
+
+  // Start playback of the ayah we were asked to open on (Continue from the
+  // home screen). Keyed on the target so a params update pointing at a
+  // different ayah replays, while the same target only ever plays once.
+  const resumePlayedKeyRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!isContentReady || surah?.number == null || resumeAyah == null) {
+      return;
+    }
+    const key = `${surah.number}:${resumeAyah}`;
+    if (resumePlayedKeyRef.current === key) {
+      return;
+    }
+    resumePlayedKeyRef.current = key;
+    // Own the pager session so the auto-swipe follows this resumption.
+    sessionActiveRef.current = true;
+    playAyah({ surah_number: surah.number, ayah_number: resumeAyah });
+  }, [isContentReady, surah?.number, resumeAyah, playAyah]);
 
   const allPageNumbers = useMemo(
     () => Array.from({ length: TOTAL_MUSHAF_PAGES }, (_, i) => i + 1),

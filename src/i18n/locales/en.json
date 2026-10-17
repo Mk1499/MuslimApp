@@ -72,7 +72,8 @@
   "lastRead": {
     "title": "Last Read",
     "surah": "Surah",
-    "ayah": "Ayah"
+    "ayah": "Ayah",
+    "page": "Page"
   },
   "hadith": {
     "collection": {

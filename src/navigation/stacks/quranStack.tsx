@@ -16,5 +16,7 @@ export default function QuranStack() {
 export type QuranStackParamList = {
   [ScreenNames.Mushaf]: {
     surah: Surah;
+    /** Ayah number to open on and start playing (e.g. Continue from home). */
+    resumeAyah?: number;
   };
 };

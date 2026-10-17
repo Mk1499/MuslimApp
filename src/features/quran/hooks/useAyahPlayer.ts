@@ -5,8 +5,20 @@ import TrackPlayer, {
   useTrackPlayerEvents,
 } from 'react-native-track-player';
 import { QuranWord } from '@/types/quran';
+import { useAppStore } from '@/store/useAppStore';
 import { buildAyahTrack } from '../player/ayahAudio';
-import { AYAH_INDEX, AYAH_LIST } from '../player/ayahSequence';
+import {
+  AYAH_INDEX,
+  AYAH_LIST,
+  AYAH_TO_PAGE,
+} from '../player/ayahSequence';
+
+/**
+ * Minimal info needed to start playback. A pressed `QuranWord` satisfies it,
+ * and so does a bare `{ surah_number, ayah_number }` (used when resuming from
+ * the home screen's last-read card).
+ */
+export type AyahTarget = Pick<QuranWord, 'surah_number' | 'ayah_number'>;
 
 /**
  * How many ayahs are enqueued up-front, and how many more are appended each
@@ -35,8 +47,8 @@ export function useAyahPlayer() {
   const startRef = useRef(0);
   const queueEndRef = useRef(0); // absolute index into AYAH_LIST
 
-  const playAyah = useCallback(async (word: QuranWord) => {
-    const key = `${word.surah_number}:${word.ayah_number}`;
+  const playAyah = useCallback(async (target: AyahTarget) => {
+    const key = `${target.surah_number}:${target.ayah_number}`;
     const startIndex = AYAH_INDEX.get(key);
     if (startIndex === undefined) {
       return;
@@ -99,6 +111,22 @@ export function useAyahPlayer() {
       // ignore
     }
   }, []);
+
+  // Keep the "last played ayah" fresh as playback advances, so the home
+  // screen's Continue resumes near where the user stopped rather than where
+  // they originally tapped. getState() reads the store without subscribing
+  // this hook to it, so the pager isn't re-rendered on every ayah change.
+  useEffect(() => {
+    if (!playingAya) {
+      return;
+    }
+    const page = AYAH_TO_PAGE.get(playingAya);
+    if (!page) {
+      return;
+    }
+    const [surah, ayah] = playingAya.split(':').map(Number);
+    useAppStore.getState().setLastPlayedAyah({ surah, ayah, page });
+  }, [playingAya]);
 
   // Fully clear playback when the owning screen unmounts (user exits the
   // mushaf). reset() so the NEXT screen never inherits this recitation's

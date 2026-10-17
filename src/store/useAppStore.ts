@@ -17,6 +17,13 @@ import type { ThemePreference } from '../theme';
 
 const APP_STORE_STORAGE_KEY = 'app.store';
 
+/** Where the user last started, or reached, a recitation in the mushaf. */
+export type LastPlayedAyah = {
+  surah: number;
+  ayah: number;
+  page: number;
+};
+
 /** Adapts the synchronous MMKV instance to zustand's persist storage interface. */
 const mmkvStorage: StateStorage = {
   getItem: name => storage.getString(name) ?? null,
@@ -30,8 +37,10 @@ interface AppState {
   themePreference: ThemePreference;
   userLocation: { latitude: number; longitude: number } | null;
   userAddress: any | null;
+  lastPlayedAyah: LastPlayedAyah | null;
 
   setUserAddress: (address: any | null) => void;
+  setLastPlayedAyah: (aya: LastPlayedAyah | null) => void;
   changeLanguage: (language: Language) => void;
   setThemePreference: (preference: ThemePreference) => void;
   setUserLocation: (
@@ -47,9 +56,13 @@ export const useAppStore = create<AppState>()(
       themePreference: 'system',
       userLocation: null,
       userAddress: null,
+      lastPlayedAyah: null,
 
       setUserAddress: address => {
         set({ userAddress: address });
+      },
+      setLastPlayedAyah: aya => {
+        set({ lastPlayedAyah: aya });
       },
       setUserLocation: location => {
         set({ userLocation: location });
@@ -84,6 +97,7 @@ export const useAppStore = create<AppState>()(
         themePreference: state.themePreference,
         userLocation: state.userLocation,
         userAddress: state.userAddress,
+        lastPlayedAyah: state.lastPlayedAyah,
       }),
     },
   ),

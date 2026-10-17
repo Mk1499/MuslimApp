@@ -39,12 +39,12 @@ export default (theme: AppTheme) =>
     surahName: {
       color: theme.basic.white,
     },
-    juzCont: {
+    pageCont: {
       backgroundColor: theme.accent.soft,
       paddingHorizontal: spacing.sm,
       borderRadius: radius.md,
     },
-    juzName: {
+    pageName: {
       color: theme.accent.primary,
     },
     continueBtn: {

@@ -72,7 +72,8 @@
   "lastRead": {
     "title": "آخر قراءة",
     "surah": "السورة",
-    "ayah": "الآية"
+    "ayah": "الآية",
+    "page": "صفحة"
   },
   "hadith": {
     "collection": {
