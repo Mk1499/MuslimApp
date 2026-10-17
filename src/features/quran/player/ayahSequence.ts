@@ -1,4 +1,5 @@
 import quranPages from '@/assets/offline-res/quran-pages.min.json';
+import quranSurahs from '@/assets/offline-res/quran-surahs.json';
 import { QuranWord } from '@/types/quran';
 
 /**
@@ -77,3 +78,12 @@ export const PAGE_TO_FIRST_AYAH = SEQUENCE.pageToFirstAyah;
 
 /** Total number of ayahs in the mushaf. */
 export const TOTAL_AYATS = SEQUENCE.list.length;
+
+/** Surah number -> Arabic name, from the bundled surah metadata. */
+export const SURAH_NAMES: Record<number, string> = (() => {
+  const map: Record<number, string> = {};
+  for (const s of quranSurahs as unknown as Array<{ id: number; name_arabic: string }>) {
+    map[s.id] = s.name_arabic;
+  }
+  return map;
+})();

@@ -90,16 +90,23 @@ export function useAyahPlayer() {
 
   const stop = useCallback(async () => {
     try {
-      await TrackPlayer.stop();
+      // reset() — not stop(). stop() only halts playback and leaves the queue
+      // and active track loaded, so useActiveTrack() would keep reporting the
+      // last ayah (leaving the player bar + highlight stuck). reset() clears
+      // the queue so the active track becomes undefined.
+      await TrackPlayer.reset();
     } catch {
       // ignore
     }
   }, []);
 
-  // Stop when the owning screen unmounts (user exits the mushaf).
+  // Fully clear playback when the owning screen unmounts (user exits the
+  // mushaf). reset() so the NEXT screen never inherits this recitation's
+  // active track — otherwise it would report a stale playing ayah and the
+  // auto-swipe would jump to the old page.
   useEffect(() => {
     return () => {
-      TrackPlayer.stop().catch(() => {});
+      TrackPlayer.reset().catch(() => {});
     };
   }, []);
 

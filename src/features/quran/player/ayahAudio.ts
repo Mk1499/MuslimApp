@@ -8,6 +8,33 @@ import { QuranWord } from '@/types/quran';
 export const RECITER_FOLDER = 'Alafasy_128kbps';
 
 /**
+ * Display names for common everyayah.com reciter folders. Anything not listed
+ * falls back to the raw folder name.
+ */
+export const RECITER_NAMES: Record<string, string> = {
+  Alafasy_128kbps: 'Mishary Rashid Alafasy',
+  Alafasy_64kbps: 'Mishary Rashid Alafasy',
+  Alafasy_32kbps: 'Mishary Rashid Alafasy',
+  'Abdurrahmaan_As-Sudais_192kbps': 'Abdurrahman As-Sudais',
+  'Abdurrahmaan_As-Sudais_128kbps': 'Abdurrahman As-Sudais',
+  'Abdul_Basit_Murattal_192kbps': 'Abdul Basit Abdus-Samad (Murattal)',
+  'Abdul_Basit_Mujawwad_192kbps': 'Abdul Basit Abdus-Samad (Mujawwad)',
+  Abdulsamad_192kbps: 'Abdul Basit Abdus-Samad',
+  'Ahmed_ibn_Ali_al-Ajamy_128kbps': 'Ahmed ibn Ali al-Ajamy',
+  'Al-Husary_128kbps': 'Mahmoud Khalil Al-Husary',
+  'Al-Husary_Mujawwad_128kbps': 'Mahmoud Khalil Al-Husary (Mujawwad)',
+  'Maher_AlMuaiqly_128kbps': 'Maher Al-Muaiqly',
+  Minshawy_128kbps: 'Mohamed Al-Minshawy',
+  'Minshawy_Mujawwad_128kbps': 'Mohamed Al-Minshawy (Mujawwad)',
+  'Saood_ash-Shuraym_128kbps': 'Saood ash-Shuraym',
+  Hani_Rifai_192kbps: 'Hani Rifai',
+};
+
+export function getReciterDisplayName(folder: string = RECITER_FOLDER): string {
+  return RECITER_NAMES[folder] ?? folder;
+}
+
+/**
  * How many ayahs (including the one pressed) to preload as a playlist.
  * Playback runs through them one after another, then stops.
  */

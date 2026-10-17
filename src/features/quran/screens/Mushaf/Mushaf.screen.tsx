@@ -1,6 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { Screen, AppTouchable, AppIcon } from '@/components/ui';
+import { Screen } from '@/components/ui';
+import PlayerBar from '../../components/PlayerBar/PlayerBar.comp';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { QuranStackParamList } from '@/navigation/stacks/quranStack';
 import ScreenNames from '@/navigation/screenNames'; // adjust to your actual path
@@ -55,6 +62,9 @@ export default function MushafScreen() {
   const { pages } = surah ?? {};
 
   const initialPageNumber = clampPageNumber(pages?.[0] ?? 1);
+  // Unique identity for the surah — two surahs can share a start page (short
+  // surahs near the end), so the surah number is the reliable key.
+  const surahId = surah?.number ?? initialPageNumber;
   const [currentPageNumber, setCurrentPageNumber] = useState(initialPageNumber);
   const pagerRef = useRef<PagerView>(null);
 
@@ -62,9 +72,44 @@ export default function MushafScreen() {
   // forward past this.
   const lastAutoPageRef = useRef(initialPageNumber);
 
+  // Only playback started on THIS screen's session may drive the pager. A
+  // stale active track inherited from a previous screen/surah must never
+  // auto-swipe the newly opened mushaf to the old playing ayah's page.
+  const sessionActiveRef = useRef(false);
+
+  // React Navigation keeps this screen mounted and only swaps `params` (same
+  // route key), so `useState(initialPageNumber)` would keep the previous
+  // surah's page and PagerView would ignore the new `initialPage`. Reset the
+  // pager state before committing whenever the surah changes.
+  const [prevSurahId, setPrevSurahId] = useState(surahId);
+  if (prevSurahId !== surahId) {
+    setPrevSurahId(surahId);
+    setCurrentPageNumber(initialPageNumber);
+    lastAutoPageRef.current = initialPageNumber;
+    sessionActiveRef.current = false; // a new surah starts a fresh session
+  }
+
   // The player lives here (not inside a page) so it survives page swipes and
   // can drive the auto-swipe below.
   const { playAyah, stop, playingAya } = useAyahPlayer();
+
+  // Mark the session as owned by this screen when the user starts playback.
+  const handleWordPress = useCallback(
+    (word: QuranWord) => {
+      sessionActiveRef.current = true;
+      playAyah(word);
+    },
+    [playAyah],
+  );
+
+  // Opening a different surah leaves the old recitation behind — stop it.
+  const stopOnSurahChangeRef = useRef(surahId);
+  useEffect(() => {
+    if (stopOnSurahChangeRef.current !== surahId) {
+      stopOnSurahChangeRef.current = surahId;
+      stop();
+    }
+  }, [surahId, stop]);
 
   // false لحد ما الـ screen transition/animations تخلص خالص
   const [isContentReady, setIsContentReady] = useState(false);
@@ -105,6 +150,9 @@ export default function MushafScreen() {
   const playingPage = playingAya ? AYAH_TO_PAGE.get(playingAya) : undefined;
 
   useEffect(() => {
+    if (!sessionActiveRef.current) {
+      return;
+    }
     if (!playingPage || playingPage <= lastAutoPageRef.current) {
       return;
     }
@@ -116,6 +164,7 @@ export default function MushafScreen() {
   return (
     <Screen isInnerPage>
       <PagerView
+        key={surahId}
         ref={pagerRef}
         style={styles.page}
         pageMargin={16}
@@ -134,7 +183,7 @@ export default function MushafScreen() {
                 <PagerItem
                   pageNumber={pageNumber}
                   playingAya={playingAya}
-                  onWordPress={playAyah}
+                  onWordPress={handleWordPress}
                   isReady={isContentReady}
                 />
               ) : (
@@ -146,16 +195,10 @@ export default function MushafScreen() {
         })}
       </PagerView>
 
-      {playingAya && (
-        <AppTouchable
-          variant="primary"
-          onPress={() => stop().catch(() => {})}
-          style={styles.stopButton}
-          accessibilityLabel="Stop recitation"
-        >
-          <AppIcon name="stop" size={22} color="text.inverse" />
-        </AppTouchable>
-      )}
+      <PlayerBar
+        playingAya={playingAya}
+        onStop={() => stop().catch(() => {})}
+      />
     </Screen>
   );
 }
@@ -168,20 +211,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  stopButton: {
-    position: 'absolute',
-    bottom: 32,
-    alignSelf: 'center',
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 3 },
   },
 });

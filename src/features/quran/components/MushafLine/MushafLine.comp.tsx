@@ -6,15 +6,17 @@ import { fontFamily, useTheme } from '@/theme';
 interface Props {
   words: QuranWord[];
   onWordPress?: (word: QuranWord) => void;
-  selectedWordAya?: number | null;
-  playingAya?: number | null;
+  /** Full "surah:ayah" key of the pressed word — unique across surahs. */
+  selectedKey?: string | null;
+  /** Full "surah:ayah" key of the currently playing ayah — unique across surahs. */
+  playingKey?: string | null;
 }
 
 export default function MushafLine({
   words,
   onWordPress,
-  selectedWordAya,
-  playingAya,
+  selectedKey,
+  playingKey,
 }: Props) {
   const theme = useTheme();
 
@@ -25,17 +27,20 @@ export default function MushafLine({
       numberOfLines={1}
     >
       {words.map((w, idx) => {
+        // Key on the full surah:ayah pair so ayahs that share an ayah number
+        // across different surahs never highlight each other.
+        const wordKey = `${w.surah_number}:${w.ayah_number}`;
         if (w.char_type_name === 'end') {
           return (
             <Text
-              key={`${w.surah_number}-${w.ayah_number}-${idx}`}
+              key={`${wordKey}-${idx}`}
               style={[
                 styles.ayahEnd,
                 { color: theme.accent.secondary },
-                selectedWordAya === w.ayah_number && {
+                selectedKey === wordKey && {
                   color: theme.background.brand,
                 },
-                playingAya === w.ayah_number && {
+                playingKey === wordKey && {
                   color: theme.accent.soft,
                 },
               ]}
@@ -47,13 +52,13 @@ export default function MushafLine({
         }
         return (
           <Text
-            key={`${w.surah_number}-${w.ayah_number}-${idx}`}
+            key={`${wordKey}-${idx}`}
             style={[
               styles.word,
-              selectedWordAya === w.ayah_number && {
+              selectedKey === wordKey && {
                 color: theme.background.brand,
               },
-              playingAya === w.ayah_number && {
+              playingKey === wordKey && {
                 color: theme.accent.soft,
               },
             ]}

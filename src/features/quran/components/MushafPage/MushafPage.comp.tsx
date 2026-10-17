@@ -18,17 +18,17 @@ function MushafPage({
   onWordPress: (word: QuranWord) => void;
 }) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
-  const [selectedWordAya, setSelectedWordAya] = useState<number | null>(null);
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
   const handleWordPress = useCallback(
     (word: QuranWord) => {
-      setSelectedWordAya(word.ayah_number);
+      // Key on the full surah:ayah pair so selection is unique even when a
+      // page holds multiple surahs with overlapping ayah numbers.
+      setSelectedKey(`${word.surah_number}:${word.ayah_number}`);
       onWordPress(word);
     },
     [onWordPress],
   );
-
-  const playingAyaNumber = playingAya ? Number(playingAya.split(':')[1]) : null;
 
   if (loading) {
     return <ActivityIndicator style={styles.center} color="#C9A24B" />;
@@ -62,8 +62,8 @@ function MushafPage({
                   key={line.lineNumber + '-MushafLine'}
                   words={line.words}
                   onWordPress={handleWordPress}
-                  selectedWordAya={selectedWordAya}
-                  playingAya={playingAyaNumber}
+                  selectedKey={selectedKey}
+                  playingKey={playingAya}
                 />
               </View>
             );
@@ -74,8 +74,8 @@ function MushafPage({
               <MushafLine
                 words={line.words}
                 onWordPress={handleWordPress}
-                selectedWordAya={selectedWordAya}
-                playingAya={playingAyaNumber}
+                selectedKey={selectedKey}
+                playingKey={playingAya}
               />
             </View>
           );
