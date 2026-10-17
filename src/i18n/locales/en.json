@@ -52,7 +52,8 @@
     "asr": "Asr",
     "maghrib": "Maghrib",
     "isha": "Isha",
-    "imsak": "Imsak"
+    "imsak": "Imsak",
+    "sunrise": "Sunrise"
   },
   "about": {
     "title": "About"

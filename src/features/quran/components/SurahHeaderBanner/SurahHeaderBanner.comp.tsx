@@ -1,8 +1,9 @@
 import React from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { SurahNameBannerImage } from '@/assets/images';
 import { AppText } from '@/components/ui';
 import quranSurahs from '@/assets/offline-res/quran-surahs.json';
+import { useTheme } from '@/theme';
 
 export default function SurahHeaderBanner({
   surahNumber,
@@ -10,23 +11,23 @@ export default function SurahHeaderBanner({
   surahNumber: number;
 }) {
   const surah = quranSurahs.find(s => s.id === surahNumber);
+  const theme = useTheme();
+
   return (
-    <ImageBackground
-      source={SurahNameBannerImage} // ornament asset, bundle your own
-      style={styles.banner}
-      resizeMode="stretch"
-    >
+    <View style={[styles.banner, { borderColor: theme.text.primary }]}>
       <AppText style={styles.title}>{surah?.name_arabic}</AppText>
-    </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   banner: {
-    height: 56,
     marginVertical: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderTopStartRadius: 20,
+    borderBottomEndRadius: 20,
   },
   title: {
     fontSize: 22,

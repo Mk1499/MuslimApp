@@ -20,22 +20,40 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
 
   return (
     <View style={styles.page}>
-      {lines.map(line => {
-        if (line.words.length === 0) return null;
-        const first = line.words[0];
-        if (first.ayah_number === 1 && first?.position === 1) {
+      {/* حاوية للمحتوى عشان تاخد المساحة المتاحة وتتضغط جواها */}
+      <View style={styles.contentContainer}>
+        {lines.map(line => {
+          if (line.words.length === 0) return null;
+          const first = line.words[0];
+          if (first.ayah_number === 1 && first?.position === 1) {
+            return (
+              <View
+                key={line.lineNumber + '-SurahStart'}
+                style={styles.shrinkableItem}
+              >
+                <SurahHeaderBanner
+                  key={line.lineNumber + 'SurahHeaderBanner'}
+                  surahNumber={+first?.surah_number}
+                />
+                <BismillahLine
+                  key={line.lineNumber + '-Basmala'}
+                  surahNumber={+first?.surah_number}
+                />
+                <MushafLine
+                  key={line.lineNumber + '-MushafLine'}
+                  words={line.words}
+                  onWordPress={word => {
+                    setSelectedWordAya(word.ayah_number);
+                  }}
+                  selectedWordAya={selectedWordAya}
+                />
+              </View>
+            );
+          }
+
           return (
-            <View key={line.lineNumber + '-SurahStart'}>
-              <SurahHeaderBanner
-                key={line.lineNumber + 'SurahHeaderBanner'}
-                surahNumber={+first?.surah_number}
-              />
-              <BismillahLine
-                key={line.lineNumber + '-Basmala'}
-                surahNumber={+first?.surah_number}
-              />
+            <View key={line.lineNumber} style={styles.shrinkableItem}>
               <MushafLine
-                key={line.lineNumber + '-MushafLine'}
                 words={line.words}
                 onWordPress={word => {
                   setSelectedWordAya(word.ayah_number);
@@ -44,19 +62,8 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
               />
             </View>
           );
-        }
-
-        return (
-          <MushafLine
-            key={line.lineNumber}
-            words={line.words}
-            onWordPress={word => {
-              setSelectedWordAya(word.ayah_number);
-            }}
-            selectedWordAya={selectedWordAya}
-          />
-        );
-      })}
+        })}
+      </View>
 
       <PageFooter pageNumber={pageData.page} />
     </View>
@@ -66,8 +73,17 @@ function MushafPage({ pageNumber }: { pageNumber: number }) {
 const styles = StyleSheet.create({
   page: {
     paddingHorizontal: 16,
-    flex: 1,
+    height: 0.84 * SCREEN_HEIGHT, // أو 100% لو الـ parent بتاعه واخد ارتفاع الشاشة مظبوط
     justifyContent: 'space-between',
+    overflow: 'hidden', // عشان نمنع أي حاجة تطلع بره الحدود
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between', // لو عايز توزع السطور جوه المساحة المتاحة
+    flexShrink: 1,
+  },
+  shrinkableItem: {
+    flexShrink: 1, // دي بتخلي العنصر يقبل الكشان لو المساحة ضاقت
   },
   center: { flex: 1, justifyContent: 'center' },
   error: { color: 'red', textAlign: 'center', marginTop: 40 },

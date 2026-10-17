@@ -30,9 +30,11 @@ export default function MushafLine({
               style={[
                 styles.ayahEnd,
                 { color: theme.accent.secondary },
-                selectedWordAya === w.ayah_number && styles.selectedWordAya,
+                selectedWordAya === w.ayah_number && {
+                  color: theme.background.brand,
+                },
               ]}
-              onLongPress={() => onWordPress?.(w)}
+              onPress={() => onWordPress?.(w)}
             >
               {w.text_uthmani + ' '}
             </Text>
@@ -43,9 +45,11 @@ export default function MushafLine({
             key={`${w.surah_number}-${w.ayah_number}-${idx}`}
             style={[
               styles.word,
-              selectedWordAya === w.ayah_number && styles.selectedWordAya,
+              selectedWordAya === w.ayah_number && {
+                color: theme.background.brand,
+              },
             ]}
-            onLongPress={() => onWordPress?.(w)}
+            onPress={() => onWordPress?.(w)}
           >
             {w.text_uthmani + ' '}
           </Text>
@@ -72,8 +76,5 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.uthmani,
     fontSize: 38,
     includeFontPadding: false,
-  },
-  selectedWordAya: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
   },
 });

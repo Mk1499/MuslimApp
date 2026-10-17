@@ -106,8 +106,7 @@ export default function MushafScreen() {
 
 const styles = StyleSheet.create({
   page: {
-    height: SCREEN_HEIGHT * 0.8,
-    // backgroundColor: 'gold',
+    flex: 1,
   },
   placeholder: {
     flex: 1,
