@@ -14,18 +14,22 @@ export default function YTPlayer({ videoId }: YTPlayerProps) {
     }
   }, []);
 
-  const togglePlaying = useCallback(() => {
-    setPlaying(prev => !prev);
-  }, []);
   return (
-    <View>
+    <View
+      style={{
+        borderRadius: 14,
+        overflow: 'hidden',
+        borderWidth: 2,
+        borderColor: 'black',
+        height: 0.35 * SCREEN_HEIGHT,
+      }}
+    >
       <YoutubePlayer
-        height={0.35 * SCREEN_HEIGHT}
+        height={'100%'}
         play={playing}
         videoId={videoId}
         onChangeState={onStateChange}
       />
-      <Button title={playing ? 'pause' : 'play'} onPress={togglePlaying} />
     </View>
   );
 }

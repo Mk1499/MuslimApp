@@ -14,7 +14,6 @@ export default function MediaDashboardScreen() {
     <Screen padded scroll isLoading={isLoading}>
       {latestVideos?.data?.map(video => (
         <View key={video._id}>
-          <AppText>{video.title}</AppText>
           <YTPlayer videoId={video.youtubeVideoId} />
         </View>
       ))}
