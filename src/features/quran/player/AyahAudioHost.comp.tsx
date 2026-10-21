@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Audio, type AudioTagHandle } from 'react-native-audio-api';
+import { Audio, type AudioSource, type AudioTagHandle } from 'react-native-audio-api';
 import { ayahPlayerEngine } from './ayahPlayerEngine';
 
 /**
@@ -33,6 +33,17 @@ export default function AyahAudioHost() {
 
   const { sourceUrl, sourceId } = snapshot;
 
+  /**
+   * The `source` object must keep the same identity for as long as the URL is
+   * unchanged. `react-native-audio-api` memoizes its loader on the source
+   * *object*, so a fresh literal on every render would tear the current source
+   * down and download the file again — restarting the ayah in a loop.
+   */
+  const source = useMemo<AudioSource>(
+    () => ({ uri: sourceUrl ?? '' }),
+    [sourceUrl],
+  );
+
   if (!sourceUrl) {
     return null;
   }
@@ -42,7 +53,7 @@ export default function AyahAudioHost() {
       <Audio
         key={sourceId}
         ref={handleRef}
-        source={{ uri: sourceUrl }}
+        source={source}
         context={ayahPlayerEngine.getAudioContext() ?? undefined}
         autoPlay={false}
         onLoad={() => ayahPlayerEngine.handleLoaded(sourceId)}

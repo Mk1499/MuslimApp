@@ -111,8 +111,12 @@ class AyahPlayerEngine {
   /**
    * The shared audio context. It is created once and reused for every ayah so
    * swapping sources never tears down the underlying native audio runtime.
+   *
+   * It is created lazily so the audio host always hands the very same context
+   * to the `<Audio>` element — a changing context would make the library
+   * build a new one.
    */
-  getAudioContext = (): AudioContext | null => this.context;
+  getAudioContext = (): AudioContext | null => this.getContext();
 
   /** Registers the audio element that actually produces the sound. */
   attachHost = (host: AyahAudioHost): (() => void) => {
@@ -133,7 +137,9 @@ class AyahPlayerEngine {
    * following ayahs, across page and surah boundaries.
    */
   play = (target: AyahTarget): void => {
-    const index = AYAH_INDEX.get(`${target.surah_number}:${target.ayah_number}`);
+    const index = AYAH_INDEX.get(
+      `${target.surah_number}:${target.ayah_number}`,
+    );
     if (index === undefined) {
       return;
     }
@@ -236,10 +242,7 @@ class AyahPlayerEngine {
       return;
     }
 
-    context
-      .resume()
-      .then(start)
-      .catch(start);
+    context.resume().then(start).catch(start);
   };
 
   /** The current source played to its end — move on to the next ayah. */
@@ -268,6 +271,9 @@ class AyahPlayerEngine {
 
   /** The audio element started / stopped producing sound. */
   handlePlaying = (isPlaying: boolean): void => {
+    if (this.snapshot.isPlaying === isPlaying) {
+      return;
+    }
     this.patch({ isPlaying });
     this.updateNotification(isPlaying ? 'playing' : 'paused');
   };
@@ -298,7 +304,20 @@ class AyahPlayerEngine {
     });
   };
 
+  /**
+   * Merges the changes into the snapshot and notifies the listeners.
+   *
+   * Nothing is published when the values did not actually change: every
+   * notification re-renders the audio host, and a re-render would in turn
+   * restart the underlying source.
+   */
   private patch = (changes: Partial<AyahPlayerSnapshot>): void => {
+    const keys = Object.keys(changes) as (keyof AyahPlayerSnapshot)[];
+    const changed = keys.some(key => this.snapshot[key] !== changes[key]);
+    if (!changed) {
+      return;
+    }
+
     this.snapshot = { ...this.snapshot, ...changes };
     this.listeners.forEach(listener => listener(this.snapshot));
   };

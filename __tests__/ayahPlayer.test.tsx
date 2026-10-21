@@ -15,6 +15,7 @@ jest.mock('react-native-audio-api', () => {
 
   const state = {
     props: null as any,
+    mounts: 0,
     handle: {
       play: jest.fn(),
       pause: jest.fn(),
@@ -28,6 +29,9 @@ jest.mock('react-native-audio-api', () => {
   const Audio = ReactModule.forwardRef((props: any, ref: any) => {
     state.props = props;
     ReactModule.useImperativeHandle(ref, () => state.handle, []);
+    ReactModule.useEffect(() => {
+      state.mounts += 1;
+    }, []);
     return null;
   });
   Audio.displayName = 'Audio';
@@ -84,6 +88,7 @@ beforeEach(async () => {
     ayahPlayerEngine.stop();
   });
   state.props = null;
+  state.mounts = 0;
   state.handle.play.mockClear();
   state.handle.pause.mockClear();
 });
