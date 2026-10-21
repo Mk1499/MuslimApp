@@ -15,6 +15,7 @@ enum ScreenNames {
   Asmaa99 = 'asmaa99',
   MutashanihatList = 'mutashanihatList',
   SurahMutashabihat = 'surahMutashabihat',
+  MediaDashboard = 'mediaDashboard',
 }
 
 export default ScreenNames;

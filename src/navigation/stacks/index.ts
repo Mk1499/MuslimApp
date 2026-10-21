@@ -2,6 +2,7 @@ import StackNames from '../StackNames';
 import QuranStack from './quranStack';
 import HomeStack from './homeStack';
 import MutashabihatStack from './mutashabihatStack';
+import MediaStack from './mediaStack';
 
 export default [
   {
@@ -13,5 +14,9 @@ export default [
   {
     name: StackNames.HomeStack,
     component: HomeStack,
+  },
+  {
+    name: StackNames.MediaStack,
+    component: MediaStack,
   },
 ];

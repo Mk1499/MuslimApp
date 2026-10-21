@@ -2,6 +2,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 import StackNames from './StackNames';
 import type { HomeStackParamList } from './stacks/homeStack';
 import type { QuranStackParamList } from './stacks/quranStack';
+import { MediaStackParamList } from './stacks/mediaStack';
 
 /** Screens inside the bottom tab bar. */
 export type MainTabParamList = {
@@ -9,6 +10,7 @@ export type MainTabParamList = {
   Quran: undefined;
   PrayerTimes: undefined;
   Settings: undefined;
+  Media: undefined;
 };
 
 /** Stack screens rendered above the tabs (push full-screen pages here). */
@@ -18,6 +20,7 @@ export type AppStackParamList = {
   [StackNames.Main]: undefined;
   [StackNames.HomeStack]: NavigatorScreenParams<HomeStackParamList>;
   [StackNames.Quran]: NavigatorScreenParams<QuranStackParamList>;
+  [StackNames.MediaStack]: NavigatorScreenParams<MediaStackParamList>;
 };
 
 /**

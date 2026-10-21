@@ -9,6 +9,7 @@ import { AppIcon, type AppIconName } from '../components/ui';
 import { fontFamily, fontSize, useTheme } from '../theme';
 import type { MainTabParamList } from './types';
 import { DashboardScreen } from '@/features/home/screens/Dashboard/Dashboard.screen';
+import MediaDashboardScreen from '@/features/media/screens/MediaDasboard/MediaDashboard.screen';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -16,6 +17,7 @@ const tabIcons: Record<keyof MainTabParamList, AppIconName> = {
   Home: 'home',
   Quran: 'book',
   PrayerTimes: 'time',
+  Media: 'caret-back-circle',
   Settings: 'settings-outline',
 };
 
@@ -84,9 +86,9 @@ export function BottomTabs(): React.JSX.Element {
         options={{ title: t('tabs.quran') }}
       />
       <Tab.Screen
-        name="PrayerTimes"
-        component={PrayerTimesScreen}
-        options={{ title: t('tabs.prayerTimes') }}
+        name="Media"
+        component={MediaDashboardScreen}
+        options={{ title: t('tabs.media') }}
       />
       <Tab.Screen
         name="Settings"

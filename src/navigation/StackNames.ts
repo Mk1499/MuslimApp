@@ -5,4 +5,5 @@ export default {
   Tafseer: 'TafseerStack',
   Azkar: 'AzkarStack',
   Mutashabihat: 'MutashabihatStack',
+  MediaStack: 'MediaStack',
 } as const;

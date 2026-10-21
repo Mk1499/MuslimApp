@@ -16,7 +16,8 @@
     "home": "Home",
     "quran": "Quran",
     "prayerTimes": "Prayer Times",
-    "settings": "Settings"
+    "settings": "Settings",
+    "media": "Media"
   },
   "home": {
     "greeting": "Assalamu Alaikum",
