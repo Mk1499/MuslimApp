@@ -11,14 +11,13 @@ export default function MediaDashboardScreen() {
   console.log({ latestVideos });
 
   return (
-    <Screen padded scroll>
+    <Screen padded scroll isLoading={isLoading}>
       {latestVideos?.data?.map(video => (
         <View key={video._id}>
           <AppText>{video.title}</AppText>
           <YTPlayer videoId={video.youtubeVideoId} />
         </View>
       ))}
-      {isLoading && <AppText>Loading...</AppText>}
       {error && <AppText>Error loading videos</AppText>}
     </Screen>
   );

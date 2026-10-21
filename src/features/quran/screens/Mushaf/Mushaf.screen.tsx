@@ -15,6 +15,7 @@ import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from 'react-native-pager-view';
 import MushafPage from '../../components/MushafPage/MushafPage.comp';
+import AyahAudioHost from '../../player/AyahAudioHost.comp';
 import { useAyahPlayer } from '../../hooks/useAyahPlayer';
 import { AYAH_TO_PAGE } from '../../player/ayahSequence';
 import { QuranWord } from '@/types/quran';
@@ -99,7 +100,8 @@ export default function MushafScreen() {
 
   // The player lives here (not inside a page) so it survives page swipes and
   // can drive the auto-swipe below.
-  const { playAyah, stop, playingAya } = useAyahPlayer();
+  const { playAyah, stop, togglePlay, playingAya, isPlaying } =
+    useAyahPlayer();
 
   // Mark the session as owned by this screen when the user starts playback.
   const handleWordPress = useCallback(
@@ -223,8 +225,13 @@ export default function MushafScreen() {
 
       <PlayerBar
         playingAya={playingAya}
-        onStop={() => stop().catch(() => {})}
+        isPlaying={isPlaying}
+        onTogglePlay={togglePlay}
+        onStop={stop}
       />
+
+      {/* Invisible audio element that actually plays the recitation. */}
+      <AyahAudioHost />
     </Screen>
   );
 }

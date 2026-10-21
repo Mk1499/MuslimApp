@@ -1,9 +1,5 @@
 import { I18nManager, StatusBar, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
-import TrackPlayer, {
-  AppKilledPlaybackBehavior,
-  Capability,
-} from 'react-native-track-player';
+import React from 'react';
 import {
   DarkTheme,
   DefaultTheme,
@@ -19,39 +15,7 @@ import './src/i18n';
 
 const queryClient = new QueryClient();
 
-// Initialise the audio player once for the whole app.
-function useTrackPlayerSetup() {
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      try {
-        await TrackPlayer.setupPlayer();
-        if (!active) return;
-        await TrackPlayer.updateOptions({
-          capabilities: [
-            Capability.Play,
-            Capability.Pause,
-            Capability.Stop,
-          ],
-          compactCapabilities: [Capability.Play, Capability.Pause],
-          android: {
-            appKilledPlaybackBehavior:
-              AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
-          },
-        });
-      } catch {
-        // ignore — player will simply not be available
-      }
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
-}
-
 function App(): React.JSX.Element {
-  useTrackPlayerSetup();
-
   return (
     <GestureHandlerRootView style={styles.flex}>
       <ThemeProvider>

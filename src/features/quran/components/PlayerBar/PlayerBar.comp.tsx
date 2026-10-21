@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { I18nManager, Pressable, StyleSheet, View } from 'react-native';
-import TrackPlayer, { useIsPlaying } from 'react-native-track-player';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -15,6 +14,9 @@ import { SURAH_NAMES } from '../../player/ayahSequence';
 interface Props {
   /** Full "surah:ayah" key of the currently playing ayah, or null. */
   playingAya: string | null;
+  /** Whether the audio is currently producing sound. */
+  isPlaying: boolean;
+  onTogglePlay: () => void;
   onStop: () => void;
 }
 
@@ -27,9 +29,13 @@ interface Props {
  * of the way with a collapse button; a small floating button then takes its
  * place and slides it back up.
  */
-export default function PlayerBar({ playingAya, onStop }: Props) {
+export default function PlayerBar({
+  playingAya,
+  isPlaying,
+  onTogglePlay,
+  onStop,
+}: Props) {
   const theme = useTheme();
-  const { playing } = useIsPlaying();
 
   const [mounted, setMounted] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -80,14 +86,6 @@ export default function PlayerBar({ playingAya, onStop }: Props) {
   const surahNumber = playingAya ? Number(playingAya.split(':')[0]) : null;
   const surahName = surahNumber != null ? SURAH_NAMES[surahNumber] : undefined;
 
-  const togglePlay = () => {
-    if (playing) {
-      TrackPlayer.pause().catch(() => {});
-    } else {
-      TrackPlayer.play().catch(() => {});
-    }
-  };
-
   return (
     <>
       {/* Floating button — shown only while the bar is collapsed. */}
@@ -135,17 +133,17 @@ export default function PlayerBar({ playingAya, onStop }: Props) {
 
           <View style={styles.controls}>
             <Pressable
-              onPress={togglePlay}
+              onPress={onTogglePlay}
               style={({ pressed }) => [
                 styles.controlBtn,
                 { backgroundColor: theme.button.primaryBg },
                 pressed && styles.pressed,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={playing ? 'Pause' : 'Play'}
+              accessibilityLabel={isPlaying ? 'Pause' : 'Play'}
             >
               <AppIcon
-                name={playing ? 'pause' : 'play'}
+                name={isPlaying ? 'pause' : 'play'}
                 size={20}
                 color="text.inverse"
               />

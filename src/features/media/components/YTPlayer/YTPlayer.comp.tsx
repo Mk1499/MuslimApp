@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Alert, Button, View } from 'react-native';
 import { YTPlayerProps } from './types';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import { SCREEN_HEIGHT } from '@/utils/constants';
 
 export default function YTPlayer({ videoId }: YTPlayerProps) {
   const [playing, setPlaying] = useState(false);
@@ -19,7 +20,7 @@ export default function YTPlayer({ videoId }: YTPlayerProps) {
   return (
     <View>
       <YoutubePlayer
-        height={200}
+        height={0.35 * SCREEN_HEIGHT}
         play={playing}
         videoId={videoId}
         onChangeState={onStateChange}

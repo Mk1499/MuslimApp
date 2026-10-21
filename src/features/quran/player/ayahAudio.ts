@@ -34,12 +34,6 @@ export function getReciterDisplayName(folder: string = RECITER_FOLDER): string {
   return RECITER_NAMES[folder] ?? folder;
 }
 
-/**
- * How many ayahs (including the one pressed) to preload as a playlist.
- * Playback runs through them one after another, then stops.
- */
-export const PRELOAD_NEXT_AYATS = 5;
-
 const BASE_URL = 'https://everyayah.com/data';
 
 const pad3 = (n: number) => String(n).padStart(3, '0');
@@ -61,19 +55,4 @@ export function getAyahStreamUrl(
   return `${BASE_URL}/${RECITER_FOLDER}/${pad3(word.surah_number)}${pad3(
     word.ayah_number,
   )}.mp3`;
-}
-
-/** Builds a track-player track for a single ayah. */
-export function buildAyahTrack(
-  surahNumber: number,
-  ayahNumber: number,
-): import('react-native-track-player').Track {
-  return {
-    id: `${surahNumber}:${ayahNumber}`,
-    url: `${BASE_URL}/${RECITER_FOLDER}/${pad3(surahNumber)}${pad3(
-      ayahNumber,
-    )}.mp3`,
-    title: `آية ${ayahNumber}`,
-    artist: `سورة ${surahNumber}`,
-  };
 }

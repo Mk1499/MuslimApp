@@ -17,10 +17,110 @@ jest.mock('react-native-localize', () => ({
   getCountry: () => 'US',
 }));
 
+jest.mock('@react-native-community/geolocation', () => ({
+  __esModule: true,
+  default: {
+    setRNConfiguration: jest.fn(),
+    requestAuthorization: jest.fn(),
+    getCurrentPosition: jest.fn(),
+    watchPosition: jest.fn(() => 1),
+    clearWatch: jest.fn(),
+  },
+}));
+
+jest.mock('react-native-webview', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+
+  const WebView = React.forwardRef((props, ref) =>
+    React.createElement(View, { ...props, ref }),
+  );
+  WebView.displayName = 'WebView';
+
+  return {
+    __esModule: true,
+    default: WebView,
+    WebView,
+  };
+});
+
 jest.mock('react-native-restart', () => ({
   __esModule: true,
   default: { restart: jest.fn(), Restart: jest.fn() },
 }));
+
+jest.mock('react-native-compass-heading', () => ({
+  __esModule: true,
+  default: {
+    start: jest.fn(() => Promise.resolve(undefined)),
+    stop: jest.fn(() => Promise.resolve(undefined)),
+  },
+}));
+
+jest.mock('react-native-audio-api', () => {
+  const React = require('react');
+
+  const Audio = React.forwardRef((props, ref) => {
+    React.useImperativeHandle(ref, () => ({
+      play: jest.fn(),
+      pause: jest.fn(),
+      seekToTime: jest.fn(),
+      setVolume: jest.fn(),
+      setMuted: jest.fn(),
+      setPlaybackRate: jest.fn(),
+    }));
+    return null;
+  });
+  Audio.displayName = 'Audio';
+
+  const AudioContext = jest.fn().mockImplementation(() => ({
+    currentTime: 0,
+    sampleRate: 44100,
+    state: 'running',
+    destination: {},
+    resume: jest.fn().mockResolvedValue(undefined),
+    suspend: jest.fn().mockResolvedValue(undefined),
+    close: jest.fn().mockResolvedValue(undefined),
+  }));
+
+  return {
+    __esModule: true,
+    Audio,
+    AudioContext,
+    AudioManager: {
+      getDevicePreferredSampleRate: jest.fn(() => 44100),
+      setAudioSessionActivity: jest.fn().mockResolvedValue(undefined),
+      setAudioSessionOptions: jest.fn(),
+      disableSessionManagement: jest.fn(),
+      observeAudioInterruptions: jest.fn(),
+      activelyReclaimSession: jest.fn(),
+      observeVolumeChanges: jest.fn(),
+      addSystemEventListener: jest.fn(() => ({ subscriptionId: '0' })),
+      requestRecordingPermissions: jest.fn(),
+      checkRecordingPermissions: jest.fn(),
+      requestNotificationPermissions: jest.fn(),
+      checkNotificationPermissions: jest.fn(),
+      getDevicesInfo: jest.fn(),
+      setInputDevice: jest.fn(),
+    },
+    PlaybackNotificationManager: {
+      show: jest.fn().mockResolvedValue(undefined),
+      hide: jest.fn().mockResolvedValue(undefined),
+      isActive: jest.fn().mockResolvedValue(false),
+      enableControl: jest.fn().mockResolvedValue(undefined),
+      addEventListener: jest.fn(() => ({ subscriptionId: '0' })),
+    },
+    RecordingNotificationManager: {
+      show: jest.fn().mockResolvedValue(undefined),
+      hide: jest.fn().mockResolvedValue(undefined),
+      isActive: jest.fn().mockResolvedValue(false),
+      addEventListener: jest.fn(() => ({ subscriptionId: '0' })),
+    },
+    decodeAudioData: jest.fn(),
+    getAudioDuration: jest.fn(),
+    isFfmpegEnabled: jest.fn(() => false),
+  };
+});
 
 jest.mock('react-native-vector-icons/Ionicons', () => {
   const React = require('react');
@@ -38,6 +138,20 @@ jest.mock('react-native-vector-icons/Ionicons', () => {
   return {
     __esModule: true,
     default: MockIcon,
+  };
+});
+
+jest.mock('react-native-worklets', () =>
+  require('react-native-worklets/lib/module/mock'),
+);
+
+// `react-native-reanimated`'s native initializers call into the CSS native
+// proxy, which is not implemented by the Jest (JSReanimated) backend.
+jest.mock('react-native-reanimated/src/css/native/proxy', () => {
+  const actual = jest.requireActual('react-native-reanimated/src/css/native/proxy');
+  return {
+    ...actual,
+    setCSSEventHandler: jest.fn(),
   };
 });
 
