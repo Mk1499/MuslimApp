@@ -1,3 +1,7 @@
+import { Platform } from 'react-native';
+
+export const isIOS = Platform.OS === 'ios';
+
 /**
  * Cairo font family names map to the bundled TTF filenames
  * (src/assets/fonts/Cairo-*.ttf) registered via react-native.config.js.
@@ -7,8 +11,8 @@ export const fontFamily = {
   medium: 'Cairo-Medium',
   semiBold: 'Cairo-SemiBold',
   bold: 'Cairo-Bold',
-  uthmani: 'KFGQPC Uthmanic Script HAFS',
-  hafs: 'KFGQPC HAFS Uthmanic Script',
+  uthmani: isIOS ? 'KFGQPC Uthmanic Script HAFS' : 'Uthmani',
+  hafs: isIOS ? 'KFGQPC HAFS Uthmanic Script' : 'hafs',
 };
 
 export const fontSize = {

@@ -39,7 +39,6 @@ export default function MushafLine({
                 { color: theme.accent.secondary },
                 playingKey === wordKey && {
                   color: theme.text.highlight,
-                  fontWeight: 'bold',
                 },
               ]}
               onPress={() => onWordPress?.(w)}

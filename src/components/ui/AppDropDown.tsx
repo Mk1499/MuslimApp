@@ -9,7 +9,7 @@ import {
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import CommonListItem from '@/components/common/CommonListItem/CommonListItem.comp';
 import { AppText } from '@/components/ui/AppText';
-import { AppTheme, useTheme } from '@/theme';
+import { AppTheme, fontFamily, useTheme } from '@/theme';
 import { AppIcon } from './AppIcon';
 
 type IProps = {
@@ -104,7 +104,8 @@ const makeStyles = (theme: AppTheme) =>
     },
     title: {
       fontSize: 20,
-      fontWeight: 'bold',
       marginStart: 16,
+      fontFamily: fontFamily.bold,
+      marginBottom: 16,
     },
   });
