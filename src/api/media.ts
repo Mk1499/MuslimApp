@@ -20,3 +20,11 @@ export async function getLatestSpeakers(): Promise<GetLatestVideosResponse> {
 
   return response.data;
 }
+
+export async function getFeaturedVideos(): Promise<GetLatestVideosResponse> {
+  const response = await mediaClient.get<GetLatestVideosResponse>(
+    '/videos/featured',
+  );
+
+  return response.data;
+}

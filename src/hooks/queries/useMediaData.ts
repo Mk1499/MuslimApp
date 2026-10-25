@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getLatestVideos } from '@/api/media';
+import { getLatestVideos, getFeaturedVideos } from '@/api/media';
 
 export default function useMediaData() {
   const useGetLatestVideosQuery = () =>
@@ -8,5 +8,11 @@ export default function useMediaData() {
       queryFn: () => getLatestVideos(),
     });
 
-  return { useGetLatestVideosQuery };
+  const useGetFeaturedVideosQuery = () =>
+    useQuery({
+      queryKey: ['featured-videos'],
+      queryFn: () => getFeaturedVideos(),
+    });
+
+  return { useGetLatestVideosQuery, useGetFeaturedVideosQuery };
 }

@@ -136,5 +136,9 @@
     "screenName": "متشابهات سور {{surah}}",
     "similarAyahs": "آيات متشابهة",
     "noSimilarAyahs": "لم يتم العثور على آيات متشابهة"
+  },
+  "media": {
+    "latestVideos": "أحدث الفيديوهات",
+    "featuredVideos": "الفيديوهات المميزة"
   }
 }
