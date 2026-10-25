@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 import { VideoCardProps } from './types';
 import { AppCard, AppIcon, AppText } from '@/components/ui';
@@ -6,6 +6,9 @@ import AppImage from '@/components/ui/AppImage';
 import makeStyles from './styles';
 import { useTheme } from '@/theme';
 import useFormatter from '@/hooks/useFormatter';
+import { useNavigation } from '@react-navigation/native';
+import StackNames from '@/navigation/StackNames';
+import ScreenNames from '@/navigation/ScreenNames';
 
 export default function VideoCard({ video }: VideoCardProps) {
   const theme = useTheme();
@@ -13,6 +16,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   const { youtubeVideoId, title, speakers, views, duration } = video;
   const coverURL = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
   const { formatDuration } = useFormatter();
+  const { navigate } = useNavigation();
 
   return (
     <AppCard style={styles.container}>
@@ -32,7 +36,17 @@ export default function VideoCard({ video }: VideoCardProps) {
           </View>
         </View>
       </View>
-      <View style={[styles.dataCont]}>
+      <Pressable
+        onPress={() => {
+          navigate(StackNames.MediaStack, {
+            screen: ScreenNames.SpeakerProfile,
+            params: {
+              speaker: speakers[0],
+            },
+          });
+        }}
+        style={[styles.dataCont]}
+      >
         <AppImage
           source={{ uri: speakers[0]?.imageUrl }}
           style={styles.speakerImg}
@@ -45,7 +59,7 @@ export default function VideoCard({ video }: VideoCardProps) {
             {speakers[0]?.name}
           </AppText>
         </View>
-      </View>
+      </Pressable>
     </AppCard>
   );
 }
