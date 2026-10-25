@@ -27,6 +27,7 @@
     "react-i18next": "^17.0.12",
     "react-native": "0.87.0",
     "react-native-audio-api": "^0.13.6",
+    "react-native-collapsible-fluid-tabs": "^1.5.1",
     "react-native-compass-heading": "^2.0.2",
     "react-native-gesture-handler": "^3.2.1",
     "react-native-linear-gradient": "^2.8.3",

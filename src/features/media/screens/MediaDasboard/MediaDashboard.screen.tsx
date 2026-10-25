@@ -13,40 +13,38 @@ export default function MediaDashboardScreen() {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const { t } = useTranslation();
-  const {
-    useGetLatestVideosQuery,
-    useGetFeaturedVideosQuery,
-    useGetFeaturedSpeakersQuery,
-  } = useMediaData();
-  const {
-    data: latestVideos,
-    isLoading: isLatestLoading,
-    error,
-    refetch: refetchLatestVideos,
-    isRefetching: isRefetchingLatestVideos,
-  } = useGetLatestVideosQuery();
-  const {
-    data: featuredVideos,
-    isLoading: isFeaturedLoading,
-    error: featuredError,
-    refetch: refetchFeaturedVideos,
-    isRefetching: isRefetchingFeaturedVideos,
-  } = useGetFeaturedVideosQuery();
+  const { useMediaDashboardQueries } = useMediaData();
 
-  const {
-    data: featuredSpeakers,
-    isLoading: isFeaturedSpeakersLoading,
-    error: featuredSpeakersError,
-    refetch: refetchFeaturedSpeakers,
-    isRefetching: isRefetchingFeaturedSpeakers,
-  } = useGetFeaturedSpeakersQuery();
+  const { data, isError, isLoading, refetch, isRefetching } =
+    useMediaDashboardQueries();
+  const { latestVideos, featuredVideos, mostViewedVideos, featuredSpeakers } =
+    data ?? {};
 
-  const isLoading =
-    isLatestLoading || isFeaturedLoading || isFeaturedSpeakersLoading;
-  const isRefetching =
-    isRefetchingLatestVideos ||
-    isRefetchingFeaturedVideos ||
-    isRefetchingFeaturedSpeakers;
+  function renderVideosSection(title: string, data: any[]) {
+    return (
+      <View style={styles.section}>
+        <View style={styles.sectionHead}>
+          <AppText variant="subtitle" style={styles.sectionTitle}>
+            {title}
+          </AppText>
+          <AppText variant="caption" style={styles.clickableText}>
+            {t('common.seeAll')}
+          </AppText>
+        </View>
+        <FlatList
+          data={data}
+          keyExtractor={item => item._id}
+          renderItem={({ item: video }) => (
+            <View style={styles.cardCont}>
+              <VideoCard video={video} />
+            </View>
+          )}
+          horizontal
+          style={styles.listCont}
+        />
+      </View>
+    );
+  }
 
   return (
     <Screen
@@ -58,9 +56,7 @@ export default function MediaDashboardScreen() {
           refreshing={isRefetching}
           colors={[theme.background.brand]}
           onRefresh={() => {
-            refetchLatestVideos();
-            refetchFeaturedVideos();
-            refetchFeaturedSpeakers();
+            refetch();
           }}
         />
       }
@@ -105,29 +101,18 @@ export default function MediaDashboardScreen() {
         />
       </View>
 
-      <View style={styles.section}>
-        <View style={styles.sectionHead}>
-          <AppText variant="subtitle" style={styles.sectionTitle}>
-            {t('media.latestVideos')}
-          </AppText>
-          <AppText variant="caption" style={styles.clickableText}>
-            {t('common.seeAll')}
-          </AppText>
-        </View>
-        <FlatList
-          data={latestVideos?.data}
-          keyExtractor={video => video._id}
-          renderItem={({ item: video }) => (
-            <View style={styles.cardCont}>
-              <VideoCard video={video} />
-            </View>
-          )}
-          horizontal
-          style={styles.listCont}
-        />
-      </View>
-      {error && <AppText>Error loading latest videos</AppText>}
-      {featuredError && <AppText>Error loading featured videos</AppText>}
+      {latestVideos &&
+        latestVideos?.data?.length > 0 &&
+        renderVideosSection(t('media.latestVideos'), latestVideos?.data)}
+
+      {mostViewedVideos &&
+        mostViewedVideos?.data?.length > 0 &&
+        renderVideosSection(
+          t('media.mostViewedVideos'),
+          mostViewedVideos?.data,
+        )}
+
+      {isError && <AppText>Error loading latest videos</AppText>}
 
       <View style={styles.noteCont}>
         <AppText style={styles.noteText} numberOfLines={3} adjustsFontSizeToFit>

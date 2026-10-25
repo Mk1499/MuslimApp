@@ -4,7 +4,9 @@ const ARABIC_INDIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨
 
 export default function useFormatter() {
   const { isRTL } = useAppStore();
-  const getLocalizedText = (arabic: string, english: string) => {
+  const getLocalizedText = (arabic?: string, english?: string) => {
+    if (isRTL && !!arabic) return arabic;
+    if (!isRTL && !!english) return english;
     return isRTL ? arabic : english;
   };
 

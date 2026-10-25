@@ -5805,6 +5805,13 @@ react-native-audio-api@^0.13.6:
   dependencies:
     semver "^7.7.3"
 
+react-native-collapsible-fluid-tabs@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible-fluid-tabs/-/react-native-collapsible-fluid-tabs-1.5.1.tgz#e2cf16103b1a61fe175c437597f3da2eb4dcf856"
+  integrity sha512-DCl57tQjTUXbX/Ls6o1cybxiZTZRw30sqWvlBVkoRt3MHGlcGYAvE5wKRrmhomGmBOzSW/UgvpbGbw7CkilHRQ==
+  dependencies:
+    "@babel/runtime" "^7.29.7"
+
 react-native-compass-heading@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/react-native-compass-heading/-/react-native-compass-heading-2.0.2.tgz#3d504e83a21aa333d682b3c3b958dab6513357bf"

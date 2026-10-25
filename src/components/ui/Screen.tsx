@@ -33,6 +33,7 @@ interface ScreenProps {
   keyboardDismissOnPress?: boolean;
   withBGPattern?: boolean;
   refreshControl?: React.ReactElement<any>;
+  stickyHeaderIndices?: number[];
 }
 
 export function Screen({
@@ -49,6 +50,7 @@ export function Screen({
   keyboardDismissOnPress,
   withBGPattern = true,
   refreshControl,
+  stickyHeaderIndices,
 }: ScreenProps): React.JSX.Element {
   const theme = useTheme();
 
@@ -80,6 +82,7 @@ export function Screen({
           showsVerticalScrollIndicator={false}
           horizontal={false}
           refreshControl={refreshControl}
+          stickyHeaderIndices={stickyHeaderIndices}
         >
           {children}
         </ScrollView>
