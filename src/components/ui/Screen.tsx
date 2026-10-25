@@ -32,6 +32,7 @@ interface ScreenProps {
   withBottomSafeArea?: boolean;
   keyboardDismissOnPress?: boolean;
   withBGPattern?: boolean;
+  refreshControl?: React.ReactElement<any>;
 }
 
 export function Screen({
@@ -47,6 +48,7 @@ export function Screen({
   withBottomSafeArea = true,
   keyboardDismissOnPress,
   withBGPattern = true,
+  refreshControl,
 }: ScreenProps): React.JSX.Element {
   const theme = useTheme();
 
@@ -76,6 +78,8 @@ export function Screen({
             contentContainerStyle,
           ]}
           showsVerticalScrollIndicator={false}
+          horizontal={false}
+          refreshControl={refreshControl}
         >
           {children}
         </ScrollView>

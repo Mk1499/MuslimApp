@@ -8,12 +8,16 @@ export default (theme: AppTheme) =>
       flex: 1,
     },
     featuredContainer: {
-      marginVertical: spacing.lg,
-      height: 0.35 * SCREEN_HEIGHT,
+      marginBottom: spacing.lg,
+      height: 0.33 * SCREEN_HEIGHT,
     },
-    section: {},
+    section: {
+      marginBottom: spacing.lg,
+    },
     sectionTitle: {
-      marginHorizontal: spacing.lg,
+      fontWeight: 'bold',
+      color: theme.text.highlight,
+      textAlign: 'left',
     },
     listCont: {
       width: '100%',
@@ -21,5 +25,38 @@ export default (theme: AppTheme) =>
     cardCont: {
       width: 0.85 * SCREEN_WIDTH,
       marginHorizontal: spacing.sm,
+    },
+    speakerCardCont: {
+      marginHorizontal: spacing.sm,
+    },
+    noteCont: {
+      backgroundColor: theme.background.brand,
+      marginHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      borderRadius: spacing.sm,
+      borderWidth: 1,
+      borderColor: theme.accent.soft,
+    },
+    noteText: {
+      marginHorizontal: spacing.lg,
+      color: theme.basic.white,
+      textAlign: 'center',
+    },
+    sectionHead: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginHorizontal: spacing.md,
+      marginBottom: spacing.md,
+    },
+    clickableText: {
+      color: theme.accent.primary,
+      textDecorationLine: 'underline',
+      fontWeight: 'bold',
+    },
+    screenTitle: {
+      fontWeight: 'bold',
+      color: theme.text.highlight,
+      textAlign: 'center',
     },
   });

@@ -10,7 +10,8 @@
     "from": "from",
     "total": "Total",
     "surah": "Surah",
-    "noData": "No data available"
+    "noData": "No data available",
+    "seeAll": "See all"
   },
   "tabs": {
     "home": "Home",
@@ -138,7 +139,10 @@
     "noSimilarAyahs": "No similar Ayahs found"
   },
   "media": {
+    "title": "Islamic Media",
     "latestVideos": "Latest Videos",
-    "featuredVideos": "Featured Videos"
+    "featuredVideos": "Featured Videos",
+    "featuredSpeakers": "Top Speakers",
+    "disclaimer": "This screen organizes links to Islamic videos from YouTube only. We do not host any videos, and they are displayed via the official YouTube player and counted according to YouTube's policies. Rights are reserved for channel owners, and for removal contact us."
   }
 }

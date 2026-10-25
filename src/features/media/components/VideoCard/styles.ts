@@ -9,6 +9,9 @@ export default (theme: AppTheme) =>
     cover: {
       width: '100%',
       height: 200,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.accent.primary,
       // flex: 1,
     },
     dataCont: {
@@ -17,7 +20,6 @@ export default (theme: AppTheme) =>
       // alignItems: 'center',
       gap: 8,
       marginTop: 16,
-      backgroundColor: 'gold',
       // flex: 1,
     },
     title: {

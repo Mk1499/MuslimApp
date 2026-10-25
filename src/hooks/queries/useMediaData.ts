@@ -1,5 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { getLatestVideos, getFeaturedVideos } from '@/api/media';
+import {
+  getLatestVideos,
+  getFeaturedVideos,
+  getFeaturedSpeakers,
+} from '@/api/media';
 
 export default function useMediaData() {
   const useGetLatestVideosQuery = () =>
@@ -14,5 +18,15 @@ export default function useMediaData() {
       queryFn: () => getFeaturedVideos(),
     });
 
-  return { useGetLatestVideosQuery, useGetFeaturedVideosQuery };
+  const useGetFeaturedSpeakersQuery = () =>
+    useQuery({
+      queryKey: ['featured-speakers'],
+      queryFn: () => getFeaturedSpeakers(),
+    });
+
+  return {
+    useGetLatestVideosQuery,
+    useGetFeaturedVideosQuery,
+    useGetFeaturedSpeakersQuery,
+  };
 }
