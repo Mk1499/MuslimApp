@@ -5848,6 +5848,11 @@ react-native-pager-view@^9.0.4:
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-9.0.7.tgz#2190e3341e4fcec72139009550bb3ed9687b9493"
   integrity sha512-71kLSrjZy8onJTXkoAWF/0UtInkF+xqmqudiV/axZe8PVGG+CK6jVdh8NYFJLKetQ6UQ9ScPNliagpvLBp1xkQ==
 
+react-native-reanimated-carousel@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-carousel/-/react-native-reanimated-carousel-5.2.0.tgz#d1dcc5b5698cfc00b3ceb447b263f4f4259d2568"
+  integrity sha512-LGsBY8PBCgdDNNk7PfVokcwlWjSFCCBAzHCvOzqrTk80TBG0R4AxCHD8gJPo2MhTLnJz5x+hsMJsQbPx8ULaKg==
+
 react-native-reanimated@4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-4.6.0.tgz#ee6fe5f0dab85f5e746a83669da04acbda1c71d6"
