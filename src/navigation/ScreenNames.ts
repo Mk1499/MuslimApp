@@ -13,6 +13,7 @@ enum ScreenNames {
   AzkarDetails = 'azkarDetails',
   Qibla = 'qibla',
   Asmaa99 = 'asmaa99',
+  Tasbeeh = 'tasbeeh',
   MutashanihatList = 'mutashanihatList',
   SurahMutashabihat = 'surahMutashabihat',
   MediaDashboard = 'mediaDashboard',

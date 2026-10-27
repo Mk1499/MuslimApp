@@ -34,6 +34,7 @@
       "qibla": "Qibla",
       "99Names": "99 Names",
       "azkar": "Azkar",
+      "tasbeeh": "Tasbeeh",
       "zakatCalc": "Zakat Calculation",
       "prayerTimes": "Prayer Times"
     }
@@ -46,6 +47,28 @@
     "empty": "No Surahs found.",
     "makkah": "In Mecca",
     "madinah": "In Medina"
+  },
+  "tasbeeh": {
+    "title": "Tasbeeh",
+    "selectedDhikr": "SELECTED DHIKR",
+    "goalCount": "Goal · {{count}}",
+    "ofGoal": "of {{goal}}",
+    "progressLabel": "YOUR PROGRESS",
+    "tapToCount": "Tap anywhere to count",
+    "tapHint": "Each tap adds one repetition",
+    "completed": "GOAL COMPLETE",
+    "goalReached": "Goal reached · reset to begin again",
+    "reset": "Reset count",
+    "chooseDhikr": "Choose a dhikr",
+    "chooseDhikrSubtitle": "Each dhikr has a recommended repetition goal.",
+    "adhkar": {
+      "subhanAllah": "SubhanAllah",
+      "alhamdulillah": "Alhamdulillah",
+      "allahuAkbar": "Allahu Akbar",
+      "laIlahaIllallah": "La ilaha illa Allah",
+      "astaghfirullah": "Astaghfirullah",
+      "subhanAllahiWaBihamdihi": "SubhanAllahi wa bihamdihi"
+    }
   },
   "prayerTimes": {
     "title": "Prayer Times",

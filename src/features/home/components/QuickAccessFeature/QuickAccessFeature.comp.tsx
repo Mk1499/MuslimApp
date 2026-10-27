@@ -1,6 +1,10 @@
 import { View, Image, Pressable } from 'react-native';
 import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  NavigatorScreenParams,
+  useNavigation,
+} from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import {
   AzkarImage,
@@ -10,7 +14,7 @@ import {
   QiblaImage,
   SalahImage,
   TafseerImage,
-  ZakatCalcImage,
+  TasbeehImage,
 } from '@/assets/images';
 import { AppCard, AppText } from '@/components/ui';
 import makeStyles from './styles';
@@ -18,6 +22,8 @@ import type { HomeStackParamList } from '@/navigation/stacks/homeStack';
 import type { AppStackParamList } from '@/navigation/types';
 import ScreenNames from '@/navigation/ScreenNames';
 import StackNames from '@/navigation/StackNames';
+
+type FeatureRoute = ScreenNames | StackNames;
 
 export default function QuickAccessFeature() {
   const { t } = useTranslation();
@@ -75,9 +81,10 @@ export default function QuickAccessFeature() {
     },
     {
       id: 8,
-      title: t('home.features.zakatCalc'),
-      imgIcon: ZakatCalcImage,
+      title: t('home.features.tasbeeh'),
+      imgIcon: TasbeehImage,
       bgColor: '#FFF8E1',
+      relatedScreen: ScreenNames.Tasbeeh,
     },
   ];
 
@@ -92,7 +99,7 @@ export default function QuickAccessFeature() {
     title: string;
     imgIcon: any;
     bgColor: string;
-    relatedScreen?: keyof HomeStackParamList;
+    relatedScreen?: FeatureRoute;
   }) {
     return (
       <Pressable
@@ -102,7 +109,7 @@ export default function QuickAccessFeature() {
           if (relatedScreen !== undefined) {
             navigate(StackNames.HomeStack, {
               screen: relatedScreen,
-            });
+            } as NavigatorScreenParams<HomeStackParamList>);
           }
         }}
       >

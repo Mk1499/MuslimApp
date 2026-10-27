@@ -9,6 +9,7 @@ export const QiblaImage = require('./features/qibla.png');
 export const SalahImage = require('./features/salah.png');
 export const HadithImage = require('./features/Hadith.png');
 export const ZakatCalcImage = require('./features/zakatCalc.png');
+export const TasbeehImage = require('./features/tsabeh.png');
 export const MekkahImage = require('./mekkah.png');
 export const MadinahImage = require('./madinah.png');
 export const SurahNameBannerImage = require('./surahNameBanner.png');

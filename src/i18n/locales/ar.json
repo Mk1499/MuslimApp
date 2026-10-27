@@ -34,6 +34,7 @@
       "qibla": "القبلة",
       "99Names": "أسماء الله الحسنى",
       "azkar": "أذكار",
+      "tasbeeh": "التسبيح",
       "zakatCalc": "حساب زكاة المال",
       "prayerTimes": "مواقيت الصلاة"
     }
@@ -46,6 +47,28 @@
     "empty": "لا توجد سور.",
     "makkah": "مكية",
     "madinah": "مدنية"
+  },
+  "tasbeeh": {
+    "title": "التسبيح",
+    "selectedDhikr": "الذِّكْر المختار",
+    "goalCount": "الهدف · {{count}}",
+    "ofGoal": "من {{goal}}",
+    "progressLabel": "تقدمك",
+    "tapToCount": "اضغط في أي مكان للعد",
+    "tapHint": "كل ضغطة تضيف تسبيحة واحدة",
+    "completed": "اكتمل الهدف",
+    "goalReached": "اكتمل الهدف · أعد العداد للبدء من جديد",
+    "reset": "إعادة العداد",
+    "chooseDhikr": "اختر ذكرًا",
+    "chooseDhikrSubtitle": "لكل ذكر عدد تكرار مقترح.",
+    "adhkar": {
+      "subhanAllah": "سبحان الله",
+      "alhamdulillah": "الحمد لله",
+      "allahuAkbar": "الله أكبر",
+      "laIlahaIllallah": "لا إله إلا الله",
+      "astaghfirullah": "أستغفر الله",
+      "subhanAllahiWaBihamdihi": "سبحان الله وبحمده"
+    }
   },
   "prayerTimes": {
     "title": "مواقيت الصلاة",
