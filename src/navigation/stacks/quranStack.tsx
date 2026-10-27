@@ -18,5 +18,7 @@ export type QuranStackParamList = {
     surah: Surah;
     /** Ayah number to open on and start playing (e.g. Continue from home). */
     resumeAyah?: number;
+    /** Exact page to reopen without starting audio. */
+    initialPage?: number;
   };
 };

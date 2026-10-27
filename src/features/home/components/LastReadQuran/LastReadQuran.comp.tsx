@@ -7,7 +7,10 @@ import { AppGradient, AppIcon, AppText, AppTouchable } from '@/components/ui';
 import { useTranslation } from 'react-i18next';
 import { QuranImage } from '@/assets/images';
 import { useAppStore } from '@/store/useAppStore';
-import { getSurahByNumber } from '@/features/quran/player/ayahSequence';
+import {
+  getSurahByNumber,
+  PAGE_TO_FIRST_AYAH,
+} from '@/features/quran/player/ayahSequence';
 import ScreenNames from '@/navigation/ScreenNames';
 import StackNames from '@/navigation/StackNames';
 import type { AppStackParamList } from '@/navigation/types';
@@ -18,24 +21,29 @@ export default function LastReadQuran() {
   const { t } = useTranslation();
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const language = useAppStore(state => state.language);
+  const lastReadPage = useAppStore(state => state.lastReadPage);
   const lastPlayedAyah = useAppStore(state => state.lastPlayedAyah);
+  // Keep older installs useful until the user opens a page with page tracking.
+  const page = lastReadPage ?? lastPlayedAyah?.page;
+  const firstAyahKey = page ? PAGE_TO_FIRST_AYAH.get(page) : undefined;
+  const [surahNumber, ayahNumber] = firstAyahKey
+    ? firstAyahKey.split(':').map(Number)
+    : [];
 
-  const surah = lastPlayedAyah
-    ? getSurahByNumber(lastPlayedAyah.surah)
-    : undefined;
+  const surah = surahNumber ? getSurahByNumber(surahNumber) : undefined;
 
-  // Nothing has been recited yet — there is nothing to continue.
-  if (!lastPlayedAyah || !surah) {
+  // Nothing has been opened yet — there is nothing to continue.
+  if (!page || !surah) {
     return null;
   }
 
   const surahName = language === 'ar' ? surah.name_arabic : surah.name_english;
 
-  // Open the mushaf on the page the last-played ayah is on and resume audio.
+  // Reopen the last viewed page without resuming audio playback.
   const handleContinue = () => {
     navigate(StackNames.Quran, {
       screen: ScreenNames.Mushaf,
-      params: { surah, resumeAyah: lastPlayedAyah.ayah },
+      params: { surah, initialPage: page },
     });
   };
 
@@ -52,11 +60,11 @@ export default function LastReadQuran() {
             <AppIcon name="book" size={24} color={theme.tabBar.active} />
             <AppText
               style={styles.surahName}
-            >{`${surahName} : ${lastPlayedAyah.ayah}`}</AppText>
+            >{`${surahName} : ${ayahNumber}`}</AppText>
             <View style={styles.pageCont}>
-              <AppText
-                style={styles.pageName}
-              >{`${t('lastRead.page')} ${lastPlayedAyah.page}`}</AppText>
+              <AppText style={styles.pageName}>{`${t(
+                'lastRead.page',
+              )} ${page}`}</AppText>
             </View>
           </View>
           <AppTouchable style={styles.continueBtn} onPress={handleContinue}>

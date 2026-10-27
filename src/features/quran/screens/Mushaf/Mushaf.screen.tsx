@@ -10,7 +10,7 @@ import { Screen } from '@/components/ui';
 import PlayerBar from '../../components/PlayerBar/PlayerBar.comp';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { QuranStackParamList } from '@/navigation/stacks/quranStack';
-import ScreenNames from '@/navigation/screenNames'; // adjust to your actual path
+import ScreenNames from '@/navigation/ScreenNames';
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from 'react-native-pager-view';
@@ -18,6 +18,7 @@ import MushafPage from '../../components/MushafPage/MushafPage.comp';
 import { useAyahPlayer } from '../../hooks/useAyahPlayer';
 import { AYAH_TO_PAGE } from '../../player/ayahSequence';
 import { QuranWord } from '@/types/quran';
+import { useAppStore } from '@/store/useAppStore';
 
 const TOTAL_MUSHAF_PAGES = 604;
 const RENDER_WINDOW = 1; // pages on each side of the current page to keep mounted
@@ -58,7 +59,7 @@ const PagerItem = React.memo(function PagerItem({
 export default function MushafScreen() {
   const { params } =
     useRoute<RouteProp<QuranStackParamList, typeof ScreenNames.Mushaf>>();
-  const { surah, resumeAyah } = params;
+  const { surah, resumeAyah, initialPage } = params;
   const { pages } = surah ?? {};
 
   // "Continue" from the home screen's last-read card points at a specific
@@ -69,11 +70,14 @@ export default function MushafScreen() {
       ? AYAH_TO_PAGE.get(`${surah.number}:${resumeAyah}`)
       : undefined;
 
-  const initialPageNumber = clampPageNumber(resumePage ?? pages?.[0] ?? 1);
+  const initialPageNumber = clampPageNumber(
+    initialPage ?? resumePage ?? pages?.[0] ?? 1,
+  );
   // Unique identity for the surah — two surahs can share a start page (short
   // surahs near the end), so the surah number is the reliable key.
   const surahId = surah?.number ?? initialPageNumber;
   const [currentPageNumber, setCurrentPageNumber] = useState(initialPageNumber);
+  const setLastReadPage = useAppStore(state => state.setLastReadPage);
   const pagerRef = useRef<PagerView>(null);
 
   // The most recent page (manual or programmatic) — the auto-swipe only moves
@@ -118,6 +122,10 @@ export default function MushafScreen() {
       stop();
     }
   }, [surahId, stop]);
+
+  useEffect(() => {
+    setLastReadPage(initialPageNumber);
+  }, [initialPageNumber, setLastReadPage, surahId]);
 
   // false لحد ما الـ screen transition/animations تخلص خالص
   const [isContentReady, setIsContentReady] = useState(false);
@@ -165,11 +173,12 @@ export default function MushafScreen() {
     (event: PagerViewOnPageSelectedEvent) => {
       const page = event.nativeEvent.position + 1;
       setCurrentPageNumber(page);
+      setLastReadPage(page);
       // Treat any page change (manual or programmatic) as the baseline so the
       // auto-swipe only ever moves forward past the latest page.
       lastAutoPageRef.current = page;
     },
-    [],
+    [setLastReadPage],
   );
 
   // Auto-swipe forward whenever playback moves onto a new page.
@@ -185,7 +194,8 @@ export default function MushafScreen() {
     lastAutoPageRef.current = playingPage;
     pagerRef.current?.setPage(playingPage - 1);
     setCurrentPageNumber(playingPage);
-  }, [playingPage]);
+    setLastReadPage(playingPage);
+  }, [playingPage, setLastReadPage]);
 
   return (
     <Screen isInnerPage>

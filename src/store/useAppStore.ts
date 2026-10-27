@@ -38,9 +38,11 @@ interface AppState {
   userLocation: { latitude: number; longitude: number } | null;
   userAddress: any | null;
   lastPlayedAyah: LastPlayedAyah | null;
+  lastReadPage: number | null;
 
   setUserAddress: (address: any | null) => void;
   setLastPlayedAyah: (aya: LastPlayedAyah | null) => void;
+  setLastReadPage: (page: number) => void;
   changeLanguage: (language: Language) => void;
   setThemePreference: (preference: ThemePreference) => void;
   setUserLocation: (
@@ -57,12 +59,16 @@ export const useAppStore = create<AppState>()(
       userLocation: null,
       userAddress: null,
       lastPlayedAyah: null,
+      lastReadPage: null,
 
       setUserAddress: address => {
         set({ userAddress: address });
       },
       setLastPlayedAyah: aya => {
         set({ lastPlayedAyah: aya });
+      },
+      setLastReadPage: page => {
+        set({ lastReadPage: page });
       },
       setUserLocation: location => {
         set({ userLocation: location });
@@ -98,6 +104,7 @@ export const useAppStore = create<AppState>()(
         userLocation: state.userLocation,
         userAddress: state.userAddress,
         lastPlayedAyah: state.lastPlayedAyah,
+        lastReadPage: state.lastReadPage,
       }),
     },
   ),
