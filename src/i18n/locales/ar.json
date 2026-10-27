@@ -80,6 +80,22 @@
     "imsak": "الإمساك",
     "sunrise": "الشروق"
   },
+  "prayerTracker": {
+    "historyTitle": "تابع نفسك",
+    "upcomingHint": "لا يمكنك تسجيل هذه الصلاة قبل دخول وقتها.",
+    "recordedHint": "تم تسجيل هذه الصلاة لهذا اليوم بالفعل.",
+    "tapToRecordHint": "سجل كيفية أداء هذه الصلاة.",
+    "upcomingMessage": "يمكنك تسجيل هذه الصلاة بعد دخول وقتها.",
+    "editRecorded": "تم حفظها اليوم. اختر خيارًا آخر لتعديل التسجيل.",
+    "chooseOutcome": "كيف أديت الصلاة؟ اختر حالة واحدة لهذا اليوم.",
+    "congregation": "في جماعة",
+    "alone": "منفردًا",
+    "notPrayed": "لم أصلِّ",
+    "points": "{{count}} نقطة",
+    "today": "اليوم",
+    "dayScore": "{{score}} نقطة",
+    "notRecorded": "غير مسجلة"
+  },
   "about": {
     "title": "عن التطبيق"
   },
@@ -113,7 +129,11 @@
     "lightDescription": "مظهر فاتح وواضح",
     "dark": "داكن",
     "darkDescription": "مظهر داكن للإضاءة المنخفضة",
-    "footer": "يتم حفظ تفضيلاتك تلقائيًا."
+    "footer": "يتم حفظ تفضيلاتك تلقائيًا.",
+    "prayerScore": "مجموع نقاط الصلوات",
+    "scoreOf": "{{score}} / {{max}}",
+    "traceYourself": "تابع صلواتك",
+    "traceYourselfSubtitle": "راجع سجل صلواتك اليومي"
   },
   "lastRead": {
     "title": "آخر قراءة",

@@ -80,6 +80,22 @@
     "imsak": "Imsak",
     "sunrise": "Sunrise"
   },
+  "prayerTracker": {
+    "historyTitle": "Trace Yourself",
+    "upcomingHint": "This prayer is not available to record yet.",
+    "recordedHint": "This prayer has already been recorded today.",
+    "tapToRecordHint": "Record how you prayed this prayer.",
+    "upcomingMessage": "You can record this prayer after its time begins.",
+    "editRecorded": "Already saved today. Choose another option to update it.",
+    "chooseOutcome": "How did you pray? Choose one option for today.",
+    "congregation": "In congregation",
+    "alone": "Alone",
+    "notPrayed": "Not prayed",
+    "points": "{{count}} points",
+    "today": "Today",
+    "dayScore": "{{score}} points",
+    "notRecorded": "Not recorded"
+  },
   "about": {
     "title": "About"
   },
@@ -113,7 +129,11 @@
     "lightDescription": "A bright, clear look",
     "dark": "Dark",
     "darkDescription": "A darker look for low-light use",
-    "footer": "Your preferences are saved automatically."
+    "footer": "Your preferences are saved automatically.",
+    "prayerScore": "Prayer score",
+    "scoreOf": "{{score}} / {{max}}",
+    "traceYourself": "Trace yourself",
+    "traceYourselfSubtitle": "Review your daily prayer history"
   },
   "lastRead": {
     "title": "Last Read",

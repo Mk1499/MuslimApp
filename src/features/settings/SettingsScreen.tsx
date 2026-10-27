@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
+import moment from 'moment';
 import {
   AppBottomSheet,
   AppBottomSheetRef,
@@ -17,6 +19,14 @@ import makeStyles from './styles';
 import ChoicesSheet from './components/ChoicesSheet/ChoicesSheet.comp';
 import { Choice } from './components/ChoicesSheet/types';
 import SettingAction from './components/SettingAction/SettingAction.comp';
+import type { AppStackParamList } from '@/navigation/types';
+import ScreenNames from '@/navigation/ScreenNames';
+import {
+  getPrayerOutcomeScore,
+  MAX_POINTS_PER_DAY,
+  PRAYER_NAMES,
+  usePrayerTrackerStore,
+} from '@/store/usePrayerTrackerStore';
 
 type Language = 'en' | 'ar';
 type ThemePreference = 'system' | 'light' | 'dark';
@@ -29,6 +39,25 @@ export function SettingsScreen(): React.JSX.Element {
   const changeLanguage = useAppStore(state => state.changeLanguage);
   const themePreference = useAppStore(state => state.themePreference);
   const setThemePreference = useAppStore(state => state.setThemePreference);
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const prayerHistory = usePrayerTrackerStore(state => state.history);
+  const firstOpenedDate = usePrayerTrackerStore(state => state.firstOpenedDate);
+  const prayerScore = Object.values(prayerHistory).reduce(
+    (total, day) =>
+      total +
+      PRAYER_NAMES.reduce(
+        (score, prayer) => score + getPrayerOutcomeScore(day[prayer]),
+        0,
+      ),
+    0,
+  );
+  const daysTracked = Math.max(
+    1,
+    moment()
+      .startOf('day')
+      .diff(moment(firstOpenedDate, 'YYYY-MM-DD').startOf('day'), 'days') + 1,
+  );
+  const maxPossibleScore = daysTracked * MAX_POINTS_PER_DAY;
   const languageSheetRef = useRef<AppBottomSheetRef>(null);
   const themeSheetRef = useRef<AppBottomSheetRef>(null);
   const [pendingLanguage, setPendingLanguage] = useState<Language>(language);
@@ -91,6 +120,18 @@ export function SettingsScreen(): React.JSX.Element {
         <AppText variant="body" style={styles.heroSubtitle}>
           {t('settings.subtitle')}
         </AppText>
+        <View style={styles.scoreSummary}>
+          <AppIcon name="trophy-outline" size={19} color={theme.basic.white} />
+          <AppText variant="caption" style={styles.scoreLabel}>
+            {t('settings.prayerScore')}
+          </AppText>
+          <AppText variant="body" weight="semiBold" style={styles.scoreValue}>
+            {t('settings.scoreOf', {
+              score: prayerScore,
+              max: maxPossibleScore,
+            })}
+          </AppText>
+        </View>
       </AppGradient>
 
       <View style={styles.content}>
@@ -116,6 +157,13 @@ export function SettingsScreen(): React.JSX.Element {
             title={t('settings.changeAppearance')}
             subtitle={t(`settings.${themePreference}`)}
             onPress={openThemeSheet}
+          />
+          <View style={styles.divider} />
+          <SettingAction
+            icon="analytics-outline"
+            title={t('settings.traceYourself')}
+            subtitle={t('settings.traceYourselfSubtitle')}
+            onPress={() => navigate(ScreenNames.PrayerTracker)}
           />
         </AppCard>
 

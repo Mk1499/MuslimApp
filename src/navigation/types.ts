@@ -1,5 +1,6 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import StackNames from './StackNames';
+import ScreenNames from './ScreenNames';
 import type { HomeStackParamList } from './stacks/homeStack';
 import type { QuranStackParamList } from './stacks/quranStack';
 import { MediaStackParamList } from './stacks/mediaStack';
@@ -21,6 +22,7 @@ export type AppStackParamList = {
   [StackNames.HomeStack]: NavigatorScreenParams<HomeStackParamList>;
   [StackNames.Quran]: NavigatorScreenParams<QuranStackParamList>;
   [StackNames.MediaStack]: NavigatorScreenParams<MediaStackParamList>;
+  [ScreenNames.PrayerTracker]: undefined;
 };
 
 /**

@@ -6,7 +6,7 @@ export default (theme: AppTheme) =>
     hero: {
       marginHorizontal: spacing.lg,
       marginTop: spacing.md,
-      minHeight: 180,
+      minHeight: 220,
       borderRadius: 24,
       justifyContent: 'center',
       overflow: 'hidden',
@@ -30,6 +30,18 @@ export default (theme: AppTheme) =>
       marginTop: spacing.xs,
       marginHorizontal: spacing.md,
     },
+    scoreSummary: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+      marginTop: spacing.lg,
+      marginHorizontal: spacing.md,
+      paddingTop: spacing.md,
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: 'rgba(255,255,255,0.3)',
+    },
+    scoreLabel: { color: 'rgba(255,255,255,0.84)', flex: 1 },
+    scoreValue: { color: theme.basic.white },
     content: {
       paddingHorizontal: spacing.lg,
       paddingTop: spacing.xl,

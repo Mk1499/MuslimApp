@@ -6,6 +6,8 @@ import { fontFamily, useTheme } from '../theme';
 import type { AppStackParamList } from './types';
 import Stacks from './stacks';
 import SplashScreen from '@/features/splash/screens/SplashScreen/Splash.screen';
+import PrayerTrackerScreen from '@/features/prayer-tracker/PrayerTracker.screen';
+import ScreenNames from './ScreenNames';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -34,6 +36,11 @@ export function AppStack(): React.JSX.Element {
       <Stack.Screen
         name="MainTabs"
         component={BottomTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ScreenNames.PrayerTracker}
+        component={PrayerTrackerScreen}
         options={{ headerShown: false }}
       />
       {Stacks.map(({ name, component, options }) => (
