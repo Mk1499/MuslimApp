@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native';
-import React, { useRef } from 'react';
+import { View } from 'react-native';
+import React from 'react';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AppIcon, AppText, AppTouchable, Screen } from '@/components/ui';
 import { MediaStackParamList } from '@/navigation/stacks/mediaStack';
@@ -11,7 +11,6 @@ import useFormatter from '@/hooks/useFormatter';
 import { isRTL } from '@/utils/constants';
 import { useTranslation } from 'react-i18next';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import PagerView from 'react-native-pager-view';
 import LatestVideosView from './Views/LatestVideos/LatestVideos.view';
 import PopularVideosView from './Views/PopularVideos/PopularVideos.view';
 
@@ -26,13 +25,10 @@ export default function SpeakerProfile() {
   const { name, imageUrl, nameAr, nameEn, bio, bioAr, bioEn, views, _id } =
     speaker ?? {};
   const { getLocalizedText } = useFormatter();
-  const pagerRef = useRef<PagerView>(null);
-
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleSegmentChange = (index: number) => {
     setSelectedIndex(index);
-    pagerRef.current?.setPage(index);
   };
 
   function renderMetaItem(label: string, value: number | string) {
@@ -44,18 +40,13 @@ export default function SpeakerProfile() {
     );
   }
 
-  return (
-    <Screen
-      topSafeAreaStyle={styles.topSafeAreaStyle}
-      scroll
-      stickyHeaderIndices={[3]}
-      withBottomSafeArea={false}
-    >
+  const listHeader = (
+    <>
       <AppTouchable
         variant="ghost"
         onPress={goBack}
         hitSlop={spacing.md}
-        style={[styles.backBtn]}
+        style={styles.backBtn}
       >
         <AppIcon
           name={isRTL ? 'chevron-forward' : 'chevron-back'}
@@ -66,7 +57,6 @@ export default function SpeakerProfile() {
       <View style={styles.bgCover} />
       <View style={styles.dataCont}>
         <AppImage source={{ uri: imageUrl }} style={styles.image} />
-
         <AppText variant="title" style={styles.name}>
           {getLocalizedText(nameAr, nameEn) || name}
         </AppText>
@@ -91,34 +81,25 @@ export default function SpeakerProfile() {
             handleSegmentChange(event.nativeEvent.selectedSegmentIndex)
           }
           style={styles.viewCont}
-          // Text styling lives here, not in a custom segment renderer
           fontStyle={styles.segmentText}
           activeFontStyle={styles.activeSegment}
           direction={isRTL ? 'rtl' : 'ltr'}
         />
       </View>
+    </>
+  );
+
+  return (
+    <Screen
+      topSafeAreaStyle={styles.topSafeAreaStyle}
+      scroll={false}
+      withBottomSafeArea={false}
+    >
       {selectedIndex === 0 ? (
-        <LatestVideosView speakerId={_id as string} />
+        <LatestVideosView speakerId={_id as string} ListHeaderComponent={listHeader} />
       ) : (
-        <PopularVideosView speakerId={_id as string} />
+        <PopularVideosView speakerId={_id as string} ListHeaderComponent={listHeader} />
       )}
-
-      {/* <PagerView
-        ref={pagerRef}
-        style={{ flex: 1 }}
-        initialPage={0}
-        layoutDirection={!isRTL ? 'rtl' : 'ltr'} // follows the app's RTL setting
-        // Swipe: keep the segment in sync with the visible page
-        onPageSelected={e => handleSegmentChange(e.nativeEvent.position)}
-
-      >
-        <View key="latest" style={{ flex: 1 }}>
-          <LatestVideosView />
-        </View>
-        <View key="mostViewed" style={{ flex: 1 }}>
-          <PopularVideosView speakerId={_id as string} />
-        </View>
-      </PagerView> */}
     </Screen>
   );
 }
