@@ -158,6 +158,8 @@
   },
   "azkar": {
     "screenName": "مجمع الأذكار",
+    "searchPlaceholder": "البحث في المجموعات",
+    "noCollectionsFound": "لم يتم العثور على مجموعات.",
     "repeat": "كرر"
   },
   "qibla": {

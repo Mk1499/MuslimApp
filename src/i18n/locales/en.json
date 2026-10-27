@@ -158,6 +158,8 @@
   },
   "azkar": {
     "screenName": "Azkar Collection",
+    "searchPlaceholder": "Search collections",
+    "noCollectionsFound": "No collections found.",
     "repeat": "Repeat"
   },
   "qibla": {
