@@ -18,3 +18,15 @@ export async function getSurahTafseer(
 
   return response.data;
 }
+
+export async function getAyahTafseer(
+  surahId: number,
+  ayahId: number,
+  tafseerId: number,
+): Promise<TafseerAya> {
+  const response = await tafseerClient.get<TafseerAya>(
+    `/tafseer/${tafseerId}/${surahId}/${ayahId}/${ayahId}`,
+  );
+
+  return response.data;
+}

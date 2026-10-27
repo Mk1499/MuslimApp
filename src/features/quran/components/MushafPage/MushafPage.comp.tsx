@@ -11,23 +11,37 @@ import { SCREEN_HEIGHT } from '@/utils/constants';
 function MushafPage({
   pageNumber,
   playingAya,
-  onWordPress,
+  onWordLongPress,
 }: {
   pageNumber: number;
   playingAya: string | null;
-  onWordPress: (word: QuranWord) => void;
+  onWordLongPress: (
+    word: QuranWord,
+    pageNumber: number,
+    ayahText: string,
+  ) => void;
 }) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
-  const handleWordPress = useCallback(
+  const handleWordLongPress = useCallback(
     (word: QuranWord) => {
       // Key on the full surah:ayah pair so selection is unique even when a
       // page holds multiple surahs with overlapping ayah numbers.
       setSelectedKey(`${word.surah_number}:${word.ayah_number}`);
-      onWordPress(word);
+      const ayahText = (pageData?.words ?? [])
+        .filter(
+          candidate =>
+            candidate.surah_number === word.surah_number &&
+            candidate.ayah_number === word.ayah_number &&
+            (candidate.char_type_name === 'word' ||
+              candidate.char_type_name === 'end'),
+        )
+        .map(candidate => candidate.text_uthmani)
+        .join(' ');
+      onWordLongPress(word, pageNumber, ayahText || word.text_uthmani);
     },
-    [onWordPress],
+    [onWordLongPress, pageData?.words, pageNumber],
   );
 
   if (loading) {
@@ -61,7 +75,7 @@ function MushafPage({
                 <MushafLine
                   key={line.lineNumber + '-MushafLine'}
                   words={line.words}
-                  onWordPress={handleWordPress}
+                  onWordLongPress={handleWordLongPress}
                   selectedKey={selectedKey}
                   playingKey={playingAya}
                 />
@@ -73,7 +87,7 @@ function MushafPage({
             <View key={line.lineNumber} style={styles.shrinkableItem}>
               <MushafLine
                 words={line.words}
-                onWordPress={handleWordPress}
+                onWordLongPress={handleWordLongPress}
                 selectedKey={selectedKey}
                 playingKey={playingAya}
               />

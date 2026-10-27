@@ -5,7 +5,7 @@ import { fontFamily, useTheme } from '@/theme';
 
 interface Props {
   words: QuranWord[];
-  onWordPress?: (word: QuranWord) => void;
+  onWordLongPress?: (word: QuranWord) => void;
   /** Full "surah:ayah" key of the pressed word — unique across surahs. */
   selectedKey?: string | null;
   /** Full "surah:ayah" key of the currently playing ayah — unique across surahs. */
@@ -14,7 +14,7 @@ interface Props {
 
 export default function MushafLine({
   words,
-  onWordPress,
+  onWordLongPress,
   selectedKey,
   playingKey,
 }: Props) {
@@ -30,6 +30,10 @@ export default function MushafLine({
         // Key on the full surah:ayah pair so ayahs that share an ayah number
         // across different surahs never highlight each other.
         const wordKey = `${w.surah_number}:${w.ayah_number}`;
+        const ayahHighlight = [
+          ...(playingKey === wordKey ? [{ color: theme.text.highlight }] : []),
+          ...(selectedKey === wordKey ? [{ color: theme.text.brand }] : []),
+        ];
         if (w.char_type_name === 'end') {
           return (
             <Text
@@ -37,11 +41,9 @@ export default function MushafLine({
               style={[
                 styles.ayahEnd,
                 { color: theme.accent.secondary },
-                playingKey === wordKey && {
-                  color: theme.text.highlight,
-                },
+                ...ayahHighlight,
               ]}
-              onPress={() => onWordPress?.(w)}
+              onLongPress={() => onWordLongPress?.(w)}
             >
               {w.text_uthmani + ' '}
             </Text>
@@ -50,13 +52,8 @@ export default function MushafLine({
         return (
           <Text
             key={`${wordKey}-${idx}`}
-            style={[
-              styles.word,
-              playingKey === wordKey && {
-                color: theme.text.highlight,
-              },
-            ]}
-            onPress={() => onWordPress?.(w)}
+            style={[styles.word, ...ayahHighlight]}
+            onLongPress={() => onWordLongPress?.(w)}
           >
             {w.text_uthmani + ' '}
           </Text>

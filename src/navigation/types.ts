@@ -23,6 +23,7 @@ export type AppStackParamList = {
   [StackNames.Quran]: NavigatorScreenParams<QuranStackParamList>;
   [StackNames.MediaStack]: NavigatorScreenParams<MediaStackParamList>;
   [ScreenNames.PrayerTracker]: undefined;
+  [ScreenNames.SavedAyahs]: { kind: 'bookmarks' | 'favorites' };
 };
 
 /**

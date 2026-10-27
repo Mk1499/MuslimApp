@@ -40,6 +40,7 @@ function buildSequence() {
   const list: AyahRef[] = [];
   const indexByKey = new Map<string, number>();
   const ayahToPage = new Map<string, number>();
+  const ayahTextParts = new Map<string, string[]>();
   const pageToFirstAyah = new Map<number, string>();
 
   const pageNumbers = Object.keys(PAGES.pages)
@@ -56,6 +57,9 @@ function buildSequence() {
         continue;
       }
       const key = keyOf(w.surah_number, w.ayah_number);
+      const textParts = ayahTextParts.get(key) ?? [];
+      textParts.push(w.text_uthmani);
+      ayahTextParts.set(key, textParts);
       if (!indexByKey.has(key)) {
         indexByKey.set(key, list.length);
         list.push({ surah: w.surah_number, ayah: w.ayah_number });
@@ -71,7 +75,7 @@ function buildSequence() {
     }
   }
 
-  return { list, indexByKey, ayahToPage, pageToFirstAyah };
+  return { list, indexByKey, ayahToPage, pageToFirstAyah, ayahTextParts };
 }
 
 const SEQUENCE = buildSequence();
@@ -87,6 +91,12 @@ export const AYAH_TO_PAGE = SEQUENCE.ayahToPage;
 
 /** page number -> "surah:ayah" of the first ayah on that page. */
 export const PAGE_TO_FIRST_AYAH = SEQUENCE.pageToFirstAyah;
+
+/** Full Uthmani text for an Ayah, including any continuation across pages. */
+export function getAyahText(surah: number, ayah: number): string | undefined {
+  const text = SEQUENCE.ayahTextParts.get(keyOf(surah, ayah));
+  return text?.join(' ');
+}
 
 /** Total number of ayahs in the mushaf. */
 export const TOTAL_AYATS = SEQUENCE.list.length;

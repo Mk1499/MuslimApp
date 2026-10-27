@@ -6,7 +6,17 @@ import React, {
   useState,
 } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useQuery } from '@tanstack/react-query';
 import { Screen } from '@/components/ui';
+import {
+  AppBottomSheet,
+  AppBottomSheetRef,
+  AppCard,
+  AppIcon,
+  AppText,
+  AppTouchable,
+} from '@/components/ui';
 import PlayerBar from '../../components/PlayerBar/PlayerBar.comp';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { QuranStackParamList } from '@/navigation/stacks/quranStack';
@@ -16,12 +26,26 @@ import PagerView, {
 } from 'react-native-pager-view';
 import MushafPage from '../../components/MushafPage/MushafPage.comp';
 import { useAyahPlayer } from '../../hooks/useAyahPlayer';
-import { AYAH_TO_PAGE } from '../../player/ayahSequence';
+import { AYAH_TO_PAGE, getAyahText } from '../../player/ayahSequence';
 import { QuranWord } from '@/types/quran';
 import { useAppStore } from '@/store/useAppStore';
+import { getAyahTafseer, getTafseerCollections } from '@/api/tafseer';
+import { getAyahMutashbihat } from '@/api/mutashabihat';
+import { useSavedAyahsStore, SavedAyah } from '@/store/useSavedAyahsStore';
+import { getSurahByNumber } from '../../player/ayahSequence';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '@/theme';
+import makeStyles from './styles';
 
 const TOTAL_MUSHAF_PAGES = 604;
 const RENDER_WINDOW = 1; // pages on each side of the current page to keep mounted
+
+type SelectedAyah = {
+  word: QuranWord;
+  page: number;
+  text: string;
+};
+type SheetView = 'actions' | 'tafseer' | 'similar';
 
 /** Clamp a 1-based mushaf page number into the valid [1, TOTAL_MUSHAF_PAGES] range. */
 function clampPageNumber(page: number): number {
@@ -32,17 +56,17 @@ function clampPageNumber(page: number): number {
 const PagerItem = React.memo(function PagerItem({
   pageNumber,
   playingAya,
-  onWordPress,
+  onWordLongPress,
   isReady,
 }: {
   pageNumber: number;
   playingAya: string | null;
-  onWordPress: (word: QuranWord) => void;
+  onWordLongPress: (word: QuranWord, page: number, ayahText: string) => void;
   isReady: boolean;
 }) {
   if (!isReady) {
     return (
-      <View style={styles.placeholder}>
+      <View style={pagerStyles.placeholder}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -51,12 +75,15 @@ const PagerItem = React.memo(function PagerItem({
     <MushafPage
       pageNumber={pageNumber}
       playingAya={playingAya}
-      onWordPress={onWordPress}
+      onWordLongPress={onWordLongPress}
     />
   );
 });
 
 export default function MushafScreen() {
+  const { t, i18n } = useTranslation();
+  const theme = useTheme();
+  const styles = makeStyles(theme);
   const { params } =
     useRoute<RouteProp<QuranStackParamList, typeof ScreenNames.Mushaf>>();
   const { surah, resumeAyah, initialPage } = params;
@@ -104,15 +131,97 @@ export default function MushafScreen() {
   // The player lives here (not inside a page) so it survives page swipes and
   // can drive the auto-swipe below.
   const { playAyah, stop, togglePlay, playingAya, isPlaying } = useAyahPlayer();
+  const [selectedAyah, setSelectedAyah] = useState<SelectedAyah | null>(null);
+  const [sheetView, setSheetView] = useState<SheetView>('actions');
+  const ayahActionsSheetRef = useRef<AppBottomSheetRef>(null);
+  const bookmarks = useSavedAyahsStore(state => state.bookmarks);
+  const favorites = useSavedAyahsStore(state => state.favorites);
+  const toggleBookmark = useSavedAyahsStore(state => state.toggleBookmark);
+  const toggleFavorite = useSavedAyahsStore(state => state.toggleFavorite);
 
-  // Mark the session as owned by this screen when the user starts playback.
-  const handleWordPress = useCallback(
-    (word: QuranWord) => {
-      sessionActiveRef.current = true;
-      playAyah(word);
+  const tafseerCollectionsQuery = useQuery({
+    queryKey: ['tafseer-collections'],
+    queryFn: getTafseerCollections,
+    enabled: !!selectedAyah,
+  });
+  const preferredTafseer =
+    tafseerCollectionsQuery.data?.find(
+      collection =>
+        collection.language === (i18n.language.startsWith('ar') ? 'ar' : 'en'),
+    ) ?? tafseerCollectionsQuery.data?.[0];
+  const ayahTafseerQuery = useQuery({
+    queryKey: [
+      'ayah-tafseer',
+      selectedAyah?.word.surah_number,
+      selectedAyah?.word.ayah_number,
+      preferredTafseer?.id,
+    ],
+    queryFn: () =>
+      getAyahTafseer(
+        selectedAyah!.word.surah_number,
+        selectedAyah!.word.ayah_number,
+        preferredTafseer!.id,
+      ),
+    enabled: sheetView === 'tafseer' && !!selectedAyah && !!preferredTafseer,
+  });
+  const similarAyahsQuery = useQuery({
+    queryKey: [
+      'ayah-mutashabihat',
+      selectedAyah?.word.surah_number,
+      selectedAyah?.word.ayah_number,
+    ],
+    queryFn: () =>
+      getAyahMutashbihat(
+        selectedAyah!.word.surah_number,
+        selectedAyah!.word.ayah_number,
+      ),
+    enabled: sheetView === 'similar' && !!selectedAyah,
+  });
+  const similarVerses =
+    similarAyahsQuery.data?.data.verses.flatMap(
+      verse => verse.similar_verses,
+    ) ?? [];
+  const selectedSurah = selectedAyah
+    ? getSurahByNumber(selectedAyah.word.surah_number)
+    : undefined;
+
+  const handleAyahLongPress = useCallback(
+    (word: QuranWord, page: number, text: string) => {
+      setSelectedAyah({
+        word,
+        page,
+        text: getAyahText(word.surah_number, word.ayah_number) ?? text,
+      });
+      setSheetView('actions');
+      ayahActionsSheetRef.current?.present();
     },
-    [playAyah],
+    [],
   );
+
+  const savedAyahRecord = (selection: SelectedAyah): SavedAyah | null => {
+    const surah = getSurahByNumber(selection.word.surah_number);
+    if (!surah) return null;
+    return {
+      key: `${selection.word.surah_number}:${selection.word.ayah_number}`,
+      surahNumber: selection.word.surah_number,
+      ayahNumber: selection.word.ayah_number,
+      page: selection.page,
+      arabic: selection.text,
+      surahNameArabic: surah.name_arabic ?? '',
+      surahNameEnglish: surah.name_english ?? '',
+    };
+  };
+
+  const playSelectedAyah = () => {
+    if (!selectedAyah) return;
+    sessionActiveRef.current = true;
+    const target = selectedAyah.word;
+    ayahActionsSheetRef.current?.dismiss();
+    playAyah({
+      surah_number: target.surah_number,
+      ayah_number: target.ayah_number,
+    });
+  };
 
   // Opening a different surah leaves the old recitation behind — stop it.
   const stopOnSurahChangeRef = useRef(surahId);
@@ -202,7 +311,7 @@ export default function MushafScreen() {
       <PagerView
         key={surahId}
         ref={pagerRef}
-        style={styles.page}
+        style={pagerStyles.page}
         pageMargin={16}
         initialPage={initialPageNumber - 1}
         onPageSelected={handlePageSelected}
@@ -219,12 +328,12 @@ export default function MushafScreen() {
                 <PagerItem
                   pageNumber={pageNumber}
                   playingAya={playingAya}
-                  onWordPress={handleWordPress}
+                  onWordLongPress={handleAyahLongPress}
                   isReady={isContentReady}
                 />
               ) : (
                 // برّه النافذة: view فاضي بس، عشان نحافظ على ثبات الـ indices
-                <View style={styles.placeholder} />
+                <View style={pagerStyles.placeholder} />
               )}
             </View>
           );
@@ -237,11 +346,201 @@ export default function MushafScreen() {
         onTogglePlay={togglePlay}
         onStop={stop}
       />
+      <AppBottomSheet
+        ref={ayahActionsSheetRef}
+        snapPoints={['72%']}
+        scrollable
+        onDismiss={() => {
+          setSelectedAyah(null);
+          setSheetView('actions');
+        }}
+      >
+        <BottomSheetScrollView contentContainerStyle={styles.sheetContent}>
+          <View style={styles.sheetHeading}>
+            {sheetView !== 'actions' && (
+              <AppTouchable
+                variant="ghost"
+                onPress={() => setSheetView('actions')}
+                accessibilityRole="button"
+                accessibilityLabel={t('common.back')}
+                style={styles.sheetBackButton}
+              >
+                <AppIcon
+                  name="chevron-back"
+                  size={21}
+                  color={theme.text.secondary}
+                />
+              </AppTouchable>
+            )}
+            <View style={styles.sheetHeadingCopy}>
+              <AppText
+                variant="subtitle"
+                weight="semiBold"
+                style={styles.sheetTitle}
+              >
+                {t(
+                  sheetView === 'tafseer'
+                    ? 'quran.ayahTafseer'
+                    : sheetView === 'similar'
+                    ? 'quran.similarAyahs'
+                    : 'quran.ayahActions',
+                )}
+              </AppText>
+              {selectedAyah && (
+                <AppText variant="caption" style={styles.sheetSubtitle}>
+                  {i18n.language.startsWith('ar')
+                    ? selectedSurah?.name_arabic
+                    : selectedSurah?.name_english}
+                  {' · '}
+                  {selectedAyah.word.ayah_number}
+                </AppText>
+              )}
+            </View>
+          </View>
+
+          {selectedAyah && (
+            <AppCard style={styles.selectedAyahCard}>
+              <AppText style={styles.selectedAyahText}>
+                {selectedAyah.text}
+              </AppText>
+            </AppCard>
+          )}
+
+          {sheetView === 'actions' && selectedAyah ? (
+            <View style={styles.actionList}>
+              <AyahAction
+                icon="play-circle-outline"
+                title={t('quran.listenAyah')}
+                onPress={playSelectedAyah}
+              />
+              <AyahAction
+                icon="book-outline"
+                title={t('quran.ayahTafseer')}
+                onPress={() => setSheetView('tafseer')}
+              />
+              <AyahAction
+                icon="git-compare-outline"
+                title={t('quran.similarAyahs')}
+                onPress={() => setSheetView('similar')}
+              />
+              {(() => {
+                const record = savedAyahRecord(selectedAyah);
+                if (!record) return null;
+                const isSaved = !!bookmarks[record.key];
+                return (
+                  <AyahAction
+                    icon={isSaved ? 'bookmark' : 'bookmark-outline'}
+                    title={t(
+                      isSaved ? 'quran.removeBookmark' : 'quran.addBookmark',
+                    )}
+                    onPress={() => toggleBookmark(record)}
+                  />
+                );
+              })()}
+              {(() => {
+                const record = savedAyahRecord(selectedAyah);
+                if (!record) return null;
+                const isSaved = !!favorites[record.key];
+                return (
+                  <AyahAction
+                    icon={isSaved ? 'heart' : 'heart-outline'}
+                    title={t(
+                      isSaved ? 'quran.removeFavorite' : 'quran.addFavorite',
+                    )}
+                    onPress={() => toggleFavorite(record)}
+                  />
+                );
+              })()}
+            </View>
+          ) : null}
+
+          {sheetView === 'tafseer' && (
+            <View style={styles.detailContent}>
+              {tafseerCollectionsQuery.isLoading ||
+              ayahTafseerQuery.isLoading ? (
+                <ActivityIndicator color={theme.text.brand} />
+              ) : tafseerCollectionsQuery.isError ||
+                ayahTafseerQuery.isError ? (
+                <AppText style={styles.detailMessage}>
+                  {t('quran.ayahDetailError')}
+                </AppText>
+              ) : ayahTafseerQuery.data?.text ? (
+                <AppText style={styles.detailText}>
+                  {ayahTafseerQuery.data.text}
+                </AppText>
+              ) : (
+                <AppText style={styles.detailMessage}>
+                  {t('quran.noTafseerFound')}
+                </AppText>
+              )}
+            </View>
+          )}
+
+          {sheetView === 'similar' && (
+            <View style={styles.detailContent}>
+              {similarAyahsQuery.isLoading ? (
+                <ActivityIndicator color={theme.text.brand} />
+              ) : similarAyahsQuery.isError ? (
+                <AppText style={styles.detailMessage}>
+                  {t('quran.ayahDetailError')}
+                </AppText>
+              ) : similarVerses.length ? (
+                similarVerses.map(verse => (
+                  <AppCard
+                    key={verse.verse_key}
+                    style={styles.similarVerseCard}
+                  >
+                    <AppText style={styles.detailText}>{verse.arabic}</AppText>
+                    <AppText variant="caption" style={styles.similarVerseLabel}>
+                      {verse.surah_name_arabic} · {verse.surah_name_english} ·{' '}
+                      {verse.ayah}
+                    </AppText>
+                  </AppCard>
+                ))
+              ) : (
+                <AppText style={styles.detailMessage}>
+                  {t('quran.noSimilarAyahs')}
+                </AppText>
+              )}
+            </View>
+          )}
+        </BottomSheetScrollView>
+      </AppBottomSheet>
     </Screen>
   );
 }
 
-const styles = StyleSheet.create({
+function AyahAction({
+  icon,
+  title,
+  onPress,
+}: {
+  icon: React.ComponentProps<typeof AppIcon>['name'];
+  title: string;
+  onPress: () => void;
+}): React.JSX.Element {
+  const theme = useTheme();
+  const styles = makeStyles(theme);
+  return (
+    <AppTouchable
+      variant="ghost"
+      onPress={onPress}
+      style={styles.actionTouchable}
+    >
+      <AppCard padded={false} style={styles.actionCard}>
+        <View style={styles.actionIcon}>
+          <AppIcon name={icon} size={21} color={theme.text.brand} />
+        </View>
+        <AppText variant="body" weight="medium" style={styles.actionText}>
+          {title}
+        </AppText>
+        <AppIcon name="chevron-forward" size={18} color={theme.text.muted} />
+      </AppCard>
+    </AppTouchable>
+  );
+}
+
+const pagerStyles = StyleSheet.create({
   page: {
     flex: 1,
   },

@@ -11,3 +11,14 @@ export async function getSurahsMutashbihat(
 
   return response.data;
 }
+
+export async function getAyahMutashbihat(
+  surahNumber: number,
+  ayahNumber: number,
+): Promise<MutashabihatSurahResponse> {
+  const response = await apiClient.get<MutashabihatSurahResponse>(
+    `/quran/mutashabihat/${surahNumber}/${ayahNumber}`,
+  );
+
+  return response.data;
+}

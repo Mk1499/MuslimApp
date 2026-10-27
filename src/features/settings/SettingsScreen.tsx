@@ -165,6 +165,24 @@ export function SettingsScreen(): React.JSX.Element {
             subtitle={t('settings.traceYourselfSubtitle')}
             onPress={() => navigate(ScreenNames.PrayerTracker)}
           />
+          <View style={styles.divider} />
+          <SettingAction
+            icon="bookmark-outline"
+            title={t('settings.bookmarks')}
+            subtitle={t('settings.bookmarksSubtitle')}
+            onPress={() =>
+              navigate(ScreenNames.SavedAyahs, { kind: 'bookmarks' })
+            }
+          />
+          <View style={styles.divider} />
+          <SettingAction
+            icon="heart-outline"
+            title={t('settings.favoriteAyahs')}
+            subtitle={t('settings.favoriteAyahsSubtitle')}
+            onPress={() =>
+              navigate(ScreenNames.SavedAyahs, { kind: 'favorites' })
+            }
+          />
         </AppCard>
 
         <AppText variant="caption" style={styles.footer}>
