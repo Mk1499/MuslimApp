@@ -58,4 +58,14 @@ export default (theme: AppTheme) =>
       textAlign: 'center',
       fontFamily: fontFamily.bold,
     },
+    searchBar: {
+      marginHorizontal: spacing.md,
+      marginTop: spacing.md,
+      marginBottom: spacing.sm,
+    },
+    noResults: {
+      color: theme.text.muted,
+      textAlign: 'center',
+      marginVertical: spacing.xl,
+    },
   });

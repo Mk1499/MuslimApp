@@ -21,6 +21,19 @@ type GetFeaturedSpeakersResponse = {
   };
 };
 
+export type MediaSearchResponse = {
+  data: {
+    speakers: VideoSpeaker[];
+    videos: Video[];
+  };
+  pagination?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+};
+
 // Videos
 export async function getLatestVideos(): Promise<GetLatestVideosResponse> {
   const response = await mediaClient.get<GetLatestVideosResponse>(
@@ -65,6 +78,27 @@ export async function getFeaturedSpeakers(): Promise<GetFeaturedSpeakersResponse
     '/speakers/featured?page=1&limit=5',
   );
 
+  return response.data;
+}
+
+export async function getAllSpeakers(
+  page: number,
+  limit = 24,
+): Promise<GetFeaturedSpeakersResponse> {
+  const response = await mediaClient.get<GetFeaturedSpeakersResponse>(
+    `/speakers?page=${page}&limit=${limit}`,
+  );
+  return response.data;
+}
+
+export async function searchMedia(
+  query: string,
+  page: number,
+  limit = 10,
+): Promise<MediaSearchResponse> {
+  const response = await mediaClient.get<MediaSearchResponse>(
+    `/search?q=${encodeURIComponent(query)}&limit=${limit}&page=${page}`,
+  );
   return response.data;
 }
 

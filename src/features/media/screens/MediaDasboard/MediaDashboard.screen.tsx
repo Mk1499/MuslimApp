@@ -9,10 +9,10 @@ import { Carousel } from 'react-native-reanimated-carousel';
 import { useTheme } from '@/theme';
 import makeStyles from './styles';
 import SpeakerCard from '../../components/SpeakerCard/SpeakerCard.comp';
-import { MediaStackParamList } from '@/navigation/stacks/mediaStack';
 import ScreenNames from '@/navigation/ScreenNames';
 import StackNames from '@/navigation/StackNames';
 import { RootStackParamList } from '@/navigation/types';
+import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
 
 export default function MediaDashboardScreen() {
   const theme = useTheme();
@@ -21,11 +21,22 @@ export default function MediaDashboardScreen() {
   const { useMediaDashboardQueries } = useMediaData();
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, StackNames.MediaStack>>();
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   const { data, isError, isLoading, refetch, isRefetching } =
     useMediaDashboardQueries();
   const { latestVideos, featuredVideos, mostViewedVideos, featuredSpeakers } =
     data ?? {};
+
+  const submitSearch = () => {
+    const query = searchQuery.trim();
+    if (!query) return;
+
+    navigate(StackNames.MediaStack, {
+      screen: ScreenNames.MediaSearchResults,
+      params: { query },
+    });
+  };
 
   function renderVideosSection(title: string, data: any[]) {
     return (
@@ -71,10 +82,19 @@ export default function MediaDashboardScreen() {
       <AppText variant="title" style={styles.screenTitle}>
         {t('media.title')}
       </AppText>
-      {featuredVideos && featuredVideos?.data?.length > 0 && (
+      <SearchInput
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        placeholder={t('media.searchPlaceholder')}
+        onClear={() => setSearchQuery('')}
+        onSubmitEditing={submitSearch}
+        containerStyle={styles.searchBar}
+        returnKeyType="search"
+      />
+      {featuredVideos?.data && featuredVideos.data.length > 0 && (
         <Carousel
           style={styles.featuredContainer}
-          data={featuredVideos?.data}
+          data={featuredVideos.data}
           renderItem={({ item }) => <VideoCard video={item} />}
           autoplay
           loop
@@ -116,16 +136,13 @@ export default function MediaDashboardScreen() {
         />
       </View>
 
-      {latestVideos &&
-        latestVideos?.data?.length > 0 &&
-        renderVideosSection(t('media.latestVideos'), latestVideos?.data)}
+      {latestVideos?.data &&
+        latestVideos.data.length > 0 &&
+        renderVideosSection(t('media.latestVideos'), latestVideos.data)}
 
-      {mostViewedVideos &&
-        mostViewedVideos?.data?.length > 0 &&
-        renderVideosSection(
-          t('media.mostViewedVideos'),
-          mostViewedVideos?.data,
-        )}
+      {mostViewedVideos?.data &&
+        mostViewedVideos.data.length > 0 &&
+        renderVideosSection(t('media.mostViewedVideos'), mostViewedVideos.data)}
 
       {isError && <AppText>Error loading latest videos</AppText>}
 

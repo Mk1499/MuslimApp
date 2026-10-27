@@ -19,6 +19,7 @@ enum ScreenNames {
   SpeakerProfile = 'speakerProfile',
   VideoDetails = 'videoDetails',
   AllSpeakers = 'allSpeakers',
+  MediaSearchResults = 'mediaSearchResults',
 }
 
 export default ScreenNames;
