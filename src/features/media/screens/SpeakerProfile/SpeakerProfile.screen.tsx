@@ -57,7 +57,7 @@ export default function SpeakerProfile() {
           {`${(speaker?.views ?? 0).toLocaleString()} ${t('media.views')}`}
         </AppText>
         {!!speakerBio && (
-          <AppText style={styles.bio} variant="caption" numberOfLines={3}>
+          <AppText style={styles.bio} variant="caption" numberOfLines={4}>
             {speakerBio}
           </AppText>
         )}

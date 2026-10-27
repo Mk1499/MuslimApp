@@ -44,7 +44,7 @@ export default function LatestVideosView({
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <Animated.View style={{ flex: 1 }} entering={FadeIn} exiting={FadeOut}>
+    <View style={{ flex: 1 }} entering={FadeIn} exiting={FadeOut}>
       <SectionList
         sections={[{ title: 'videos', data: allVideos }]}
         style={{ flex: 1 }}
@@ -52,7 +52,11 @@ export default function LatestVideosView({
         renderSectionHeader={() => StickyHeaderComponent}
         stickySectionHeadersEnabled
         keyExtractor={item => item._id}
-        renderItem={({ item }) => <VideoCard video={item} />}
+        renderItem={({ item }) => (
+          <View style={{ paddingHorizontal: 16 }}>
+            <VideoCard video={item} />
+          </View>
+        )}
         onScroll={event => {
           if (event.nativeEvent.contentOffset.y > 0) hasScrolled.current = true;
         }}
@@ -69,6 +73,6 @@ export default function LatestVideosView({
         }
         ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
       />
-    </Animated.View>
+    </View>
   );
 }
