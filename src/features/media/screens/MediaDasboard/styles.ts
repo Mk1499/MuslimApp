@@ -1,4 +1,4 @@
-import { AppTheme, spacing } from '@/theme';
+import { AppTheme, fontFamily, spacing } from '@/theme';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
@@ -8,14 +8,13 @@ export default (theme: AppTheme) =>
       flex: 1,
     },
     featuredContainer: {
-      marginBottom: spacing.lg,
-      height: 0.33 * SCREEN_HEIGHT,
+      height: 0.36 * SCREEN_HEIGHT,
     },
     section: {
       marginBottom: spacing.lg,
     },
     sectionTitle: {
-      fontWeight: 'bold',
+      fontFamily: fontFamily.bold,
       color: theme.text.highlight,
       textAlign: 'left',
     },
@@ -52,11 +51,11 @@ export default (theme: AppTheme) =>
     clickableText: {
       color: theme.accent.primary,
       textDecorationLine: 'underline',
-      fontWeight: 'bold',
+      fontFamily: fontFamily.bold,
     },
     screenTitle: {
-      fontWeight: 'bold',
       color: theme.text.highlight,
       textAlign: 'center',
+      fontFamily: fontFamily.bold,
     },
   });

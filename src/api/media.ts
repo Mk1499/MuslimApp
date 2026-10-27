@@ -38,6 +38,19 @@ export async function getMostViewedVideos(): Promise<GetLatestVideosResponse> {
   return response.data;
 }
 
+export async function getRelatedVideos(
+  videoId: string,
+): Promise<GetLatestVideosResponse> {
+  const response = await mediaClient.get<GetLatestVideosResponse>(
+    `/videos/${videoId}/related`,
+  );
+  return response.data;
+}
+
+export async function watchVideo(videoId: string): Promise<void> {
+  await mediaClient.get(`/videos/${videoId}/watch`);
+}
+
 export async function getFeaturedVideos(): Promise<GetLatestVideosResponse> {
   const response = await mediaClient.get<GetLatestVideosResponse>(
     '/videos/featured?page=1&limit=5',

@@ -44,5 +44,7 @@ export type Video = {
   speakers: VideoSpeaker[];
   createdAt: string;
   updatedAt: string;
+  likes: number;
+  dislikes: number;
   __v: number;
 };

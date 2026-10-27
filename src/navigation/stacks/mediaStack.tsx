@@ -4,6 +4,8 @@ import MediaDashboard from '@/features/media/screens/MediaDasboard/MediaDashboar
 import { Surah } from '@/types/surah';
 import SpeakerProfile from '@/features/media/screens/SpeakerProfile/SpeakerProfile.screen';
 import { VideoSpeaker } from '@/types/media.types';
+import VideoDetails from '@/features/media/screens/VideoDetails/VideoDetails.screen';
+import { Video } from '@/types/media.types';
 
 const Stack = createNativeStackNavigator<MediaStackParamList>();
 
@@ -19,6 +21,7 @@ export default function MediaStack() {
         name={ScreenNames.SpeakerProfile}
         component={SpeakerProfile}
       />
+      <Stack.Screen name={ScreenNames.VideoDetails} component={VideoDetails} />
     </Stack.Navigator>
   );
 }
@@ -28,4 +31,5 @@ export type MediaStackParamList = {
   [ScreenNames.SpeakerProfile]: {
     speaker?: VideoSpeaker;
   };
+  [ScreenNames.VideoDetails]: { video: Video };
 };

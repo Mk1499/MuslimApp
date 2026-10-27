@@ -1,4 +1,5 @@
 import { AppTheme } from '@/theme';
+import { SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
@@ -8,7 +9,7 @@ export default (theme: AppTheme) =>
     },
     cover: {
       width: '100%',
-      height: 200,
+      height: 0.25 * SCREEN_HEIGHT,
       borderRadius: 8,
       borderWidth: 1,
       borderColor: theme.accent.primary,

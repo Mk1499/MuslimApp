@@ -148,6 +148,11 @@
     "likes": "Likes",
     "videos": "Videos",
     "disLike": "Dislike",
-    "views": "Views"
+    "views": "Views",
+    "video": "Video",
+    "speaker": "Speaker",
+    "viewChannel": "View channel",
+    "relatedVideos": "Related videos",
+    "relatedError": "Could not load related videos."
   }
 }

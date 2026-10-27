@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import React from 'react';
 import { VideoCardProps } from './types';
 import { AppCard, AppIcon, AppText } from '@/components/ui';
@@ -16,11 +16,16 @@ export default function VideoCard({ video }: VideoCardProps) {
   const { youtubeVideoId, title, speakers, views, duration } = video;
   const coverURL = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
   const { formatDuration } = useFormatter();
-  const { navigate } = useNavigation();
+  const navigation = useNavigation<any>();
+  const openVideo = () =>
+    navigation.navigate(StackNames.MediaStack, {
+      screen: ScreenNames.VideoDetails,
+      params: { video },
+    });
 
   return (
     <AppCard style={styles.container}>
-      <View>
+      <Pressable onPress={openVideo} accessibilityRole="button">
         <AppImage source={{ uri: coverURL }} style={styles.cover} />
         <View style={styles.metaCont}>
           <View style={styles.metaItemCont}>
@@ -35,10 +40,10 @@ export default function VideoCard({ video }: VideoCardProps) {
             </AppText>
           </View>
         </View>
-      </View>
+      </Pressable>
       <Pressable
         onPress={() => {
-          navigate(StackNames.MediaStack, {
+          navigation.navigate(StackNames.MediaStack, {
             screen: ScreenNames.SpeakerProfile,
             params: {
               speaker: speakers[0],
@@ -52,7 +57,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           style={styles.speakerImg}
         />
         <View style={styles.infoCont}>
-          <AppText style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+          <AppText style={styles.title} numberOfLines={2} ellipsizeMode="tail">
             {title}
           </AppText>
           <AppText style={styles.speakerName} variant="caption">

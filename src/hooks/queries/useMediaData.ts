@@ -6,6 +6,8 @@ import {
   getMostViewedVideos,
   getSpeakerLatestVideos,
   getSpeakerMostViewedVideos,
+  getRelatedVideos,
+  watchVideo,
 } from '@/api/media';
 
 export default function useMediaData() {
@@ -78,10 +80,27 @@ export default function useMediaData() {
       staleTime: 1000 * 60 * 5, // 5 minutes
     });
 
+  const useRelatedVideosQuery = (videoId: string) =>
+    useQuery({
+      queryKey: ['related-videos', videoId],
+      queryFn: () => getRelatedVideos(videoId),
+      enabled: !!videoId,
+      staleTime: 1000 * 60 * 5,
+    });
+
+  const useWatchVideoQuery = (videoId: string) =>
+    useQuery({
+      queryKey: ['watch-video', videoId],
+      queryFn: () => watchVideo(videoId),
+      enabled: false,
+    });
+
   return {
     useGetFeaturedSpeakersQuery,
     useMediaDashboardQueries,
     useSpeakerTopVideosQuery,
     useSpeakerLatestVideosQuery,
+    useRelatedVideosQuery,
+    useWatchVideoQuery,
   };
 }
