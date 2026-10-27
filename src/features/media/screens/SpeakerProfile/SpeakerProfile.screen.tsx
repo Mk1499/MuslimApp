@@ -1,16 +1,15 @@
-import { View } from 'react-native';
 import React from 'react';
+import { Pressable, View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AppIcon, AppText, AppTouchable, Screen } from '@/components/ui';
+import AppImage from '@/components/ui/AppImage';
 import { MediaStackParamList } from '@/navigation/stacks/mediaStack';
 import ScreenNames from '@/navigation/ScreenNames';
-import makeStyles from './styles';
 import { spacing, useTheme } from '@/theme';
-import AppImage from '@/components/ui/AppImage';
 import useFormatter from '@/hooks/useFormatter';
 import { isRTL } from '@/utils/constants';
 import { useTranslation } from 'react-i18next';
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
+import makeStyles from './styles';
 import LatestVideosView from './Views/LatestVideos/LatestVideos.view';
 import PopularVideosView from './Views/PopularVideos/PopularVideos.view';
 
@@ -21,27 +20,22 @@ export default function SpeakerProfile() {
   const { goBack } = useNavigation();
   const { params } =
     useRoute<RouteProp<MediaStackParamList, ScreenNames.SpeakerProfile>>();
-  const { speaker } = params ?? {};
-  const { name, imageUrl, nameAr, nameEn, bio, bioAr, bioEn, views, _id } =
-    speaker ?? {};
+  const speaker = params?.speaker;
   const { getLocalizedText } = useFormatter();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const tabs = [
+    { id: 'latest', label: t('media.latestVideos') },
+    { id: 'popular', label: t('media.mostViewedVideos') },
+  ] as const;
+  const activeTab = tabs[selectedIndex] ?? tabs[0];
+  const speakerName =
+    getLocalizedText(speaker?.nameAr, speaker?.nameEn) || speaker?.name || '';
+  const speakerBio =
+    getLocalizedText(speaker?.bioAr, speaker?.bioEn) || speaker?.bio || '';
 
-  const handleSegmentChange = (index: number) => {
-    setSelectedIndex(index);
-  };
-
-  function renderMetaItem(label: string, value: number | string) {
-    return (
-      <View style={styles.metaCont}>
-        <AppText style={styles.metaTitle}>{label}</AppText>
-        <AppText style={styles.metaValue}>{value}</AppText>
-      </View>
-    );
-  }
-
-  const listHeader = (
-    <>
+  const profileHeader = (
+    <View style={styles.profileHeader}>
+      <View style={styles.bgCover} />
       <AppTouchable
         variant="ghost"
         onPress={goBack}
@@ -54,39 +48,47 @@ export default function SpeakerProfile() {
           size={30}
         />
       </AppTouchable>
-      <View style={styles.bgCover} />
       <View style={styles.dataCont}>
-        <AppImage source={{ uri: imageUrl }} style={styles.image} />
+        <AppImage source={{ uri: speaker?.imageUrl }} style={styles.image} />
         <AppText variant="title" style={styles.name}>
-          {getLocalizedText(nameAr, nameEn) || name}
+          {speakerName}
         </AppText>
-        <View style={styles.rowCont}>
-          {renderMetaItem(t('media.videos'), 222)}
-          <View style={styles.colLine} />
-          {renderMetaItem(t('media.likes'), 222)}
-          <View style={styles.colLine} />
-          {renderMetaItem(t('media.disLike'), 222)}
-          <View style={styles.colLine} />
-          {renderMetaItem(t('media.views'), views ?? 0)}
-        </View>
-        <AppText style={styles.bio} variant="caption">
-          {getLocalizedText(bioAr, bioEn) || bio}
+        <AppText style={styles.views} variant="caption">
+          {`${(speaker?.views ?? 0).toLocaleString()} ${t('media.views')}`}
         </AppText>
+        {!!speakerBio && (
+          <AppText style={styles.bio} variant="caption" numberOfLines={3}>
+            {speakerBio}
+          </AppText>
+        )}
       </View>
+    </View>
+  );
+
+  const stickyTabs = (
+    <View style={styles.stickyHeader}>
       <View style={styles.segmentCont}>
-        <SegmentedControl
-          values={[t('media.latestVideos'), t('media.mostViewedVideos')]}
-          selectedIndex={selectedIndex}
-          onChange={event =>
-            handleSegmentChange(event.nativeEvent.selectedSegmentIndex)
-          }
-          style={styles.viewCont}
-          fontStyle={styles.segmentText}
-          activeFontStyle={styles.activeSegment}
-          direction={isRTL ? 'rtl' : 'ltr'}
-        />
+        {tabs.map((tab, index) => (
+          <Pressable
+            key={tab.id}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: selectedIndex === index }}
+            onPress={() => setSelectedIndex(index)}
+            style={styles.tabButton}
+          >
+            <AppText
+              style={[
+                styles.tabText,
+                selectedIndex === index ? styles.selectedTabText : undefined,
+              ]}
+            >
+              {tab.label}
+            </AppText>
+            {selectedIndex === index && <View style={styles.tabIndicator} />}
+          </Pressable>
+        ))}
       </View>
-    </>
+    </View>
   );
 
   return (
@@ -95,10 +97,18 @@ export default function SpeakerProfile() {
       scroll={false}
       withBottomSafeArea={false}
     >
-      {selectedIndex === 0 ? (
-        <LatestVideosView speakerId={_id as string} ListHeaderComponent={listHeader} />
+      {activeTab.id === 'latest' ? (
+        <LatestVideosView
+          speakerId={speaker?._id ?? ''}
+          ListHeaderComponent={profileHeader}
+          StickyHeaderComponent={stickyTabs}
+        />
       ) : (
-        <PopularVideosView speakerId={_id as string} ListHeaderComponent={listHeader} />
+        <PopularVideosView
+          speakerId={speaker?._id ?? ''}
+          ListHeaderComponent={profileHeader}
+          StickyHeaderComponent={stickyTabs}
+        />
       )}
     </Screen>
   );
