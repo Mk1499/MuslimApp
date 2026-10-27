@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
   StyleSheet.create({
+    searchContainer: {
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+    },
     videoList: {
       flex: 1,
     },
@@ -17,6 +21,12 @@ export default (theme: AppTheme) =>
     },
     speakersSection: {
       marginBottom: spacing.lg,
+    },
+    speakerEmptyState: {
+      minHeight: 96,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: spacing.md,
     },
     sectionTitle: {
       color: theme.text.primary,

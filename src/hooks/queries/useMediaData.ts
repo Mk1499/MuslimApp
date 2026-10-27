@@ -10,6 +10,8 @@ import {
   watchVideo,
   getAllSpeakers,
   searchMedia,
+  searchSpeakers,
+  searchVideos,
 } from '@/api/media';
 
 export default function useMediaData() {
@@ -128,6 +130,40 @@ export default function useMediaData() {
       enabled: false,
     });
 
+  const useSearchSpeakers = (query: string) =>
+    useInfiniteQuery({
+      queryKey: ['search-speakers', query],
+      queryFn: ({ pageParam = 1 }) => searchSpeakers(query, pageParam, 10),
+      getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+        const { page, totalPages } = lastPage.pagination ?? {};
+        if (page && totalPages) {
+          return page < totalPages ? page + 1 : undefined;
+        }
+        const resultCount = lastPage.data?.length ?? 0;
+        return resultCount >= 10 ? Number(lastPageParam) + 1 : undefined;
+      },
+      initialPageParam: 1,
+      enabled: false,
+      staleTime: 1000 * 60 * 2, // 2 minutes
+    });
+
+  const useSearchVideos = (query: string) =>
+    useInfiniteQuery({
+      queryKey: ['search-videos', query],
+      queryFn: ({ pageParam = 1 }) => searchVideos(query, pageParam, 10),
+      getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+        const { page, totalPages } = lastPage.pagination ?? {};
+        if (page && totalPages) {
+          return page < totalPages ? page + 1 : undefined;
+        }
+        const resultCount = lastPage.data?.length ?? 0;
+        return resultCount >= 10 ? Number(lastPageParam) + 1 : undefined;
+      },
+      initialPageParam: 1,
+      enabled: false,
+      staleTime: 1000 * 60 * 2, // 2 minutes
+    });
+
   return {
     useGetFeaturedSpeakersQuery,
     useAllSpeakersQuery,
@@ -137,5 +173,7 @@ export default function useMediaData() {
     useSpeakerLatestVideosQuery,
     useRelatedVideosQuery,
     useWatchVideoQuery,
+    useSearchSpeakers,
+    useSearchVideos,
   };
 }

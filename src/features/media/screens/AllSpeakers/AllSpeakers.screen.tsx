@@ -14,6 +14,7 @@ import useMediaData from '@/hooks/queries/useMediaData';
 import { useTheme } from '@/theme';
 import makeStyles from './styles';
 import ScreenNames from '@/navigation/ScreenNames';
+import SpeakerCardLarge from '../../components/SpeakerCardLarge/SpeakerCardLarge.comp';
 
 export default function AllSpeakers() {
   const { t } = useTranslation();
@@ -77,12 +78,12 @@ export default function AllSpeakers() {
       </View>
       <FlatList
         data={speakers}
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginTop: 16 }}
         numColumns={3}
         keyExtractor={speaker => speaker._id}
         renderItem={({ item }) => (
           <View style={styles.speakerCell}>
-            <SpeakerCard speaker={item} />
+            <SpeakerCardLarge speaker={item} />
           </View>
         )}
         columnWrapperStyle={styles.speakerRow}

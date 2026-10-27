@@ -91,17 +91,6 @@ export async function getAllSpeakers(
   return response.data;
 }
 
-export async function searchMedia(
-  query: string,
-  page: number,
-  limit = 10,
-): Promise<MediaSearchResponse> {
-  const response = await mediaClient.get<MediaSearchResponse>(
-    `/search?q=${encodeURIComponent(query)}&limit=${limit}&page=${page}`,
-  );
-  return response.data;
-}
-
 export async function getSpeakerLatestVideos(
   speakerId: string,
   page: number,
@@ -121,5 +110,42 @@ export async function getSpeakerMostViewedVideos(
     `/videos/most-viewed?speaker=${speakerId}&page=${page}&limit=3`,
   );
 
+  return response.data;
+}
+
+export async function searchMedia(
+  query: string,
+  page: number,
+  limit = 10,
+): Promise<MediaSearchResponse> {
+  const response = await mediaClient.get<MediaSearchResponse>(
+    `/search?q=${encodeURIComponent(query)}&limit=${limit}&page=${page}`,
+  );
+  return response.data;
+}
+
+export async function searchSpeakers(
+  query: string,
+  page: number,
+  limit = 10,
+): Promise<GetFeaturedSpeakersResponse> {
+  const response = await mediaClient.get<GetFeaturedSpeakersResponse>(
+    `/search/speakers?query=${encodeURIComponent(
+      query,
+    )}&page=${page}&limit=${limit}`,
+  );
+  return response.data;
+}
+
+export async function searchVideos(
+  query: string,
+  page: number,
+  limit = 10,
+): Promise<GetLatestVideosResponse> {
+  const response = await mediaClient.get<GetLatestVideosResponse>(
+    `/search/videos?query=${encodeURIComponent(
+      query,
+    )}&page=${page}&limit=${limit}`,
+  );
   return response.data;
 }
