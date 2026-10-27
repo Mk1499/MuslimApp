@@ -1,4 +1,5 @@
 import { FlatList, RefreshControl, View } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppText, Screen } from '@/components/ui';
@@ -8,12 +9,18 @@ import { Carousel } from 'react-native-reanimated-carousel';
 import { useTheme } from '@/theme';
 import makeStyles from './styles';
 import SpeakerCard from '../../components/SpeakerCard/SpeakerCard.comp';
+import { MediaStackParamList } from '@/navigation/stacks/mediaStack';
+import ScreenNames from '@/navigation/ScreenNames';
+import StackNames from '@/navigation/StackNames';
+import { RootStackParamList } from '@/navigation/types';
 
 export default function MediaDashboardScreen() {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const { t } = useTranslation();
   const { useMediaDashboardQueries } = useMediaData();
+  const { navigate } =
+    useNavigation<NavigationProp<RootStackParamList, StackNames.MediaStack>>();
 
   const { data, isError, isLoading, refetch, isRefetching } =
     useMediaDashboardQueries();
@@ -83,7 +90,15 @@ export default function MediaDashboardScreen() {
           <AppText variant="subtitle" style={styles.sectionTitle}>
             {t('media.featuredSpeakers')}
           </AppText>
-          <AppText variant="caption" style={styles.clickableText}>
+          <AppText
+            variant="caption"
+            style={styles.clickableText}
+            onPress={() => {
+              navigate(StackNames.MediaStack, {
+                screen: ScreenNames.AllSpeakers,
+              });
+            }}
+          >
             {t('common.seeAll')}
           </AppText>
         </View>
