@@ -44,7 +44,7 @@ export default function PopularVideosView({
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <View style={{ flex: 1 }} entering={FadeIn} exiting={FadeOut}>
+    <Animated.View style={{ flex: 1 }} entering={FadeIn} exiting={FadeOut}>
       <SectionList
         sections={[{ title: 'videos', data: allVideos }]}
         style={{ flex: 1 }}
@@ -73,6 +73,6 @@ export default function PopularVideosView({
         }
         ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
       />
-    </View>
+    </Animated.View>
   );
 }

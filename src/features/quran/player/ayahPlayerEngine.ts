@@ -2,6 +2,8 @@ import {
   AudioContext,
   AudioManager,
   PlaybackNotificationManager,
+  type AudioBuffer,
+  type AudioBufferSourceNode,
 } from 'react-native-audio-api';
 import { AYAH_INDEX, AYAH_LIST, SURAH_NAMES } from './ayahSequence';
 import {
@@ -10,181 +12,107 @@ import {
   getReciterDisplayName,
 } from './ayahAudio';
 
-/**
- * Minimal info needed to start playback. A pressed `QuranWord` satisfies it,
- * and so does a bare `{ surah_number, ayah_number }` (used when resuming from
- * the home screen's last-read card).
- */
 export interface AyahTarget {
   surah_number: number;
   ayah_number: number;
 }
 
-/**
- * Everything the UI needs to know about the player at a given moment.
- */
 export interface AyahPlayerSnapshot {
-  /** URL of the ayah currently loaded into the audio element. */
-  sourceUrl: string | null;
-  /**
-   * Bumped every time the loaded source changes. The audio host uses it to
-   * ignore events that belong to a source that has already been replaced.
-   */
-  sourceId: number;
-  /** "surah:ayah" of the ayah that is loaded. */
   currentAyahKey: string | null;
-  /** True while the audio element is actually producing sound. */
   isPlaying: boolean;
-  /** True while the current source is still being fetched/decoded. */
   isLoading: boolean;
-}
-
-/**
- * The imperative surface the audio host (the `<Audio>` element) hands over to
- * the engine. The engine owns *what* should play, the host owns *how*.
- */
-export interface AyahAudioHost {
-  play(): void;
-  pause(): void;
 }
 
 type SnapshotListener = (snapshot: AyahPlayerSnapshot) => void;
 
 const EMPTY_SNAPSHOT: AyahPlayerSnapshot = {
-  sourceUrl: null,
-  sourceId: 0,
   currentAyahKey: null,
   isPlaying: false,
   isLoading: false,
 };
 
 /**
- * Playback engine for ayah recitation, built on `react-native-audio-api`.
- *
- * `react-native-track-player` used to own a native queue of tracks; the audio
- * API has no such concept, so the queue lives here instead: the engine keeps
- * a cursor into `AYAH_LIST` and walks it forward, one ayah at a time, as each
- * source finishes playing.
- *
- * The engine is a singleton because — like the old playback service — it has
- * to outlive the component that started the recitation (the mushaf screen can
- * be left while the audio keeps going).
+ * Plays recitations through decoded AudioBuffers. The next ayah is downloaded
+ * and decoded during the current ayah, then its source is scheduled at the
+ * current source's exact end time on the AudioContext clock. This avoids
+ * relying on a JS onEnded callback to start the next audio file.
  */
 class AyahPlayerEngine {
   private listeners = new Set<SnapshotListener>();
-
-  private snapshot: AyahPlayerSnapshot = EMPTY_SNAPSHOT;
-
-  private host: AyahAudioHost | null = null;
-
+  private snapshot = EMPTY_SNAPSHOT;
   private context: AudioContext | null = null;
-
-  /** Index into `AYAH_LIST` of the ayah that is currently loaded. */
   private cursor = -1;
-
-  /**
-   * Whether playback should be running as soon as the current source is ready.
-   * Lets the user pause while a source is still loading.
-   */
+  private currentOffset = 0;
+  private currentStartTime = 0;
+  private currentBuffer: AudioBuffer | null = null;
+  private currentSource: AudioBufferSourceNode | null = null;
+  private nextSource: AudioBufferSourceNode | null = null;
+  private nextBuffer: AudioBuffer | null = null;
+  private nextIndex: number | null = null;
+  private nextStartTime = 0;
+  private bufferPromises = new Map<number, Promise<AudioBuffer>>();
+  private runId = 0;
   private pendingPlay = false;
-
-  /** Set once the native listeners (interruption + notification) are wired. */
   private nativeListenersReady = false;
-
-  /** The notification permission is only ever asked for once per session. */
   private notificationPermissionRequested = false;
-
-  // ---------------------------------------------------------------------
-  // Subscription
-  // ---------------------------------------------------------------------
 
   subscribe = (listener: SnapshotListener): (() => void) => {
     this.listeners.add(listener);
     listener(this.snapshot);
-    return () => {
-      this.listeners.delete(listener);
-    };
+    return () => this.listeners.delete(listener);
   };
 
   getSnapshot = (): AyahPlayerSnapshot => this.snapshot;
 
-  /**
-   * The shared audio context. It is created once and reused for every ayah so
-   * swapping sources never tears down the underlying native audio runtime.
-   *
-   * It is created lazily so the audio host always hands the very same context
-   * to the `<Audio>` element — a changing context would make the library
-   * build a new one.
-   */
-  getAudioContext = (): AudioContext | null => this.getContext();
-
-  /** Registers the audio element that actually produces the sound. */
-  attachHost = (host: AyahAudioHost): (() => void) => {
-    this.host = host;
-    return () => {
-      if (this.host === host) {
-        this.host = null;
-      }
-    };
-  };
-
-  // ---------------------------------------------------------------------
-  // Commands
-  // ---------------------------------------------------------------------
-
-  /**
-   * Starts a recitation at the given ayah and keeps going through the
-   * following ayahs, across page and surah boundaries.
-   */
   play = (target: AyahTarget): void => {
     const index = AYAH_INDEX.get(
       `${target.surah_number}:${target.ayah_number}`,
     );
-    if (index === undefined) {
-      return;
-    }
-
-    this.pendingPlay = true;
+    if (index === undefined) return;
     this.prepareNativeSession();
-    this.load(index);
+    this.startAt(index, 0);
   };
 
   pause = (): void => {
+    if (this.cursor < 0) return;
+    const context = this.getContext();
+    if (this.currentBuffer && context) {
+      this.currentOffset = Math.min(
+        this.currentBuffer.duration,
+        this.currentOffset +
+          Math.max(0, context.currentTime - this.currentStartTime),
+      );
+    }
     this.pendingPlay = false;
-    this.host?.pause();
-    this.patch({ isPlaying: false });
+    this.runId += 1;
+    this.cancelSources();
+    this.patch({ isPlaying: false, isLoading: false });
     this.updateNotification('paused');
   };
 
   resume = (): void => {
-    if (this.snapshot.currentAyahKey == null) {
-      return;
-    }
-
-    this.pendingPlay = true;
-    // Still loading — playback starts on its own once the source is ready.
-    if (this.snapshot.isLoading) {
-      return;
-    }
-    this.host?.play();
+    if (this.cursor < 0 || this.snapshot.currentAyahKey == null) return;
+    this.prepareNativeSession();
+    this.startAt(this.cursor, this.currentOffset);
   };
 
   toggle = (): void => {
-    if (this.snapshot.isPlaying) {
-      this.pause();
-    } else {
-      this.resume();
-    }
+    if (this.snapshot.isPlaying) this.pause();
+    else this.resume();
   };
 
-  /** Stops everything and clears the loaded ayah. */
   stop = (): void => {
     this.pendingPlay = false;
-    this.host?.pause();
+    this.runId += 1;
+    this.cancelSources();
     this.cursor = -1;
+    this.currentOffset = 0;
+    this.currentStartTime = 0;
+    this.currentBuffer = null;
+    this.nextIndex = null;
+    this.nextStartTime = 0;
+    this.bufferPromises.clear();
     this.patch({
-      sourceUrl: null,
-      sourceId: this.snapshot.sourceId + 1,
       currentAyahKey: null,
       isPlaying: false,
       isLoading: false,
@@ -193,131 +121,300 @@ class AyahPlayerEngine {
     PlaybackNotificationManager.hide().catch(() => {});
   };
 
-  /** Jumps to the next ayah in reading order. */
   next = (): void => {
-    const next = this.cursor + 1;
-    if (next < 0 || next >= AYAH_LIST.length) {
-      return;
-    }
-    this.pendingPlay = true;
-    this.load(next);
+    const nextIndex = this.cursor + 1;
+    if (this.cursor < 0 || nextIndex >= AYAH_LIST.length) return;
+    this.startAt(nextIndex, 0);
   };
 
-  /** Jumps back to the previous ayah in reading order. */
   previous = (): void => {
-    const previous = this.cursor - 1;
-    if (previous < 0) {
-      return;
-    }
-    this.pendingPlay = true;
-    this.load(previous);
+    const previousIndex = this.cursor - 1;
+    if (previousIndex < 0) return;
+    this.startAt(previousIndex, 0);
   };
 
-  // ---------------------------------------------------------------------
-  // Events coming from the audio host
-  // ---------------------------------------------------------------------
-
-  /** The current source finished loading and is ready to play. */
-  handleLoaded = (sourceId: number): void => {
-    if (sourceId !== this.snapshot.sourceId) {
-      return;
-    }
-
-    this.patch({ isLoading: false });
-
-    if (!this.pendingPlay) {
-      return;
-    }
-
-    const start = () => {
-      // The user may have hit pause while the context was resuming.
-      if (this.pendingPlay) {
-        this.host?.play();
-      }
-    };
+  private startAt = (index: number, offset: number): void => {
+    if (!AYAH_LIST[index]) return;
+    this.pendingPlay = true;
+    this.runId += 1;
+    const runId = this.runId;
+    this.cancelSources();
+    this.cursor = index;
+    this.currentOffset = offset;
+    this.currentBuffer = null;
+    this.nextIndex = null;
+    this.patch({
+      currentAyahKey: this.getAyahKey(index),
+      isLoading: true,
+      isPlaying: false,
+    });
 
     const context = this.getContext();
     if (!context) {
-      start();
+      this.pendingPlay = false;
+      this.patch({ isLoading: false });
       return;
     }
 
-    context.resume().then(start).catch(start);
+    // Fetch and decode current and next concurrently. Only the current ayah is
+    // scheduled to play; the following one is scheduled once decoded.
+    const currentBuffer = this.getBuffer(index);
+    if (index + 1 < AYAH_LIST.length) {
+      void this.getBuffer(index + 1).catch(() => {});
+    }
+
+    context
+      .resume()
+      .then(() => {
+        currentBuffer
+          .then(buffer => {
+            if (runId !== this.runId || !this.pendingPlay) return;
+            this.currentBuffer = buffer;
+            if (offset >= buffer.duration) {
+              this.currentOffset = 0;
+              this.startAt(index + 1, 0);
+              return;
+            }
+            const startTime = context.currentTime + 0.015;
+            this.scheduleCurrent(index, buffer, offset, startTime, runId);
+          })
+          .catch(() => {
+            if (runId !== this.runId) return;
+            this.pendingPlay = false;
+            this.patch({ isLoading: false, isPlaying: false });
+          });
+      })
+      .catch(() => {
+        if (runId === this.runId) {
+          this.pendingPlay = false;
+          this.patch({ isLoading: false, isPlaying: false });
+        }
+      });
   };
 
-  /** The current source played to its end — move on to the next ayah. */
-  handleEnded = (sourceId: number): void => {
-    if (sourceId !== this.snapshot.sourceId) {
+  private scheduleCurrent = (
+    index: number,
+    buffer: AudioBuffer,
+    offset: number,
+    startTime: number,
+    runId: number,
+  ): void => {
+    if (runId !== this.runId || !this.pendingPlay) return;
+    const context = this.getContext();
+    if (!context) return;
+
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.onEnded = () => this.handleSourceEnded(index, source, runId);
+    source.start(startTime, offset);
+
+    this.cursor = index;
+    this.currentBuffer = buffer;
+    this.currentSource = source;
+    this.currentOffset = offset;
+    this.currentStartTime = startTime;
+    this.patch({
+      currentAyahKey: this.getAyahKey(index),
+      isLoading: false,
+      isPlaying: true,
+    });
+    this.updateNotification('playing');
+    this.scheduleNext(index, buffer, startTime, runId);
+  };
+
+  private scheduleNext = (
+    index: number,
+    currentBuffer: AudioBuffer,
+    currentStartTime: number,
+    runId: number,
+  ): void => {
+    const indexToPreload = index + 1;
+    if (indexToPreload >= AYAH_LIST.length) return;
+    const startTime = currentStartTime + currentBuffer.duration;
+
+    void this.getBuffer(indexToPreload)
+      .then(buffer => {
+        if (
+          runId !== this.runId ||
+          this.cursor !== index ||
+          this.nextSource != null
+        ) {
+          return;
+        }
+        const context = this.getContext();
+        if (!context) return;
+
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.onEnded = () =>
+          this.handleSourceEnded(indexToPreload, source, runId);
+        source.start(startTime);
+        this.nextSource = source;
+        this.nextBuffer = buffer;
+        this.nextIndex = indexToPreload;
+        this.nextStartTime = startTime;
+      })
+      .catch(() => {
+        // The current ayah continues; its end handler retries the next fetch.
+      });
+  };
+
+  private handleSourceEnded = (
+    index: number,
+    source: AudioBufferSourceNode,
+    runId: number,
+  ): void => {
+    if (runId !== this.runId) return;
+
+    // A scheduled next source can begin exactly at the current source's end;
+    // promote it even if the native ended callbacks arrive in reverse order.
+    if (index === this.nextIndex && index === this.cursor + 1) {
+      this.promoteNext(index, source, runId);
+      // This path means the native end notification for the scheduled next
+      // ayah overtook the previous source's notification. Advance now because
+      // the promoted source has already ended.
+      this.handleSourceEnded(index, source, runId);
       return;
     }
+    if (index !== this.cursor || source !== this.currentSource) return;
+    this.disconnectSource(source);
 
-    const next = this.cursor + 1;
-    if (next >= AYAH_LIST.length) {
+    const completedIndex = index;
+    const followingIndex = index + 1;
+    if (followingIndex >= AYAH_LIST.length) {
       this.stop();
       return;
     }
 
-    this.load(next);
-  };
-
-  /** The current source failed to load. */
-  handleError = (sourceId: number): void => {
-    if (sourceId !== this.snapshot.sourceId) {
-      return;
-    }
-    this.pendingPlay = false;
-    this.patch({ isLoading: false, isPlaying: false });
-  };
-
-  /** The audio element started / stopped producing sound. */
-  handlePlaying = (isPlaying: boolean): void => {
-    if (this.snapshot.isPlaying === isPlaying) {
-      return;
-    }
-    this.patch({ isPlaying });
-    this.updateNotification(isPlaying ? 'playing' : 'paused');
-  };
-
-  // ---------------------------------------------------------------------
-  // Internals
-  // ---------------------------------------------------------------------
-
-  /**
-   * Points the audio element at a new ayah. Bumping `sourceId` makes the host
-   * swap the `<Audio>` element, which tears the previous source down.
-   */
-  private load = (index: number): void => {
-    const ayah = AYAH_LIST[index];
-    if (!ayah) {
+    if (this.nextIndex === followingIndex && this.nextSource) {
+      this.promoteNext(followingIndex, this.nextSource, runId);
       return;
     }
 
-    this.cursor = index;
+    this.currentSource = null;
+    this.currentBuffer = null;
+    this.bufferPromises.delete(completedIndex);
+    this.cursor = followingIndex;
+    this.currentOffset = 0;
     this.patch({
-      sourceUrl: getAyahStreamUrl({
-        surah_number: ayah.surah,
-        ayah_number: ayah.ayah,
-      }),
-      sourceId: this.snapshot.sourceId + 1,
-      currentAyahKey: `${ayah.surah}:${ayah.ayah}`,
+      currentAyahKey: this.getAyahKey(followingIndex),
       isLoading: true,
+      isPlaying: false,
+    });
+    this.updateNotification('playing');
+
+    void this.getBuffer(followingIndex)
+      .then(buffer => {
+        if (runId !== this.runId || this.cursor !== followingIndex) return;
+        const context = this.getContext();
+        if (!context) return;
+        this.scheduleCurrent(
+          followingIndex,
+          buffer,
+          0,
+          context.currentTime + 0.015,
+          runId,
+        );
+      })
+      .catch(() => {
+        if (runId === this.runId && this.cursor === followingIndex) {
+          this.pendingPlay = false;
+          this.patch({ isLoading: false, isPlaying: false });
+        }
+      });
+  };
+
+  private promoteNext = (
+    index: number,
+    source: AudioBufferSourceNode,
+    runId: number,
+  ): void => {
+    if (runId !== this.runId) return;
+    if (this.currentSource && this.currentSource !== source) {
+      this.disconnectSource(this.currentSource);
+    }
+    this.bufferPromises.delete(this.cursor);
+    this.cursor = index;
+    this.currentSource = source;
+    const promotedBuffer = this.nextBuffer;
+    if (!promotedBuffer) return;
+    this.currentBuffer = promotedBuffer;
+    this.currentOffset = 0;
+    this.currentStartTime = this.nextStartTime;
+    this.nextSource = null;
+    this.nextBuffer = null;
+    this.nextIndex = null;
+    this.nextStartTime = 0;
+    this.patch({
+      currentAyahKey: this.getAyahKey(index),
+      isLoading: false,
+      isPlaying: true,
+    });
+    this.updateNotification('playing');
+    this.scheduleNext(index, promotedBuffer, this.currentStartTime, runId);
+  };
+
+  private getBuffer = (index: number): Promise<AudioBuffer> => {
+    const cached = this.bufferPromises.get(index);
+    if (cached) return cached;
+
+    const ayah = AYAH_LIST[index];
+    if (!ayah) return Promise.reject(new Error('Ayah index out of range'));
+
+    const context = this.getContext();
+    if (!context) return Promise.reject(new Error('AudioContext unavailable'));
+
+    const bufferPromise = context
+      .decodeAudioData(
+        getAyahStreamUrl({
+          surah_number: ayah.surah,
+          ayah_number: ayah.ayah,
+        }),
+      )
+      .catch(error => {
+        this.bufferPromises.delete(index);
+        throw error;
+      });
+    this.bufferPromises.set(index, bufferPromise);
+    return bufferPromise;
+  };
+
+  private getAyahKey = (index: number): string | null => {
+    const ayah = AYAH_LIST[index];
+    return ayah ? `${ayah.surah}:${ayah.ayah}` : null;
+  };
+
+  private cancelSources = (): void => {
+    const sources = [this.currentSource, this.nextSource];
+    this.currentSource = null;
+    this.nextSource = null;
+    this.nextBuffer = null;
+    this.nextIndex = null;
+    this.nextStartTime = 0;
+    sources.forEach(source => {
+      if (!source) return;
+      try {
+        source.stop();
+      } catch {
+        // The source may already have ended.
+      }
+      this.disconnectSource(source);
     });
   };
 
-  /**
-   * Merges the changes into the snapshot and notifies the listeners.
-   *
-   * Nothing is published when the values did not actually change: every
-   * notification re-renders the audio host, and a re-render would in turn
-   * restart the underlying source.
-   */
+  private disconnectSource = (source: AudioBufferSourceNode): void => {
+    try {
+      source.disconnect();
+    } catch {
+      // The source may already be disconnected.
+    }
+  };
+
   private patch = (changes: Partial<AyahPlayerSnapshot>): void => {
     const keys = Object.keys(changes) as (keyof AyahPlayerSnapshot)[];
-    const changed = keys.some(key => this.snapshot[key] !== changes[key]);
-    if (!changed) {
-      return;
-    }
-
+    if (!keys.some(key => this.snapshot[key] !== changes[key])) return;
     this.snapshot = { ...this.snapshot, ...changes };
     this.listeners.forEach(listener => listener(this.snapshot));
   };
@@ -327,29 +424,19 @@ class AyahPlayerEngine {
       try {
         this.context = new AudioContext();
       } catch {
-        // The native module is unavailable — playback simply won't start.
         return null;
       }
     }
     return this.context;
   };
 
-  /**
-   * Configures the audio session for spoken content and starts observing
-   * interruptions (phone calls, other apps taking over).
-   */
   private prepareNativeSession = (): void => {
     if (!this.nativeListenersReady) {
       this.nativeListenersReady = true;
       this.listenToNativeEvents();
     }
-
-    // Created up-front so the audio host can hand it to every `<Audio>`
-    // element instead of letting each one spin up its own context.
     this.getContext();
-
     this.ensureNotificationPermission();
-
     try {
       AudioManager.setAudioSessionOptions({
         iosCategory: 'playback',
@@ -359,24 +446,17 @@ class AyahPlayerEngine {
       AudioManager.observeAudioInterruptions('gain');
       AudioManager.setAudioSessionActivity(true).catch(() => {});
     } catch {
-      // ignore — the session keeps its defaults.
+      // Keep default audio-session options when native setup is unavailable.
     }
   };
 
-  /**
-   * Asks for the notification permission once, so the lock screen / shade
-   * controls are available on Android 13+. Playback never depends on it.
-   */
   private ensureNotificationPermission = (): void => {
-    if (this.notificationPermissionRequested) {
-      return;
-    }
+    if (this.notificationPermissionRequested) return;
     this.notificationPermissionRequested = true;
-
     try {
       AudioManager.requestNotificationPermissions().catch(() => {});
     } catch {
-      // ignore — the controls are a bonus, not a requirement.
+      // Notification controls are optional.
     }
   };
 
@@ -385,23 +465,19 @@ class AyahPlayerEngine {
       AudioManager.observeAudioInterruptions(false);
       AudioManager.setAudioSessionActivity(false).catch(() => {});
     } catch {
-      // ignore
+      // Ignore native cleanup failures.
     }
   };
 
   private listenToNativeEvents = (): void => {
     try {
       AudioManager.addSystemEventListener('interruption', event => {
-        if (event.type === 'began') {
-          this.pause();
-        } else if (event.shouldResume) {
-          this.resume();
-        }
+        if (event.type === 'began') this.pause();
+        else if (event.shouldResume) this.resume();
       });
     } catch {
-      // ignore
+      // Native interruption handling is optional.
     }
-
     try {
       PlaybackNotificationManager.addEventListener(
         'playbackNotificationPlay',
@@ -424,19 +500,14 @@ class AyahPlayerEngine {
         () => this.previous(),
       );
     } catch {
-      // ignore — the notification is a bonus, not a requirement.
+      // Notification controls are optional.
     }
   };
 
-  /** Keeps the lock screen / notification in sync with the player. */
   private updateNotification = (state: 'playing' | 'paused'): void => {
     const key = this.snapshot.currentAyahKey;
-    if (!key) {
-      return;
-    }
-
+    if (!key) return;
     const [surah, ayah] = key.split(':').map(Number);
-
     try {
       PlaybackNotificationManager.show({
         title: `آية ${ayah}`,
@@ -445,7 +516,7 @@ class AyahPlayerEngine {
         state,
       }).catch(() => {});
     } catch {
-      // ignore
+      // Notification controls are optional.
     }
   };
 }
