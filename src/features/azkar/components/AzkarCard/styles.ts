@@ -11,6 +11,22 @@ const makeStyle = (theme: AppTheme) =>
       fontSize: 20,
       fontFamily: fontFamily.hafs,
     },
+    categoryRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      marginTop: 10,
+    },
+    categoryLabel: {
+      fontSize: 13,
+      fontFamily: fontFamily.medium,
+      color: theme.text.muted,
+    },
+    categoryText: {
+      fontSize: 13,
+      fontFamily: fontFamily.medium,
+      color: theme.text.brand,
+    },
     rawyAuthorText: {
       fontSize: 16,
       fontFamily: fontFamily.regular,
@@ -21,6 +37,11 @@ const makeStyle = (theme: AppTheme) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       marginVertical: 8,
+    },
+    favoriteButton: {
+      minWidth: 40,
+      minHeight: 40,
+      borderRadius: 20,
     },
     patchCont: {
       backgroundColor: theme.accent.soft,

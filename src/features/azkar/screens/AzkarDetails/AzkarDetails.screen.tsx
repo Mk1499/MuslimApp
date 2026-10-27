@@ -5,9 +5,12 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import useAzkarData from '@/hooks/queries/useAzkarData';
 import AzkarCard from '../../components/AzkarCard/AzkarCard.comp';
+import ScreenNames from '@/navigation/ScreenNames';
 
 export default function AzkarDetailsScreen() {
-  const { params } = useRoute<RouteProp<AzkarStackParamList, 'azkarDetails'>>();
+  const { params } = useRoute<
+    RouteProp<AzkarStackParamList, ScreenNames.AzkarDetails>
+  >();
   const { item: collectionItem } = params;
   const { useAzkarDetailsByID } = useAzkarData();
   const { data: azkarDetails, isLoading } = useAzkarDetailsByID(
@@ -28,7 +31,9 @@ export default function AzkarDetailsScreen() {
         <FlatList
           data={azkarDetailsArray ?? []}
           keyExtractor={item => item.ID?.toString() ?? Math.random().toString()}
-          renderItem={({ item }) => <AzkarCard item={item} />}
+          renderItem={({ item }) => (
+            <AzkarCard item={item} category={collectionItem.TITLE} />
+          )}
         />
       </View>
     </Screen>

@@ -158,6 +158,17 @@
   },
   "azkar": {
     "screenName": "مجمع الأذكار",
+    "homeTitle": "تصفح الأذكار",
+    "homeSubtitle": "اختر مجموعة أو عُد إلى الأذكار التي حفظتها.",
+    "favoriteAzkar": "الأذكار المفضلة",
+    "favoriteCount": "{{count}} محفوظة",
+    "allAzkar": "كل الأذكار",
+    "allAzkarSubtitle": "تصفح جميع المجموعات المتاحة",
+    "addFavorite": "أضف إلى المفضلة",
+    "removeFavorite": "إزالة من المفضلة",
+    "category": "التصنيف",
+    "noFavoritesTitle": "لا توجد أذكار مفضلة بعد",
+    "noFavoritesSubtitle": "اضغط على رمز القلب في أي ذكر لحفظه هنا.",
     "searchPlaceholder": "البحث في المجموعات",
     "noCollectionsFound": "لم يتم العثور على مجموعات.",
     "repeat": "كرر"

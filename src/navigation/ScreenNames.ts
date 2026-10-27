@@ -11,6 +11,8 @@ enum ScreenNames {
   TafseerDetails = 'tafseerDetails',
   AzkarCollections = 'azkarCollections',
   AzkarDetails = 'azkarDetails',
+  AzkarHome = 'azkarHome',
+  AzkarFavorites = 'azkarFavorites',
   Qibla = 'qibla',
   Asmaa99 = 'asmaa99',
   Tasbeeh = 'tasbeeh',

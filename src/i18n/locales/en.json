@@ -158,6 +158,17 @@
   },
   "azkar": {
     "screenName": "Azkar Collection",
+    "homeTitle": "Explore Azkar",
+    "homeSubtitle": "Choose a collection or return to the remembrances you saved.",
+    "favoriteAzkar": "Favorite Azkar",
+    "favoriteCount": "{{count}} saved",
+    "allAzkar": "All Azkar",
+    "allAzkarSubtitle": "Browse all available collections",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites",
+    "category": "Category",
+    "noFavoritesTitle": "No favorite Azkar yet",
+    "noFavoritesSubtitle": "Tap the heart on any zekr to save it here.",
     "searchPlaceholder": "Search collections",
     "noCollectionsFound": "No collections found.",
     "repeat": "Repeat"
