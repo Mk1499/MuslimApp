@@ -13,10 +13,25 @@ export default function SurahHeaderBanner({
   const surah = quranSurahs.find(s => s.id === surahNumber);
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const surahId = () => {
+    if (!surah?.id) {
+      return '';
+    }
+    if (surah?.id > 0 && surah?.id < 10) {
+      return `surah00${surah.id}`;
+    }
+    if (surah?.id >= 10 && surah?.id < 100) {
+      return `surah0${surah.id}`;
+    }
+    if (surah?.id >= 100) {
+      return `surah${surah.id}`;
+    }
+    return '';
+  };
 
   return (
     <View style={[styles.banner, { borderColor: theme.text.primary }]}>
-      <AppText style={styles.title}>{`سورة ${surah?.name_arabic}`}</AppText>
+      <AppText style={styles.title}>{surahId()}</AppText>
     </View>
   );
 }
@@ -31,10 +46,11 @@ const makeStyles = (theme: AppTheme) =>
       borderTopStartRadius: 20,
       borderBottomEndRadius: 20,
       backgroundColor: theme.background.brand,
+      // padding: 8,
     },
     title: {
-      fontSize: 32,
-      fontFamily: fontFamily.hafs,
+      fontSize: 40,
+      fontFamily: fontFamily.surahName,
       color: theme.basic.white,
     },
   });

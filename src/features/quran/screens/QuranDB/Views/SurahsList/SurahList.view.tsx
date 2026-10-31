@@ -27,12 +27,14 @@ export default function SurahListView({ onPressItem }: IProps) {
     () =>
       surahs.filter(
         surah =>
-          surah.name_arabic.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          surah.name_english
-            .toLowerCase()
+          surah?.name_arabic
+            ?.toLowerCase()
             .includes(searchQuery.toLowerCase()) ||
-          surah.name_translation
-            .toLowerCase()
+          surah?.name_english
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          surah?.name_translation
+            ?.toLowerCase()
             .includes(searchQuery.toLowerCase()),
       ),
     [searchQuery, surahs],

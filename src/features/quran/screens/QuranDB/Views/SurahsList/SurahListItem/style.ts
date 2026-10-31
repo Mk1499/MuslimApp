@@ -55,4 +55,8 @@ export default (theme: AppTheme) =>
     placeName: {
       fontSize: fontSize.sm,
     },
+    formattedSurahName: {
+      fontSize: 2.5 * fontSize.lg,
+      fontFamily: fontFamily.surahName,
+    },
   });

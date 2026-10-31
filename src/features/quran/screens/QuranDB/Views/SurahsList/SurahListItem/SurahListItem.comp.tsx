@@ -7,12 +7,13 @@ import makeStyle from './style';
 import { IProps } from './types';
 import useFormatter from '@/hooks/useFormatter';
 import { MadinahImage, MekkahImage } from '@/assets/images';
+import { isRTL } from '@/utils/constants';
 
 export default function SurahListItem({ surah, onPress }: IProps) {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { t } = useTranslation();
-  const { getLocalizedText } = useFormatter();
+  const { formateSurahName } = useFormatter();
   const isMakkah = surah.revelation_place === 'makkah';
 
   return (
@@ -25,13 +26,23 @@ export default function SurahListItem({ surah, onPress }: IProps) {
           <AppText style={styles.badgeText}>{surah.number}</AppText>
         </View>
         <View>
-          <AppText
-            style={styles.arabicName}
-            variant="subtitle"
-            numberOfLines={1}
-          >
-            {getLocalizedText(surah.name_arabic, surah.name_english)}
-          </AppText>
+          {isRTL ? (
+            <AppText
+              style={styles.formattedSurahName}
+              variant="subtitle"
+              numberOfLines={1}
+            >
+              {formateSurahName(surah.number)}
+            </AppText>
+          ) : (
+            <AppText
+              style={styles.arabicName}
+              variant="subtitle"
+              numberOfLines={1}
+            >
+              {surah.name_english ?? surah.name_arabic}
+            </AppText>
+          )}
 
           <AppText style={styles.meta} variant="caption" color="secondary">
             {surah.verses_count} {t('quran.ayahs')}

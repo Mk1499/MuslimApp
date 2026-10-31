@@ -65,11 +65,11 @@ export default function MushafLine({
 
 const styles = StyleSheet.create({
   lineRow: {
-    flexDirection: 'row', // Arabic reads right-to-left
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-    width: '100%',
+    // flexDirection: 'row', // Arabic reads right-to-left
+    // flexWrap: 'nowrap',
+    // justifyContent: 'space-between',
+    // alignItems: 'baseline',
+    // width: '100%',
   },
   word: {
     fontFamily: fontFamily.hafs, // see README for font setup

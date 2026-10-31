@@ -13,6 +13,7 @@ export const fontFamily = {
   bold: 'Cairo-Bold',
   uthmani: isIOS ? 'KFGQPC Uthmanic Script HAFS' : 'Uthmani',
   hafs: isIOS ? 'KFGQPC HAFS Uthmanic Script' : 'hafs',
+  surahName: 'surah-name-v2',
 };
 
 export const fontSize = {

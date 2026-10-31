@@ -29,5 +29,12 @@ export default function useFormatter() {
       : `${mins} : ${secs.toString().padStart(2, '0')}`;
   }
 
-  return { getLocalizedText, toArabicIndic, formatDuration };
+  function formateSurahName(surahId: number): string {
+    if (surahId <= 0) return '';
+    else if (surahId > 0 && surahId < 10) return `surah00${surahId}`;
+    else if (surahId >= 10 && surahId < 100) return `surah0${surahId}`;
+    return `surah${surahId}`;
+  }
+
+  return { getLocalizedText, toArabicIndic, formatDuration, formateSurahName };
 }

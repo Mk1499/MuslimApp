@@ -96,7 +96,7 @@ function MushafPage({
         })}
       </View>
 
-      <PageFooter pageNumber={pageData.page} />
+      {/* <PageFooter pageNumber={pageData.page} /> */}
     </View>
   );
 }
@@ -109,8 +109,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden', // عشان نمنع أي حاجة تطلع بره الحدود
   },
   contentContainer: {
-    flex: 1,
-    justifyContent: 'space-between', // لو عايز توزع السطور جوه المساحة المتاحة
+    justifyContent: 'flex-start', // لو عايز توزع السطور جوه المساحة المتاحة
     flexShrink: 1,
   },
   shrinkableItem: {

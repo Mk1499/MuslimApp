@@ -22,7 +22,7 @@ export default function BismillahLine({
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: fontFamily.hafs,
+    fontFamily: fontFamily.uthmani,
     fontSize: 26,
     textAlign: 'center',
     // marginVertical: 10,

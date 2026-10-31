@@ -6,7 +6,6 @@ import LastReadQuran from '@/features/home/components/LastReadQuran/LastReadQura
 import { useTheme } from '@/theme';
 import makeStyle from './styles';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 export function QuranScreen(): React.JSX.Element {
   const { t } = useTranslation();

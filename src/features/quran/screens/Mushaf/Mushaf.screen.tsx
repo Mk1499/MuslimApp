@@ -288,7 +288,7 @@ export default function MushafScreen() {
   }, [playingPage, setLastReadPage]);
 
   return (
-    <Screen isInnerPage>
+    <Screen isInnerPage screenTitle={`صفحة ${currentPageNumber}`}>
       <PagerView
         key={surahId}
         ref={pagerRef}
