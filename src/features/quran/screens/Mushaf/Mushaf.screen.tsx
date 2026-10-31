@@ -38,6 +38,7 @@ import { useTheme } from '@/theme';
 import makeStyles from './styles';
 import { isRTL } from '@/utils/constants';
 import useTafseerData from '@/hooks/queries/useTafseetData';
+import LoaderOverlay from '@/components/common/LoaderOverlay/LoaderOverlay.comp';
 
 const TOTAL_MUSHAF_PAGES = 604;
 const RENDER_WINDOW = 1; // pages on each side of the current page to keep mounted
@@ -69,7 +70,7 @@ const PagerItem = React.memo(function PagerItem({
   if (!isReady) {
     return (
       <View style={pagerStyles.placeholder}>
-        <ActivityIndicator size="large" />
+        <LoaderOverlay />
       </View>
     );
   }

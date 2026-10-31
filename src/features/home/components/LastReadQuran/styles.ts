@@ -45,7 +45,7 @@ export default (theme: AppTheme) =>
       borderRadius: radius.md,
     },
     pageName: {
-      color: theme.accent.primary,
+      color: theme.basic.black,
     },
     continueBtn: {
       paddingHorizontal: spacing.md,

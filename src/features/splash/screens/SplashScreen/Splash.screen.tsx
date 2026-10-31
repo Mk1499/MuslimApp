@@ -3,7 +3,9 @@ import useLocation from '@/hooks/useLocation';
 import { useAppStore } from '@/store/useAppStore';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import LottieView from 'lottie-react-native';
+import { SplashAnimation } from '@/assets/animations';
 
 export default function SplashScreen() {
   const { getCurrentLocation } = useLocation();
@@ -11,7 +13,7 @@ export default function SplashScreen() {
   const { reset } = useNavigation();
 
   useEffect(() => {
-    initApp();
+    // initApp();
   }, []);
 
   function initApp() {
@@ -35,10 +37,30 @@ export default function SplashScreen() {
   }
 
   return (
-    <Screen>
-      <View>
-        <Text>Splash Screen</Text>
-      </View>
-    </Screen>
+    <View style={styles.container}>
+      <LottieView
+        source={SplashAnimation}
+        autoPlay
+        style={styles.animation}
+        loop={false}
+        onAnimationFinish={() => {
+          initApp();
+        }}
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  animation: {
+    width: '100%',
+    height: '100%',
+    transform: [{ scale: 1.3 }],
+    alignSelf: 'center',
+  },
+});

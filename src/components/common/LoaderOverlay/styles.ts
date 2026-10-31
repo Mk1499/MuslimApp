@@ -13,4 +13,8 @@ export default () =>
       right: 0,
       bottom: 0,
     },
+    animation: {
+      width: 150,
+      height: 150,
+    },
   });

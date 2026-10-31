@@ -15,6 +15,7 @@ import { useTheme } from '@/theme';
 import makeStyles from './styles';
 import ScreenNames from '@/navigation/ScreenNames';
 import SpeakerCardLarge from '../../components/SpeakerCardLarge/SpeakerCardLarge.comp';
+import LoaderOverlay from '@/components/common/LoaderOverlay/LoaderOverlay.comp';
 
 export default function AllSpeakers() {
   const { t } = useTranslation();
@@ -107,7 +108,7 @@ export default function AllSpeakers() {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             {isLoading ? (
-              <ActivityIndicator color={theme.text.brand} />
+              <LoaderOverlay />
             ) : (
               <AppText style={styles.emptyText}>
                 {isError ? t('media.speakersLoadError') : t('common.noData')}
