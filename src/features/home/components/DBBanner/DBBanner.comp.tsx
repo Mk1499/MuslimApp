@@ -199,7 +199,7 @@ export default function DBBannerComponent() {
           </AppText>
         </View>
         <Pressable onPress={getCurrentLocation} style={styles.addressCont}>
-          <AppText style={styles.address}>
+          <AppText style={styles.address} numberOfLines={1}>
             {(userAddress && userAddress?.name) ??
               userAddress?.address?.city ??
               ''}
@@ -249,6 +249,9 @@ export default function DBBannerComponent() {
           data={prayers.filter(
             item => !['sunrise', 'imsak'].includes(item.name),
           )}
+          // Prayer outcomes live outside `data`; pass them explicitly so the
+          // memoized list always refreshes its visible rows after a store write.
+          extraData={recordedPrayers}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.paryersListCont}

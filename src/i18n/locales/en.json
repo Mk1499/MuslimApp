@@ -107,7 +107,12 @@
     "points": "{{count}} points",
     "today": "Today",
     "dayScore": "{{score}} points",
-    "notRecorded": "Not recorded"
+    "notRecorded": "Not recorded",
+    "statsTitle": "Your progress",
+    "statsSubtitle": "Every prayer is a step forward",
+    "pointsLabel": "points",
+    "trackedDays": "Days with records",
+    "recordedPrayers": "Prayers recorded"
   },
   "about": {
     "title": "About"

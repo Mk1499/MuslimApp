@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { spacing, AppTheme, fontSize } from '@/theme';
+import { SCREEN_WIDTH } from '@/utils/constants';
 
 export default (theme: AppTheme) =>
   StyleSheet.create({
@@ -47,6 +48,7 @@ export default (theme: AppTheme) =>
       fontSize: fontSize.lg,
       paddingTop: spacing.lg,
       fontWeight: '100',
+      width: 0.45 * SCREEN_WIDTH,
     },
     paryersListCont: {
       flexDirection: 'row',

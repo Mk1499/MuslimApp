@@ -260,7 +260,7 @@ export const darkTheme: AppTheme = {
     error: '#F87171',
     errorSoft: '#7F1D1D',
     info: '#60A5FA',
-    infoSoft: '#1E3A8A',
+    infoSoft: '#DBEAFE',
   },
   accent: {
     primary: palette.gold[300],

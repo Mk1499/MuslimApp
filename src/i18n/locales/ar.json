@@ -107,7 +107,12 @@
     "points": "{{count}} نقطة",
     "today": "اليوم",
     "dayScore": "{{score}} نقطة",
-    "notRecorded": "غير مسجلة"
+    "notRecorded": "غير مسجلة",
+    "statsTitle": "إنجازك",
+    "statsSubtitle": "كل صلاة خطوة إلى الأمام",
+    "pointsLabel": "نقطة",
+    "trackedDays": "أيام مسجلة",
+    "recordedPrayers": "صلوات مسجلة"
   },
   "about": {
     "title": "عن التطبيق"
