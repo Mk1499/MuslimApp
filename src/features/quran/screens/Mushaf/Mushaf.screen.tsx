@@ -36,6 +36,8 @@ import { getSurahByNumber } from '../../player/ayahSequence';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/theme';
 import makeStyles from './styles';
+import { isRTL } from '@/utils/constants';
+import useTafseerData from '@/hooks/queries/useTafseetData';
 
 const TOTAL_MUSHAF_PAGES = 604;
 const RENDER_WINDOW = 1; // pages on each side of the current page to keep mounted
@@ -88,6 +90,7 @@ export default function MushafScreen() {
     useRoute<RouteProp<QuranStackParamList, typeof ScreenNames.Mushaf>>();
   const { surah, resumeAyah, initialPage } = params;
   const { pages } = surah ?? {};
+  const { getAyahTafseerQuery } = useTafseerData();
 
   // "Continue" from the home screen's last-read card points at a specific
   // ayah — open on the page that ayah lives on instead of the surah's first
@@ -111,15 +114,9 @@ export default function MushafScreen() {
   // forward past this.
   const lastAutoPageRef = useRef(initialPageNumber);
 
-  // Only playback started on THIS screen's session may drive the pager. A
-  // stale active track inherited from a previous screen/surah must never
   // auto-swipe the newly opened mushaf to the old playing ayah's page.
   const sessionActiveRef = useRef(false);
 
-  // React Navigation keeps this screen mounted and only swaps `params` (same
-  // route key), so `useState(initialPageNumber)` would keep the previous
-  // surah's page and PagerView would ignore the new `initialPage`. Reset the
-  // pager state before committing whenever the surah changes.
   const [prevSurahId, setPrevSurahId] = useState(surahId);
   if (prevSurahId !== surahId) {
     setPrevSurahId(surahId);
@@ -128,8 +125,6 @@ export default function MushafScreen() {
     sessionActiveRef.current = false; // a new surah starts a fresh session
   }
 
-  // The player lives here (not inside a page) so it survives page swipes and
-  // can drive the auto-swipe below.
   const { playAyah, stop, togglePlay, playingAya, isPlaying } = useAyahPlayer();
   const [selectedAyah, setSelectedAyah] = useState<SelectedAyah | null>(null);
   const [sheetView, setSheetView] = useState<SheetView>('actions');
@@ -139,31 +134,18 @@ export default function MushafScreen() {
   const toggleBookmark = useSavedAyahsStore(state => state.toggleBookmark);
   const toggleFavorite = useSavedAyahsStore(state => state.toggleFavorite);
 
-  const tafseerCollectionsQuery = useQuery({
-    queryKey: ['tafseer-collections'],
-    queryFn: getTafseerCollections,
-    enabled: !!selectedAyah,
-  });
-  const preferredTafseer =
-    tafseerCollectionsQuery.data?.find(
-      collection =>
-        collection.language === (i18n.language.startsWith('ar') ? 'ar' : 'en'),
-    ) ?? tafseerCollectionsQuery.data?.[0];
-  const ayahTafseerQuery = useQuery({
-    queryKey: [
-      'ayah-tafseer',
-      selectedAyah?.word.surah_number,
-      selectedAyah?.word.ayah_number,
-      preferredTafseer?.id,
-    ],
-    queryFn: () =>
-      getAyahTafseer(
-        selectedAyah!.word.surah_number,
-        selectedAyah!.word.ayah_number,
-        preferredTafseer!.id,
-      ),
-    enabled: sheetView === 'tafseer' && !!selectedAyah && !!preferredTafseer,
-  });
+  const preferredTafseer = 1;
+
+  const {
+    data: ayahTafseer,
+    isLoading: ayahTafseerLoading,
+    isError: ayahTafseerError,
+  } = getAyahTafseerQuery(
+    selectedAyah?.word.surah_number,
+    selectedAyah?.word.ayah_number,
+    preferredTafseer ?? 0,
+  );
+
   const similarAyahsQuery = useQuery({
     queryKey: [
       'ayah-mutashabihat',
@@ -177,10 +159,12 @@ export default function MushafScreen() {
       ),
     enabled: sheetView === 'similar' && !!selectedAyah,
   });
+
   const similarVerses =
     similarAyahsQuery.data?.data.verses.flatMap(
       verse => verse.similar_verses,
     ) ?? [];
+
   const selectedSurah = selectedAyah
     ? getSurahByNumber(selectedAyah.word.surah_number)
     : undefined;
@@ -366,7 +350,7 @@ export default function MushafScreen() {
                 style={styles.sheetBackButton}
               >
                 <AppIcon
-                  name="chevron-back"
+                  name={isRTL ? 'chevron-forward' : 'chevron-back'}
                   size={21}
                   color={theme.text.secondary}
                 />
@@ -456,18 +440,21 @@ export default function MushafScreen() {
 
           {sheetView === 'tafseer' && (
             <View style={styles.detailContent}>
-              {tafseerCollectionsQuery.isLoading ||
-              ayahTafseerQuery.isLoading ? (
+              {ayahTafseerLoading ? (
                 <ActivityIndicator color={theme.text.brand} />
-              ) : tafseerCollectionsQuery.isError ||
-                ayahTafseerQuery.isError ? (
+              ) : ayahTafseerError ? (
                 <AppText style={styles.detailMessage}>
                   {t('quran.ayahDetailError')}
                 </AppText>
-              ) : ayahTafseerQuery.data?.text ? (
-                <AppText style={styles.detailText}>
-                  {ayahTafseerQuery.data.text}
-                </AppText>
+              ) : ayahTafseer?.text ? (
+                <AppCard>
+                  <AppText style={styles.detailText}>
+                    {ayahTafseer.text}
+                  </AppText>
+                  <AppText style={styles.detailFetured}>
+                    {ayahTafseer.tafseer_name}
+                  </AppText>
+                </AppCard>
               ) : (
                 <AppText style={styles.detailMessage}>
                   {t('quran.noTafseerFound')}
@@ -534,7 +521,11 @@ function AyahAction({
         <AppText variant="body" weight="medium" style={styles.actionText}>
           {title}
         </AppText>
-        <AppIcon name="chevron-forward" size={18} color={theme.text.muted} />
+        <AppIcon
+          name={isRTL ? 'chevron-back' : 'chevron-forward'}
+          size={18}
+          color={theme.text.muted}
+        />
       </AppCard>
     </AppTouchable>
   );

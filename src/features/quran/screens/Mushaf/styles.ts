@@ -1,4 +1,4 @@
-import { AppTheme, radius, spacing } from '@/theme';
+import { AppTheme, fontFamily, radius, spacing } from '@/theme';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
@@ -26,7 +26,11 @@ export default (theme: AppTheme) =>
       color: theme.text.primary,
       fontSize: 24,
       lineHeight: 42,
-      textAlign: 'right',
+      textAlign: 'center',
+      fontFamily: fontFamily.hafs,
+    },
+    selectedAyahNum: {
+      fontFamily: fontFamily.uthmani,
     },
     actionList: { gap: spacing.sm, marginTop: spacing.md },
     actionTouchable: { alignSelf: 'stretch' },
@@ -48,8 +52,15 @@ export default (theme: AppTheme) =>
       backgroundColor: theme.status.infoSoft,
     },
     actionText: { color: theme.text.primary, flex: 1, textAlign: 'left' },
-    detailContent: { gap: spacing.sm, marginTop: spacing.sm },
+    detailContent: {
+      gap: spacing.sm,
+      marginTop: spacing.md,
+    },
     detailText: { color: theme.text.primary, fontSize: 18, lineHeight: 30 },
+    detailFetured: {
+      color: theme.text.brand,
+      textAlign: 'right',
+    },
     detailMessage: {
       color: theme.text.secondary,
       textAlign: 'center',

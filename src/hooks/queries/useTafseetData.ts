@@ -1,4 +1,8 @@
-import { getSurahTafseer, getTafseerCollections } from '@/api/tafseer';
+import {
+  getAyahTafseer,
+  getSurahTafseer,
+  getTafseerCollections,
+} from '@/api/tafseer';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -128,11 +132,26 @@ export default function useTafseerData(surahParams?: SurahTafseerParams) {
     enabled: !!surahParams && !!surahAyatQuery.data,
   });
 
+  const getAyahTafseerQuery = (
+    surahNumber?: number,
+    ayahNumber?: number,
+    tafseerId = 1,
+  ) => {
+    const ayahTafseerQuery = useQuery({
+      queryKey: ['ayah-tafseer', surahNumber, ayahNumber, tafseerId],
+      queryFn: () => getAyahTafseer(surahNumber, ayahNumber, tafseerId),
+      enabled: !!surahNumber && !!ayahNumber,
+      staleTime: 60_000, // 60 seconds
+    });
+    return ayahTafseerQuery;
+  };
+
   return {
     tafseerCollectionsQuery,
     tafseerSurahQuery,
     getFullSurahTafseer,
     surahAyatQuery,
     surahTafseerPagesQuery,
+    getAyahTafseerQuery,
   };
 }
