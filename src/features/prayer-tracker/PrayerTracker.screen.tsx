@@ -134,21 +134,5 @@ export default function PrayerTrackerScreen(): React.JSX.Element {
 }
 
 function formatDate(date: string, locale: string): string {
-  const value = new Date(`${date}T12:00:00`);
-  try {
-    if (
-      typeof Intl !== 'undefined' &&
-      typeof Intl.DateTimeFormat === 'function'
-    ) {
-      return new Intl.DateTimeFormat(locale, {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      }).format(value);
-    }
-  } catch {
-    // Fall back for runtimes without the requested locale data.
-  }
-  return moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+  return moment(date, 'YYYY-MM-DD').format('dddd, MMM D, YYYY');
 }

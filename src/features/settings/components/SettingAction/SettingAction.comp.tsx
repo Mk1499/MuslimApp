@@ -26,19 +26,25 @@ export default function SettingAction({
       style={styles.actionTouchable}
     >
       <View style={styles.actionRow}>
-        <View style={styles.actionIcon}>
-          <AppIcon name={icon} size={21} color={theme.text.brand} />
-        </View>
-        <View style={styles.actionCopy}>
-          <AppText variant="body" weight="semiBold" style={styles.actionTitle}>
-            {title}
-          </AppText>
-          <AppText variant="caption" style={styles.actionSubtitle}>
-            {subtitle}
-          </AppText>
+        <View style={styles.rhs}>
+          <View style={styles.actionIcon}>
+            <AppIcon name={icon} size={21} color={theme.text.brand} />
+          </View>
+          <View>
+            <AppText
+              variant="body"
+              weight="semiBold"
+              style={styles.actionTitle}
+            >
+              {title}
+            </AppText>
+            <AppText variant="caption" style={styles.actionSubtitle}>
+              {subtitle}
+            </AppText>
+          </View>
         </View>
         <AppIcon
-          name={isRTL ? 'chevron-back' : 'chevron-forward'}
+          name={!isRTL ? 'chevron-forward' : 'chevron-back'}
           size={19}
           color={theme.text.muted}
         />

@@ -2,21 +2,22 @@ import { Screen } from '@/components/ui';
 import useLocation from '@/hooks/useLocation';
 import { useAppStore } from '@/store/useAppStore';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { SplashAnimation } from '@/assets/animations';
+import moment from 'moment';
+import 'moment/locale/ar';
+import { isRTL } from '@/utils/constants';
 
 export default function SplashScreen() {
   const { getCurrentLocation } = useLocation();
-  const { userAddress, userLocation } = useAppStore();
+  const { userLocation } = useAppStore();
   const { reset } = useNavigation();
 
-  useEffect(() => {
-    // initApp();
-  }, []);
-
   function initApp() {
+    moment.locale(isRTL ? 'ar' : 'en');
+
     if (!userLocation) {
       getCurrentLocation()
         .catch(error => {

@@ -24,11 +24,13 @@ export default (theme: AppTheme) =>
       color: theme.basic.white,
       marginTop: spacing.md,
       marginHorizontal: spacing.md,
+      textAlign: 'left',
     },
     heroSubtitle: {
       color: 'rgba(255,255,255,0.84)',
       marginTop: spacing.xs,
       marginHorizontal: spacing.md,
+      textAlign: 'left',
     },
     scoreSummary: {
       flexDirection: 'row',
@@ -47,11 +49,12 @@ export default (theme: AppTheme) =>
       paddingTop: spacing.xl,
       paddingBottom: spacing.xxl,
     },
-    sectionTitle: { color: theme.text.primary },
+    sectionTitle: { color: theme.text.primary, textAlign: 'left' },
     sectionDescription: {
       color: theme.text.muted,
       marginTop: 3,
       marginBottom: spacing.md,
+      textAlign: 'left',
     },
 
     divider: {

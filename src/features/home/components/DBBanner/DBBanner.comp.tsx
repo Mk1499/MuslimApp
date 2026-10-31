@@ -134,13 +134,16 @@ export default function DBBannerComponent() {
             : 'prayerTracker.tapToRecordHint',
         )}
         onPress={() => {
+          if (isUpcoming) {
+            return;
+          }
           setSelectedPrayer(prayerName);
           prayerSheetRef.current?.present();
         }}
         style={[
           styles.prayerItem,
           item.name === current_status?.next_prayer && styles.prayerItemActive,
-          isUpcoming ? styles.prayerItemUpcoming : undefined,
+          !isUpcoming ? styles.prayerItemUpcoming : undefined,
         ]}
       >
         <View style={styles.prayerNameRow}>
