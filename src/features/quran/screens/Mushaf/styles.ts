@@ -20,10 +20,10 @@ export default (theme: AppTheme) =>
     sheetSubtitle: { color: theme.text.muted, marginTop: 2 },
     selectedAyahCard: {
       borderRadius: radius.lg,
-      backgroundColor: theme.background.secondary,
+      backgroundColor: theme.background.brand,
     },
     selectedAyahText: {
-      color: theme.text.primary,
+      color: theme.basic.white,
       fontSize: 24,
       lineHeight: 42,
       textAlign: 'center',
@@ -56,7 +56,12 @@ export default (theme: AppTheme) =>
       gap: spacing.sm,
       marginTop: spacing.md,
     },
-    detailText: { color: theme.text.primary, fontSize: 18, lineHeight: 30 },
+    detailText: {
+      color: theme.text.primary,
+      fontSize: 24,
+      // lineHeight: 30,
+      fontFamily: fontFamily.hafs,
+    },
     detailFetured: {
       color: theme.text.brand,
       textAlign: 'right',
@@ -66,9 +71,11 @@ export default (theme: AppTheme) =>
       textAlign: 'center',
       marginTop: spacing.xl,
     },
-    similarVerseCard: { borderRadius: radius.md },
+    similarVerseCard: {
+      borderRadius: radius.md,
+    },
     similarVerseLabel: {
-      color: theme.text.muted,
+      color: theme.text.brand,
       marginTop: spacing.sm,
       textAlign: 'left',
     },

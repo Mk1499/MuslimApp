@@ -1,5 +1,8 @@
 import { apiClient } from '@/api/APIClients';
-import { MutashabihatSurahResponse } from '@/types/mutashabihat';
+import {
+  MutashabihaAyahResponse,
+  MutashabihatSurahResponse,
+} from '@/types/mutashabihat';
 
 export async function getSurahsMutashbihat(
   surahNumber: number,
@@ -15,8 +18,8 @@ export async function getSurahsMutashbihat(
 export async function getAyahMutashbihat(
   surahNumber: number,
   ayahNumber: number,
-): Promise<MutashabihatSurahResponse> {
-  const response = await apiClient.get<MutashabihatSurahResponse>(
+): Promise<MutashabihaAyahResponse> {
+  const response = await apiClient.get<MutashabihaAyahResponse>(
     `/quran/mutashabihat/${surahNumber}/${ayahNumber}`,
   );
 

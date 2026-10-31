@@ -31,3 +31,7 @@ export type MutashabihatSurahResponse = {
     verses: AyaMutashabihat[];
   };
 };
+
+export type MutashabihaAyahResponse = {
+  data: AyaMutashabihat;
+};

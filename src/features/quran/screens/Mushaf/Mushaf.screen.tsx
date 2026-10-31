@@ -160,10 +160,7 @@ export default function MushafScreen() {
     enabled: sheetView === 'similar' && !!selectedAyah,
   });
 
-  const similarVerses =
-    similarAyahsQuery.data?.data.verses.flatMap(
-      verse => verse.similar_verses,
-    ) ?? [];
+  const similarVerses = similarAyahsQuery.data?.data.similar_verses ?? [];
 
   const selectedSurah = selectedAyah
     ? getSurahByNumber(selectedAyah.word.surah_number)
@@ -372,7 +369,7 @@ export default function MushafScreen() {
               </AppText>
               {selectedAyah && (
                 <AppText variant="caption" style={styles.sheetSubtitle}>
-                  {i18n.language.startsWith('ar')
+                  {isRTL
                     ? selectedSurah?.name_arabic
                     : selectedSurah?.name_english}
                   {' · '}

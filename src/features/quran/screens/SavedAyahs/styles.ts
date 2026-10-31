@@ -1,4 +1,4 @@
-import { AppTheme, radius, spacing } from '@/theme';
+import { AppTheme, fontFamily, radius, spacing } from '@/theme';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
@@ -10,8 +10,9 @@ export default (theme: AppTheme) =>
     arabicText: {
       color: theme.text.primary,
       fontSize: 22,
-      textAlign: 'right',
+      textAlign: 'left',
       lineHeight: 38,
+      fontFamily: fontFamily.hafs,
     },
     ayahCaption: {
       color: theme.text.muted,
