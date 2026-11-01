@@ -1,6 +1,6 @@
-import { apiClient } from '@/api/APIClients';
-import { PrayerTimesResponse } from '@/types/prayer';
-import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
+import { CalculationMethod, Coordinates, PrayerTimes } from 'adhan';
+
+import type { PrayerTimesResponse } from '@/types/prayer';
 
 export type GetPrayerTimesParams = {
   latitude: number;
@@ -11,15 +11,13 @@ export type GetPrayerTimesParams = {
 export async function getPrayerTimes(
   params: GetPrayerTimesParams,
 ): Promise<PrayerTimesResponse> {
-  const coordinates = new Coordinates(35.789751, -78.691249);
+  const coordinates = new Coordinates(params.latitude, params.longitude);
   const adhanParams = CalculationMethod.MoonsightingCommittee();
-  const prayerTimes = new PrayerTimes(coordinates, new Date(), adhanParams);
+  const prayerTimes = new PrayerTimes(
+    coordinates,
+    params.date ? new Date(params.date) : new Date(),
+    adhanParams,
+  );
 
-  console.log({ prayerTimes });
-
-  const response = await apiClient.get<PrayerTimesResponse>('/prayer-times', {
-    params,
-  });
-
-  return response.data;
+  return { prayerTimes };
 }

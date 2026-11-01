@@ -1,6 +1,5 @@
 import { View, FlatList, Image, Pressable } from 'react-native';
-import type { PrayerType } from '@/types/prayer';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { spacing, useTheme } from '@/theme';
 import makeStyle from './styles';
 import {
@@ -20,7 +19,7 @@ import CountDownTimer from '@/components/common/CountDownTimer/CountDownTimer.co
 import { useTodayHijriDate } from '@/hooks/queries/useHejriDate';
 import { useAppStore } from '@/store/useAppStore';
 import useLocation from '@/hooks/useLocation';
-import moment, { type Moment } from 'moment';
+import moment from 'moment';
 import {
   getLocalDateKey,
   getPrayerOutcomeScore,
@@ -28,6 +27,11 @@ import {
   TrackedPrayer,
   usePrayerTrackerStore,
 } from '@/store/usePrayerTrackerStore';
+import {
+  getNextPrayer,
+  isPrayerUpcoming,
+  PRAYER_ORDER,
+} from '@/features/prayer-times/prayerTimes.utils';
 
 const PRAYER_OUTCOMES: {
   value: PrayerOutcome;
@@ -45,7 +49,6 @@ export default function DBBannerComponent() {
   const { t } = useTranslation();
   const { isRTL } = useAppStore();
   const { getFormattedTime } = useDateHook();
-  const [nextPrayer, setNextPrayer] = useState<PrayerType>();
   const [selectedPrayer, setSelectedPrayer] = useState<TrackedPrayer | null>(
     null,
   );
@@ -63,64 +66,24 @@ export default function DBBannerComponent() {
     latitude: userLocation?.latitude ?? 0,
     longitude: userLocation?.longitude ?? 0,
   });
-  const { prayer_times, current_status, prayer_datetimes } = data?.data ?? {};
+  const { prayerTimes } = data ?? {};
   const { hijri } = hijriDateData?.data ?? {};
-  const prayers = useMemo(
-    () =>
-      Object.entries(prayer_times || {}).map(([key, value]) => ({
-        name: key,
-        time: value,
-        icon: key === 'fajr' ? 'sunrise' : 'sunset',
-      })),
-    [prayer_times],
-  );
-
-  useEffect(() => {
-    checkCurrentStatus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current_status]);
+  const nextPrayer = getNextPrayer(prayerTimes, now);
+  const prayers = PRAYER_ORDER.map(name => ({
+    name,
+    time: prayerTimes ? getFormattedTime(prayerTimes[name]) : '',
+    icon: name === 'fajr' ? 'sunrise' : 'sunset',
+  }));
 
   useEffect(() => {
     const interval = setInterval(() => setNow(moment()), 60_000);
     return () => clearInterval(interval);
   }, []);
 
-  function checkCurrentStatus() {
-    if (current_status) {
-      const nextPrayerName =
-        current_status.next_prayer !== 'none'
-          ? current_status.next_prayer
-          : 'isha';
-      const prayerTimesByName = prayer_times as
-        | Record<string, string>
-        | undefined;
-      const prayerDateTimesByName = prayer_datetimes as
-        | Record<string, Date | string>
-        | undefined;
-
-      setNextPrayer({
-        name: nextPrayerName,
-        time: prayerTimesByName?.[nextPrayerName],
-        icon: nextPrayerName === 'fajr' ? 'sunrise' : 'sunset',
-        timeUntilInMinutes:
-          current_status?.minutes_until_next ??
-          moment().diff(
-            moment(prayerDateTimesByName?.[nextPrayerName]),
-            'minutes',
-          ),
-      });
-    }
-  }
-
   function renderPrayerItem({ item }: { item: (typeof prayers)[0] }) {
     const prayerName = item.name as TrackedPrayer;
     const outcome = recordedPrayers[prayerName];
-    const isUpcoming = isPrayerUpcoming(
-      prayerName,
-      prayer_datetimes,
-      prayer_times,
-      now,
-    );
+    const isUpcoming = isPrayerUpcoming(prayerName, prayerTimes, now);
 
     return (
       <Pressable
@@ -142,7 +105,9 @@ export default function DBBannerComponent() {
         }}
         style={[
           styles.prayerItem,
-          item.name === current_status?.next_prayer && styles.prayerItemActive,
+          nextPrayer?.name === item.name &&
+            nextPrayer.isElapsed === false &&
+            styles.prayerItemActive,
           !isUpcoming ? styles.prayerItemUpcoming : undefined,
         ]}
       >
@@ -171,7 +136,7 @@ export default function DBBannerComponent() {
     ? recordedPrayers[selectedPrayer]
     : undefined;
   const selectedIsUpcoming = selectedPrayer
-    ? isPrayerUpcoming(selectedPrayer, prayer_datetimes, prayer_times, now)
+    ? isPrayerUpcoming(selectedPrayer, prayerTimes, now)
     : false;
 
   function renderHijriDate() {
@@ -217,7 +182,7 @@ export default function DBBannerComponent() {
           {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
         </AppText>
         <AppText style={styles.nextPlayerTime} variant="title">
-          {getFormattedTime(nextPrayer?.time ?? '') ?? ''}
+          {nextPrayer ? getFormattedTime(nextPrayer.time) : ''}
         </AppText>
         <View style={styles.nextPrayerRow}>
           <AppIcon
@@ -227,16 +192,12 @@ export default function DBBannerComponent() {
           />
           <AppText style={styles.nextPrayerTimeText}>
             {t(`prayerTimes.${nextPrayer?.name}`) ?? nextPrayer?.name}{' '}
-            {current_status?.next_prayer !== 'none'
-              ? t('common.after')
-              : t('common.from')}
+            {nextPrayer?.isElapsed ? t('common.from') : t('common.after')}
           </AppText>
           <CountDownTimer
-            minutes={nextPrayer?.timeUntilInMinutes ?? 0}
-            onFinish={() => {
-              checkCurrentStatus();
-            }}
-            incMode={current_status?.next_prayer === 'none'}
+            minutes={nextPrayer?.minutesUntil ?? 0}
+            onFinish={() => setNow(moment())}
+            incMode={nextPrayer?.isElapsed ?? false}
           />
         </View>
       </View>
@@ -246,9 +207,7 @@ export default function DBBannerComponent() {
         </View>
       ) : (
         <FlatList
-          data={prayers.filter(
-            item => !['sunrise', 'imsak'].includes(item.name),
-          )}
+          data={prayers.filter(item => item.name !== 'sunrise')}
           // Prayer outcomes live outside `data`; pass them explicitly so the
           // memoized list always refreshes its visible rows after a store write.
           extraData={recordedPrayers}
@@ -346,33 +305,4 @@ export default function DBBannerComponent() {
       </AppBottomSheet>
     </AppGradient>
   );
-}
-
-function isPrayerUpcoming(
-  prayer: TrackedPrayer,
-  prayerDateTimes: Record<string, Date | string> | undefined,
-  prayerTimes: Record<string, string> | undefined,
-  now: Moment,
-): boolean {
-  const scheduledDateTime = prayerDateTimes?.[prayer];
-  let scheduled = scheduledDateTime
-    ? moment(scheduledDateTime)
-    : moment.invalid();
-
-  if (!scheduled.isValid()) {
-    const time = prayerTimes?.[prayer];
-    if (!time) return true;
-    scheduled = moment(
-      time,
-      ['h:mm A', 'hh:mm A', 'h:mm:ss A', 'HH:mm', 'H:mm', 'HH:mm:ss'],
-      true,
-    ).set({
-      year: now.year(),
-      month: now.month(),
-      date: now.date(),
-    });
-  }
-
-  if (!scheduled.isValid()) return true;
-  return scheduled.isAfter(now);
 }

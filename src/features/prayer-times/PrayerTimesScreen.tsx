@@ -23,23 +23,14 @@ import { usePrayerTimes } from '@/hooks/queries/usePrayerTimes';
 import useDateHook from '@/hooks/useDateHook';
 import useLocation from '@/hooks/useLocation';
 import ScreenNames from '@/navigation/ScreenNames';
-import type { PrayerTimesResponse } from '@/types/prayer';
-
-type PrayerKey = keyof PrayerTimesResponse['data']['prayer_times'];
-
-/** The five daily prayers plus sunrise, in the order they occur each day. */
-const PRAYER_ORDER: PrayerKey[] = [
-  'fajr',
-  'sunrise',
-  'dhuhr',
-  'asr',
-  'maghrib',
-  'isha',
-];
+import {
+  getNextPrayer,
+  PRAYER_ORDER,
+  type PrayerKey,
+} from './prayerTimes.utils';
 
 /** One icon per prayer, all from a single set so the list stays consistent. */
 const PRAYER_ICONS: Record<PrayerKey, string> = {
-  imsak: 'cloudy-sharp',
   fajr: 'partly-sunny',
   sunrise: 'partly-sunny-sharp',
   dhuhr: 'sunny',
@@ -72,14 +63,11 @@ export function PrayerTimesScreen(): React.JSX.Element {
   });
 
   const { hijri } = hijriResponse?.data ?? {};
-  const { prayer_times, current_status } = data?.data ?? {};
-
-  // After Isha there is no "next" prayer left today, so fall back to Isha and
-  // count upwards instead (same convention the home banner uses).
-  const nextPrayerName: PrayerKey =
-    current_status?.next_prayer && current_status.next_prayer !== 'none'
-      ? (current_status.next_prayer as PrayerKey)
-      : 'isha';
+  const { prayerTimes } = data ?? {};
+  // After Isha there is no "next" prayer left today, so the helper falls back
+  // to Isha and counts upwards instead (same convention the home banner uses).
+  const nextPrayer = getNextPrayer(prayerTimes);
+  const nextPrayerName: PrayerKey = nextPrayer?.name ?? 'isha';
 
   const today = moment(selectedDate);
   // Weekday/month names come from the active locale while the digits stay
@@ -109,7 +97,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
       );
     }
 
-    if (isError || !prayer_times) {
+    if (isError || !prayerTimes) {
       return (
         <View style={styles.stateBox}>
           <AppText color="muted" variant="body">
@@ -129,7 +117,8 @@ export function PrayerTimesScreen(): React.JSX.Element {
     return (
       <AppCard padded={false} style={styles.listCard}>
         {PRAYER_ORDER.map((name, index) => {
-          const isNext = current_status?.next_prayer === name;
+          const isNext =
+            nextPrayer?.name === name && nextPrayer.isElapsed === false;
 
           return (
             <View
@@ -159,7 +148,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
                 color={isNext ? 'primary' : 'secondary'}
                 style={styles.rowTime}
               >
-                {getFormattedTime(prayer_times[name])}
+                {getFormattedTime(prayerTimes[name])}
               </AppText>
             </View>
           );
@@ -201,7 +190,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
           )}
         </View>
 
-        {current_status && prayer_times && (
+        {nextPrayer && prayerTimes && (
           <View style={styles.nextBlock}>
             <AppText variant="caption" style={styles.nextLabel}>
               {t('home.nextPrayer')}
@@ -211,7 +200,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
                 {t(`prayerTimes.${nextPrayerName}`)}
               </AppText>
               <AppText variant="title" style={styles.nextTime}>
-                {getFormattedTime(prayer_times[nextPrayerName])}
+                {getFormattedTime(nextPrayer.time)}
               </AppText>
             </View>
             <View style={styles.countdownRow}>
@@ -222,8 +211,8 @@ export function PrayerTimesScreen(): React.JSX.Element {
                 color={theme.basic.white}
               />
               <CountDownTimer
-                minutes={current_status.minutes_until_next}
-                incMode={current_status.next_prayer === 'none'}
+                minutes={nextPrayer.minutesUntil}
+                incMode={nextPrayer.isElapsed}
                 onFinish={() => refetch()}
               />
             </View>
