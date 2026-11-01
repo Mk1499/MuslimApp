@@ -20,12 +20,13 @@ export default function TodayDuaa() {
   return (
     <View style={styles.container}>
       <AppText style={styles.basmala}>{t('home.todayDuaa')}</AppText>
-      <AppText style={styles.aya} numberOfLines={4}>
+      <AppText style={styles.aya} numberOfLines={3} adjustsFontSizeToFit>
         {getLocalizedText(arabic ?? '', transliteration ?? '')}
       </AppText>
       <AppText style={styles.surah} numberOfLines={1}>
         {source ?? ''}
       </AppText>
+      <View />
     </View>
   );
 }

@@ -8,6 +8,7 @@ export default (theme: AppTheme) =>
       width: '100%',
       height: '90%',
       paddingHorizontal: 16,
+      justifyContent: 'space-between',
     },
     basmala: {
       fontSize: 20,

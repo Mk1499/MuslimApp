@@ -5,9 +5,10 @@ export default (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       width: '100%',
-      height: '80%',
+      height: '90%',
       paddingHorizontal: 16,
       borderRadius: 8,
+      justifyContent: 'space-between',
     },
     basmala: {
       fontSize: 20,
@@ -20,14 +21,13 @@ export default (theme: AppTheme) =>
       textAlign: 'center',
       color: theme.basic.white,
       width: '100%',
-      fontSize: 16,
-      lineHeight: 24,
+      fontSize: 26,
     },
     surah: {
       color: theme.accent.soft,
       fontFamily: fontFamily.bold,
       position: 'absolute',
-      bottom: 0,
+      bottom: 10,
       textAlign: 'right',
       start: 10,
     },

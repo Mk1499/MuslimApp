@@ -19,13 +19,14 @@ export default function TodayAya() {
   return (
     <View style={styles.container}>
       <AppText style={styles.basmala}>{'بسم الله الرحمن الرحيم'}</AppText>
-      <AppText style={styles.aya} adjustsFontSizeToFit numberOfLines={3}>
+      <AppText style={styles.aya} adjustsFontSizeToFit numberOfLines={2}>
         {arabic}
       </AppText>
       <AppText style={styles.surah} adjustsFontSizeToFit numberOfLines={1}>
         {getLocalizedText(surah?.name_arabic ?? '', surah?.name_english ?? '')}{' '}
         {verse?.ayah}
       </AppText>
+      <View />
     </View>
   );
 }

@@ -8,10 +8,15 @@ require Pod::Executable.execute_command('node', ['-p',
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
+# Default to dynamic linkage for react-native-firebase with SPM, 
+# while still allowing an override via the USE_FRAMEWORKS environment variable if passed.
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
+else
+  Pod::UI.puts "Configuring Pod with dynamicly linked Frameworks (default)".green
+  use_frameworks! :linkage => :dynamic
 end
 
 target 'MuslimApp' do
@@ -30,5 +35,17 @@ target 'MuslimApp' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # بيمنع أخطاء الـ non-modular include
+        config.build_settings['CLANG_WARN_STRICT_PROTOTYPES'] = 'NO'
+        config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -Wno-error=non-modular-include-in-framework-module'
+        config.build_settings['OTHER_CFLAGS'] = '$(inherited) -Wno-error=non-modular-include-in-framework-module'
+        
+        # بيسمح بالـ undefined symbols لو مكتبات الصوت أو FFmpeg بتطلبها وما لقيتهاش
+        config.build_settings['OTHER_LDFLAGS'] = '$(inherited) -undefined dynamic_lookup'
+      end
+    end
   end
 end
