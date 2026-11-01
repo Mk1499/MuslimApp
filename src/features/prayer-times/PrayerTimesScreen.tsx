@@ -44,7 +44,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const route = useRoute();
-  const { language, userLocation, userAddress } = useAppStore();
+  const { language, userAddress, prayerTimes } = useAppStore();
   const { getCurrentLocation } = useLocation();
   const { getFormattedTime } = useDateHook();
 
@@ -57,13 +57,9 @@ export function PrayerTimesScreen(): React.JSX.Element {
   const isPushedScreen = String(route.name) === ScreenNames.PrayerTimes;
 
   const { data: hijriResponse, isLoading: hijriLoading } = useTodayHijriDate();
-  const { data, isLoading, isError, refetch } = usePrayerTimes({
-    latitude: userLocation?.latitude ?? 0,
-    longitude: userLocation?.longitude ?? 0,
-  });
 
   const { hijri } = hijriResponse?.data ?? {};
-  const { prayerTimes } = data ?? {};
+
   // After Isha there is no "next" prayer left today, so the helper falls back
   // to Isha and counts upwards instead (same convention the home banner uses).
   const nextPrayer = getNextPrayer(prayerTimes);
@@ -89,15 +85,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
   );
 
   function renderPrayerList() {
-    if (isLoading) {
-      return (
-        <View style={styles.stateBox}>
-          <ActivityIndicator size="large" color={theme.button.primaryBg} />
-        </View>
-      );
-    }
-
-    if (isError || !prayerTimes) {
+    if (!prayerTimes) {
       return (
         <View style={styles.stateBox}>
           <AppText color="muted" variant="body">
@@ -106,7 +94,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
           <AppTouchable
             variant="secondary"
             style={styles.retryBtn}
-            onPress={() => refetch()}
+            onPress={() => getCurrentLocation()}
           >
             <AppText weight="semiBold">{t('common.retry')}</AppText>
           </AppTouchable>
@@ -213,7 +201,7 @@ export function PrayerTimesScreen(): React.JSX.Element {
               <CountDownTimer
                 minutes={nextPrayer.minutesUntil}
                 incMode={nextPrayer.isElapsed}
-                onFinish={() => refetch()}
+                onFinish={() => getCurrentLocation()}
               />
             </View>
           </View>

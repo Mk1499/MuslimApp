@@ -14,6 +14,7 @@ import i18next, {
 } from '../i18n';
 import { storage } from '../utils/storage';
 import type { ThemePreference } from '../theme';
+import { PrayerTimes } from 'adhan';
 
 const APP_STORE_STORAGE_KEY = 'app.store';
 
@@ -39,7 +40,9 @@ interface AppState {
   userAddress: any | null;
   lastPlayedAyah: LastPlayedAyah | null;
   lastReadPage: number | null;
+  prayerTimes: PrayerTimes | null;
 
+  setPrayerTimes: (prayerTimes: PrayerTimes | null) => void;
   setUserAddress: (address: any | null) => void;
   setLastPlayedAyah: (aya: LastPlayedAyah | null) => void;
   setLastReadPage: (page: number) => void;
@@ -60,7 +63,11 @@ export const useAppStore = create<AppState>()(
       userAddress: null,
       lastPlayedAyah: null,
       lastReadPage: null,
+      prayerTimes: null,
 
+      setPrayerTimes: prayerTimes => {
+        set({ prayerTimes });
+      },
       setUserAddress: address => {
         set({ userAddress: address });
       },
@@ -105,6 +112,7 @@ export const useAppStore = create<AppState>()(
         userAddress: state.userAddress,
         lastPlayedAyah: state.lastPlayedAyah,
         lastReadPage: state.lastReadPage,
+        prayerTimes: state.prayerTimes,
       }),
     },
   ),

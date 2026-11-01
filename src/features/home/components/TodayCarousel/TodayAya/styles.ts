@@ -1,5 +1,4 @@
 import { AppTheme, fontFamily } from '@/theme';
-import { SCREEN_HEIGHT } from '@/utils/constants';
 import { StyleSheet } from 'react-native';
 
 export default (theme: AppTheme) =>
@@ -17,7 +16,7 @@ export default (theme: AppTheme) =>
       top: 0,
     },
     aya: {
-      fontSize: 40,
+      fontSize: 30,
       textAlign: 'center',
       color: theme.basic.white,
       fontFamily: fontFamily.hafs,
@@ -25,8 +24,6 @@ export default (theme: AppTheme) =>
     surah: {
       color: theme.accent.soft,
       fontFamily: fontFamily.bold,
-      position: 'absolute',
-      bottom: 0,
       textAlign: 'right',
     },
   });

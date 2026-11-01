@@ -1,6 +1,7 @@
 import moment, { type Moment } from 'moment';
 
 import type { PrayerTimesResponse } from '@/types/prayer';
+import { PrayerTimes } from 'adhan';
 
 /** The five daily prayers plus sunrise, in the order they occur each day. */
 export const PRAYER_ORDER = [
@@ -15,13 +16,7 @@ export const PRAYER_ORDER = [
 export type PrayerKey = (typeof PRAYER_ORDER)[number];
 
 /** Sunrise is a time marker, not a prayer, so it is never the "next prayer". */
-const NEXT_PRAYER_ORDER = [
-  'fajr',
-  'dhuhr',
-  'asr',
-  'maghrib',
-  'isha',
-] as const;
+const NEXT_PRAYER_ORDER = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
 
 type AdhanPrayerTimes = PrayerTimesResponse['prayerTimes'];
 
@@ -40,7 +35,7 @@ export type NextPrayerInfo = {
  * convention used by the rest of the app.
  */
 export function getNextPrayer(
-  prayerTimes: AdhanPrayerTimes | undefined,
+  prayerTimes: PrayerTimes | null,
   now: Moment = moment(),
 ): NextPrayerInfo | undefined {
   if (!prayerTimes) {
@@ -76,9 +71,12 @@ export function getNextPrayer(
 
 export function isPrayerUpcoming(
   prayer: PrayerKey,
-  prayerTimes: AdhanPrayerTimes | undefined,
+  prayerTimes: PrayerTimes | null,
   now: Moment,
 ): boolean {
+  if (!prayerTimes) {
+    return false;
+  }
   const time = prayerTimes?.[prayer];
   return time ? moment(time).isAfter(now) : true;
 }

@@ -6,5 +6,6 @@ export function usePrayerTimes(params: GetPrayerTimesParams) {
   return useQuery({
     queryKey: ['prayer-times', params],
     queryFn: () => getPrayerTimes(params),
+    staleTime: 0,
   });
 }

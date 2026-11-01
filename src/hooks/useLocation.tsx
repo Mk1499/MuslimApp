@@ -1,9 +1,10 @@
+import { getPrayerTimes } from '@/api/prayerTimes';
 import { useAppStore } from '@/store/useAppStore';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 
 export default function useLocation() {
-  const { setUserLocation, setUserAddress } = useAppStore();
+  const { setUserLocation, setUserAddress, setPrayerTimes } = useAppStore();
 
   const getCurrentLocation = () => {
     return new Promise((resolve, reject) => {
@@ -16,8 +17,16 @@ export default function useLocation() {
           getAddress({
             latitude: position?.coords?.latitude,
             longitude: position?.coords?.longitude,
-          }).then(address => {
+          }).then(async address => {
             setUserAddress(address);
+            const prayerTimesData = await getPrayerTimes(
+              {
+                latitude: position?.coords?.latitude,
+                longitude: position?.coords?.longitude,
+              },
+              address as string,
+            );
+            setPrayerTimes(prayerTimesData?.prayerTimes);
           });
           resolve(position);
         },

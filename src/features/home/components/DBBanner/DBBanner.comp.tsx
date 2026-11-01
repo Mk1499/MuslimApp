@@ -59,14 +59,12 @@ export default function DBBannerComponent() {
   const recordPrayer = usePrayerTrackerStore(state => state.recordPrayer);
   const recordedPrayers = todayHistory ?? {};
   const { getCurrentLocation } = useLocation();
-  const { userLocation, userAddress } = useAppStore();
+  const { userLocation, userAddress, prayerTimes } = useAppStore();
+
+  console.log(userAddress);
 
   const { data: hijriDateData } = useTodayHijriDate();
-  const { data, isLoading } = usePrayerTimes({
-    latitude: userLocation?.latitude ?? 0,
-    longitude: userLocation?.longitude ?? 0,
-  });
-  const { prayerTimes } = data ?? {};
+
   const { hijri } = hijriDateData?.data ?? {};
   const nextPrayer = getNextPrayer(prayerTimes, now);
   const prayers = PRAYER_ORDER.map(name => ({
@@ -165,8 +163,8 @@ export default function DBBannerComponent() {
         </View>
         <Pressable onPress={getCurrentLocation} style={styles.addressCont}>
           <AppText style={styles.address} numberOfLines={1}>
-            {(userAddress && userAddress?.name) ??
-              userAddress?.address?.city ??
+            {(userAddress && userAddress?.address?.city) ??
+              userAddress?.name ??
               ''}
           </AppText>
           <AppIcon
@@ -201,23 +199,17 @@ export default function DBBannerComponent() {
           />
         </View>
       </View>
-      {isLoading ? (
-        <View>
-          <AppText>Loading prayer times...</AppText>
-        </View>
-      ) : (
-        <FlatList
-          data={prayers.filter(item => item.name !== 'sunrise')}
-          // Prayer outcomes live outside `data`; pass them explicitly so the
-          // memoized list always refreshes its visible rows after a store write.
-          extraData={recordedPrayers}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.paryersListCont}
-          keyExtractor={item => item.name}
-          renderItem={renderPrayerItem}
-        />
-      )}
+      <FlatList
+        data={prayers.filter(item => item.name !== 'sunrise')}
+        // Prayer outcomes live outside `data`; pass them explicitly so the
+        // memoized list always refreshes its visible rows after a store write.
+        extraData={recordedPrayers}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.paryersListCont}
+        keyExtractor={item => item.name}
+        renderItem={renderPrayerItem}
+      />
       <AppBottomSheet
         ref={prayerSheetRef}
         snapPoints={['55%']}
