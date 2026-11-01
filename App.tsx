@@ -12,6 +12,7 @@ import { ThemeProvider, useTheme } from './src/theme';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './src/i18n';
+import { AthanNotificationManager } from './src/features/athan/AthanNotificationManager';
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ function ThemedApp(): React.JSX.Element {
         barStyle={theme.mode === 'dark' ? 'light-content' : 'dark-content'}
       />
       <BottomSheetModalProvider>
+        <AthanNotificationManager />
         <RootNavigator />
       </BottomSheetModalProvider>
     </NavigationContainer>

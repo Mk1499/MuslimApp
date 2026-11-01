@@ -17,6 +17,7 @@ enum ScreenNames {
   Asmaa99 = 'asmaa99',
   Tasbeeh = 'tasbeeh',
   PrayerTracker = 'prayerTracker',
+  AthanSettings = 'athanSettings',
   SavedAyahs = 'savedAyahs',
   MutashanihatList = 'mutashanihatList',
   SurahMutashabihat = 'surahMutashabihat',

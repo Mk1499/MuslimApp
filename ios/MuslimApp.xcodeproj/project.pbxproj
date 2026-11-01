@@ -7,81 +7,109 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04ADD6052EFD45B58CD3FEF1 /* banna_azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 093D67FE76794D89A221FF05 /* banna_azan.mp3 */; };
+		0BB5B2CEEF934667AF8D18A1 /* refaat_azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 50B0635EABD048DAA4B3EB59 /* refaat_azan.mp3 */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		21163746F59940D6AD61BF58 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2FB7032F18243918C040D0D /* SimpleLineIcons.ttf */; };
+		2289031D0D40463B85A98C9C /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB39702AD3EC43BCA72FC5E9 /* EvilIcons.ttf */; };
 		28B94BC31D19A9BAFD0ACDD9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B6BE1C4BEA3C624E4B7F6B88 /* FirebaseCore */; };
+		2E87062999A74CD0818F07E5 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E467DC7593D422A8D0FFD94 /* Entypo.ttf */; };
+		3C13D38F21514E5889149EB9 /* haram_azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2BD492FA918C414AA03D96B3 /* haram_azan.mp3 */; };
 		5E527E6CAD1444B39E26FFCB /* hafs.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACE3D61854474C598A09F71C /* hafs.ttf */; };
+		600875EC87B044B3A67F3103 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57CFF4EABDF7428A94666908 /* FontAwesome6_Brands.ttf */; };
 		60CADE4B2DDD48E4AF848BC8 /* Hafs01.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F96939A89A2243D4AA7E29A0 /* Hafs01.ttf */; };
+		6CA518BB363A4DB487A11789 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D18670766DF44E1E8D328C2F /* Fontisto.ttf */; };
 		74706215B2DA44B1B32CF2E3 /* Cairo-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE6C121509034CE3AF62ABF8 /* Cairo-SemiBold.ttf */; };
+		752041E1A1724F7B9D72C999 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFE7E26D36164AB4A90DF96F /* FontAwesome5_Solid.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		7AF509D6D70E4D0DA12D57A5 /* Cairo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 258EB83D5FEB471098CF76DB /* Cairo-Regular.ttf */; };
 		7CD6767D007D42D1ABBCEFF9 /* surah-name-v2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BAC34E70663343CCB79D43F8 /* surah-name-v2.ttf */; };
+		7D836D5136E04990BCFECEEC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04E91E3B1A5B49D0AB1C5416 /* MaterialIcons.ttf */; };
+		804602546A434EE4BFFBD449 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 409A627B858048588D55DFDE /* Feather.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		853EA7863CE2410BA63DDA76 /* Cairo-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2A93483A14D4340B526F601 /* Cairo-Medium.ttf */; };
+		8FFA46B101B7491582E8CBFE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47EBC8E0987B4630A840103A /* Zocial.ttf */; };
 		9055E1E63097766D00DE7138 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9055E1E53097766D00DE7138 /* GoogleService-Info.plist */; };
 		94A11F67AB32462095FBA837 /* Uthmani.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0436B7513FE24573BD2786F8 /* Uthmani.ttf */; };
-		ACD9E73556A847DE87350584 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95354C5EAB9445FEA771B8EA /* Cairo-Bold.ttf */; };
-		CA6E4C2E242236F36FEB2D35 /* Pods_MuslimApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E183B9064EDC14AECE31C1 /* Pods_MuslimApp.framework */; };
-		DEDC3626A08751CB685DA051 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		6CA518BB363A4DB487A11789 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D18670766DF44E1E8D328C2F /* Fontisto.ttf */; };
-		C1D13F773F454097A34D7307 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D92919F95B844459F29311F /* Octicons.ttf */; };
-		804602546A434EE4BFFBD449 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 409A627B858048588D55DFDE /* Feather.ttf */; };
-		C68138103F074FBAAB13DE6E /* FontAwesome6_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DA5D82583624A759B71A5B3 /* FontAwesome6_Regular.ttf */; };
-		2E87062999A74CD0818F07E5 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E467DC7593D422A8D0FFD94 /* Entypo.ttf */; };
-		B873D52A4A44488A93578ED9 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EF5F7FDFF0345C7B01E6DBB /* FontAwesome5_Brands.ttf */; };
-		B07D1AAF0F484BF4ACDEF793 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB865227B07C48BBA72F3118 /* MaterialCommunityIcons.ttf */; };
-		E2C5B9B8363448B79CD2C429 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 209CD4DB65F048AD9F7000A3 /* AntDesign.ttf */; };
+		96310EBE7652429293D7B7E9 /* qatamy_azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FA9EBD791F9A4EC684B232BA /* qatamy_azan.mp3 */; };
 		9AB2E5B34CCA4AE49104D5FE /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D3C9A39C213490291F5D871 /* Foundation.ttf */; };
-		ACF0E7581B0041CE8469290B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43694FE44E274C4096829D6F /* Ionicons.ttf */; };
-		752041E1A1724F7B9D72C999 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFE7E26D36164AB4A90DF96F /* FontAwesome5_Solid.ttf */; };
 		9C5133D7BB674388BE3700C5 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6056A16552E460BBAF63813 /* FontAwesome5_Regular.ttf */; };
+		A70100000000000000000001 /* azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000001 /* azan.caf */; };
+		A70100000000000000000002 /* banna_azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000002 /* banna_azan.caf */; };
+		A70100000000000000000003 /* haram_azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000003 /* haram_azan.caf */; };
+		A70100000000000000000004 /* qatamy_azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000004 /* qatamy_azan.caf */; };
+		A70100000000000000000005 /* abdelbaset_azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000005 /* abdelbaset_azan.caf */; };
+		A70100000000000000000006 /* refaat_azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000006 /* refaat_azan.caf */; };
+		A70100000000000000000007 /* default_azan.caf in Resources */ = {isa = PBXBuildFile; fileRef = A70200000000000000000007 /* default_azan.caf */; };
+		ACD9E73556A847DE87350584 /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95354C5EAB9445FEA771B8EA /* Cairo-Bold.ttf */; };
+		ACF0E7581B0041CE8469290B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43694FE44E274C4096829D6F /* Ionicons.ttf */; };
+		B07D1AAF0F484BF4ACDEF793 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB865227B07C48BBA72F3118 /* MaterialCommunityIcons.ttf */; };
+		B873D52A4A44488A93578ED9 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EF5F7FDFF0345C7B01E6DBB /* FontAwesome5_Brands.ttf */; };
+		C1D13F773F454097A34D7307 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D92919F95B844459F29311F /* Octicons.ttf */; };
+		C68138103F074FBAAB13DE6E /* FontAwesome6_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DA5D82583624A759B71A5B3 /* FontAwesome6_Regular.ttf */; };
+		CA6E4C2E242236F36FEB2D35 /* Pods_MuslimApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E183B9064EDC14AECE31C1 /* Pods_MuslimApp.framework */; };
 		DC651435D2364C6DA6702973 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B1EA524E387465495E9ED8F /* FontAwesome.ttf */; };
-		8FFA46B101B7491582E8CBFE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47EBC8E0987B4630A840103A /* Zocial.ttf */; };
-		2289031D0D40463B85A98C9C /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB39702AD3EC43BCA72FC5E9 /* EvilIcons.ttf */; };
+		DEDC3626A08751CB685DA051 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		E2C5B9B8363448B79CD2C429 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 209CD4DB65F048AD9F7000A3 /* AntDesign.ttf */; };
+		E315FCF4C44246D0953A5AAE /* abdelbaset_azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3C91A4C9AE5F48768BA3EB6C /* abdelbaset_azan.mp3 */; };
 		FDD7B55B13624EFDBD68A0F7 /* FontAwesome6_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7454AC47F48049E3B24EAA71 /* FontAwesome6_Solid.ttf */; };
-		21163746F59940D6AD61BF58 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2FB7032F18243918C040D0D /* SimpleLineIcons.ttf */; };
-		600875EC87B044B3A67F3103 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57CFF4EABDF7428A94666908 /* FontAwesome6_Brands.ttf */; };
-		7D836D5136E04990BCFECEEC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04E91E3B1A5B49D0AB1C5416 /* MaterialIcons.ttf */; };
+		F4AD09B8A5BD43FBA138B736 /* azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13F5DAEE9CA34093843B43FF /* azan.mp3 */; };
+		F666793F58224C748A41F15A /* default_azan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3267012D935644168E811571 /* default_azan.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0436B7513FE24573BD2786F8 /* Uthmani.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Uthmani.ttf; path = ../src/assets/fonts/Uthmani.ttf; sourceTree = "<group>"; };
+		04E91E3B1A5B49D0AB1C5416 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = ../src/assets/fonts/MaterialIcons.ttf; sourceTree = "<group>"; };
+		093D67FE76794D89A221FF05 /* banna_azan.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = banna_azan.mp3; path = ../src/assets/sounds/Azans/banna_azan.mp3; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MuslimApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MuslimApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MuslimApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MuslimApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = MuslimApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13E183B9064EDC14AECE31C1 /* Pods_MuslimApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MuslimApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D92919F95B844459F29311F /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = ../src/assets/fonts/Octicons.ttf; sourceTree = "<group>"; };
+		209CD4DB65F048AD9F7000A3 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = ../src/assets/fonts/AntDesign.ttf; sourceTree = "<group>"; };
 		258EB83D5FEB471098CF76DB /* Cairo-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Regular.ttf"; path = "../src/assets/fonts/Cairo-Regular.ttf"; sourceTree = "<group>"; };
+		2BD492FA918C414AA03D96B3 /* haram_azan.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = haram_azan.mp3; path = ../src/assets/sounds/Azans/haram_azan.mp3; sourceTree = "<group>"; };
+		2EF5F7FDFF0345C7B01E6DBB /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = ../src/assets/fonts/FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-MuslimApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuslimApp.debug.xcconfig"; path = "Target Support Files/Pods-MuslimApp/Pods-MuslimApp.debug.xcconfig"; sourceTree = "<group>"; };
+		3C91A4C9AE5F48768BA3EB6C /* abdelbaset_azan.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = abdelbaset_azan.mp3; path = ../src/assets/sounds/Azans/abdelbaset_azan.mp3; sourceTree = "<group>"; };
+		409A627B858048588D55DFDE /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = ../src/assets/fonts/Feather.ttf; sourceTree = "<group>"; };
+		43694FE44E274C4096829D6F /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = ../src/assets/fonts/Ionicons.ttf; sourceTree = "<group>"; };
+		47EBC8E0987B4630A840103A /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = ../src/assets/fonts/Zocial.ttf; sourceTree = "<group>"; };
+		4E467DC7593D422A8D0FFD94 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = ../src/assets/fonts/Entypo.ttf; sourceTree = "<group>"; };
+		50B0635EABD048DAA4B3EB59 /* refaat_azan.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = refaat_azan.mp3; path = ../src/assets/sounds/Azans/refaat_azan.mp3; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-MuslimApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MuslimApp.release.xcconfig"; path = "Target Support Files/Pods-MuslimApp/Pods-MuslimApp.release.xcconfig"; sourceTree = "<group>"; };
+		57CFF4EABDF7428A94666908 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome6_Brands.ttf; path = ../src/assets/fonts/FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
+		6D3C9A39C213490291F5D871 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = ../src/assets/fonts/Foundation.ttf; sourceTree = "<group>"; };
+		6DA5D82583624A759B71A5B3 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome6_Regular.ttf; path = ../src/assets/fonts/FontAwesome6_Regular.ttf; sourceTree = "<group>"; };
+		7454AC47F48049E3B24EAA71 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome6_Solid.ttf; path = ../src/assets/fonts/FontAwesome6_Solid.ttf; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MuslimApp/AppDelegate.swift; sourceTree = "<group>"; };
+		7B1EA524E387465495E9ED8F /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = ../src/assets/fonts/FontAwesome.ttf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MuslimApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9055E1E53097766D00DE7138 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95354C5EAB9445FEA771B8EA /* Cairo-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Bold.ttf"; path = "../src/assets/fonts/Cairo-Bold.ttf"; sourceTree = "<group>"; };
+		A70200000000000000000001 /* azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = azan.caf; path = MuslimApp/AthanSounds/azan.caf; sourceTree = "<group>"; };
+		A70200000000000000000002 /* banna_azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = banna_azan.caf; path = MuslimApp/AthanSounds/banna_azan.caf; sourceTree = "<group>"; };
+		A70200000000000000000003 /* haram_azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = haram_azan.caf; path = MuslimApp/AthanSounds/haram_azan.caf; sourceTree = "<group>"; };
+		A70200000000000000000004 /* qatamy_azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = qatamy_azan.caf; path = MuslimApp/AthanSounds/qatamy_azan.caf; sourceTree = "<group>"; };
+		A70200000000000000000005 /* abdelbaset_azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = abdelbaset_azan.caf; path = MuslimApp/AthanSounds/abdelbaset_azan.caf; sourceTree = "<group>"; };
+		A70200000000000000000006 /* refaat_azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = refaat_azan.caf; path = MuslimApp/AthanSounds/refaat_azan.caf; sourceTree = "<group>"; };
+		A70200000000000000000007 /* default_azan.caf */ = {isa = PBXFileReference; lastKnownFileType = audio.caf; name = default_azan.caf; path = MuslimApp/AthanSounds/default_azan.caf; sourceTree = "<group>"; };
 		ACE3D61854474C598A09F71C /* hafs.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = hafs.ttf; path = ../src/assets/fonts/hafs.ttf; sourceTree = "<group>"; };
+		B2FB7032F18243918C040D0D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = ../src/assets/fonts/SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		BAC34E70663343CCB79D43F8 /* surah-name-v2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "surah-name-v2.ttf"; path = "../src/assets/fonts/surah-name-v2.ttf"; sourceTree = "<group>"; };
+		C6056A16552E460BBAF63813 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = ../src/assets/fonts/FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		D18670766DF44E1E8D328C2F /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = ../src/assets/fonts/Fontisto.ttf; sourceTree = "<group>"; };
 		D2A93483A14D4340B526F601 /* Cairo-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Medium.ttf"; path = "../src/assets/fonts/Cairo-Medium.ttf"; sourceTree = "<group>"; };
 		DE6C121509034CE3AF62ABF8 /* Cairo-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-SemiBold.ttf"; path = "../src/assets/fonts/Cairo-SemiBold.ttf"; sourceTree = "<group>"; };
+		EB39702AD3EC43BCA72FC5E9 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = ../src/assets/fonts/EvilIcons.ttf; sourceTree = "<group>"; };
+		EB865227B07C48BBA72F3118 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = ../src/assets/fonts/MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F96939A89A2243D4AA7E29A0 /* Hafs01.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Hafs01.ttf; path = ../src/assets/fonts/Hafs01.ttf; sourceTree = "<group>"; };
-		D18670766DF44E1E8D328C2F /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../src/assets/fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1D92919F95B844459F29311F /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../src/assets/fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		409A627B858048588D55DFDE /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../src/assets/fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6DA5D82583624A759B71A5B3 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome6_Regular.ttf"; path = "../src/assets/fonts/FontAwesome6_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4E467DC7593D422A8D0FFD94 /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../src/assets/fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2EF5F7FDFF0345C7B01E6DBB /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Brands.ttf"; path = "../src/assets/fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EB865227B07C48BBA72F3118 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../src/assets/fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		209CD4DB65F048AD9F7000A3 /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../src/assets/fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6D3C9A39C213490291F5D871 /* Foundation.ttf */ = {isa = PBXFileReference; name = "Foundation.ttf"; path = "../src/assets/fonts/Foundation.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		43694FE44E274C4096829D6F /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../src/assets/fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FFE7E26D36164AB4A90DF96F /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Solid.ttf"; path = "../src/assets/fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C6056A16552E460BBAF63813 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Regular.ttf"; path = "../src/assets/fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7B1EA524E387465495E9ED8F /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../src/assets/fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		47EBC8E0987B4630A840103A /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../src/assets/fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EB39702AD3EC43BCA72FC5E9 /* EvilIcons.ttf */ = {isa = PBXFileReference; name = "EvilIcons.ttf"; path = "../src/assets/fonts/EvilIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7454AC47F48049E3B24EAA71 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome6_Solid.ttf"; path = "../src/assets/fonts/FontAwesome6_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B2FB7032F18243918C040D0D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../src/assets/fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		57CFF4EABDF7428A94666908 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome6_Brands.ttf"; path = "../src/assets/fonts/FontAwesome6_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		04E91E3B1A5B49D0AB1C5416 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../src/assets/fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FA9EBD791F9A4EC684B232BA /* qatamy_azan.mp3 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = qatamy_azan.mp3; path = ../src/assets/sounds/Azans/qatamy_azan.mp3; sourceTree = "<group>"; };
+		FFE7E26D36164AB4A90DF96F /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = ../src/assets/fonts/FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
+		13F5DAEE9CA34093843B43FF /* azan.mp3 */ = {isa = PBXFileReference; name = "azan.mp3"; path = "../src/assets/sounds/Azans/azan.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3267012D935644168E811571 /* default_azan.mp3 */ = {isa = PBXFileReference; name = "default_azan.mp3"; path = "../src/assets/sounds/default_azan.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +216,20 @@
 				B2FB7032F18243918C040D0D /* SimpleLineIcons.ttf */,
 				57CFF4EABDF7428A94666908 /* FontAwesome6_Brands.ttf */,
 				04E91E3B1A5B49D0AB1C5416 /* MaterialIcons.ttf */,
+				50B0635EABD048DAA4B3EB59 /* refaat_azan.mp3 */,
+				3C91A4C9AE5F48768BA3EB6C /* abdelbaset_azan.mp3 */,
+				FA9EBD791F9A4EC684B232BA /* qatamy_azan.mp3 */,
+				2BD492FA918C414AA03D96B3 /* haram_azan.mp3 */,
+				093D67FE76794D89A221FF05 /* banna_azan.mp3 */,
+				A70200000000000000000001 /* azan.caf */,
+				A70200000000000000000002 /* banna_azan.caf */,
+				A70200000000000000000003 /* haram_azan.caf */,
+				A70200000000000000000004 /* qatamy_azan.caf */,
+				A70200000000000000000005 /* abdelbaset_azan.caf */,
+				A70200000000000000000006 /* refaat_azan.caf */,
+				A70200000000000000000007 /* default_azan.caf */,
+				13F5DAEE9CA34093843B43FF /* azan.mp3 */,
+				3267012D935644168E811571 /* default_azan.mp3 */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -292,6 +334,20 @@
 				21163746F59940D6AD61BF58 /* SimpleLineIcons.ttf in Resources */,
 				600875EC87B044B3A67F3103 /* FontAwesome6_Brands.ttf in Resources */,
 				7D836D5136E04990BCFECEEC /* MaterialIcons.ttf in Resources */,
+				0BB5B2CEEF934667AF8D18A1 /* refaat_azan.mp3 in Resources */,
+				E315FCF4C44246D0953A5AAE /* abdelbaset_azan.mp3 in Resources */,
+				96310EBE7652429293D7B7E9 /* qatamy_azan.mp3 in Resources */,
+				3C13D38F21514E5889149EB9 /* haram_azan.mp3 in Resources */,
+				04ADD6052EFD45B58CD3FEF1 /* banna_azan.mp3 in Resources */,
+				A70100000000000000000001 /* azan.caf in Resources */,
+				A70100000000000000000002 /* banna_azan.caf in Resources */,
+				A70100000000000000000003 /* haram_azan.caf in Resources */,
+				A70100000000000000000004 /* qatamy_azan.caf in Resources */,
+				A70100000000000000000005 /* abdelbaset_azan.caf in Resources */,
+				A70100000000000000000006 /* refaat_azan.caf in Resources */,
+				A70100000000000000000007 /* default_azan.caf in Resources */,
+				F4AD09B8A5BD43FBA138B736 /* azan.mp3 in Resources */,
+				F666793F58224C748A41F15A /* default_azan.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

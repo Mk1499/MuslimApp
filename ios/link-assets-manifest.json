@@ -108,6 +108,34 @@
     {
       "path": "src/assets/fonts/Zocial.ttf",
       "sha1": "6a48a962b06cc3acbdfd61df0d9a34744eea5e8d"
+    },
+    {
+      "path": "src/assets/sounds/Azans/abdelbaset_azan.mp3",
+      "sha1": "8068c763c87256a176777ac36d1e09a54f47375c"
+    },
+    {
+      "path": "src/assets/sounds/Azans/azan.mp3",
+      "sha1": "b04657a107a121180f1b20f462c8ab9f1da5e67d"
+    },
+    {
+      "path": "src/assets/sounds/Azans/banna_azan.mp3",
+      "sha1": "bafc14943171dda0ce9b423b8cef0694ef125b7d"
+    },
+    {
+      "path": "src/assets/sounds/Azans/haram_azan.mp3",
+      "sha1": "56ab8154c9464464e35fad97a07d150e6bbad9ec"
+    },
+    {
+      "path": "src/assets/sounds/Azans/qatamy_azan.mp3",
+      "sha1": "2c3dc17f59a03503b104a41678d5a40400fc3629"
+    },
+    {
+      "path": "src/assets/sounds/Azans/refaat_azan.mp3",
+      "sha1": "e22694dcf406e2a4715bf077cd4d8917510ba6dd"
+    },
+    {
+      "path": "src/assets/sounds/default_azan.mp3",
+      "sha1": "77efa3f48a0b409b4dc3e05ee27990ad7688c7bb"
     }
   ]
 }

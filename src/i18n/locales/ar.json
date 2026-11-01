@@ -114,6 +114,37 @@
     "trackedDays": "أيام مسجلة",
     "recordedPrayers": "صلوات مسجلة"
   },
+  "athan": {
+    "title": "تنبيهات الأذان",
+    "settingsSubtitle": "اختر الصلوات التي تريد تنبيهك واختر صوت الأذان.",
+    "description": "فعّل التنبيه لكل صلاة واختر صوت الأذان الذي تفضله.",
+    "prayersTitle": "تنبيهات الصلاة",
+    "enabled": "تنبيه الأذان مفعل",
+    "disabled": "تنبيه الأذان متوقف",
+    "soundTitle": "صوت التنبيه",
+    "soundDescription": "يستخدم مع كل الصلوات المفعلة. يشغل iOS مقطعًا مدته ٢٩ ثانية.",
+    "soundDescriptionAndroid": "يستخدم مع كل الصلوات المفعلة",
+    "chooseSound": "اختر صوت الأذان",
+    "playPreview": "تشغيل معاينة الصوت",
+    "stopPreview": "إيقاف معاينة الصوت",
+    "selectedSound": "الصوت المحدد",
+    "previewErrorTitle": "تعذر تشغيل المعاينة",
+    "previewErrorMessage": "حاول مجددًا أو اختر صوتًا آخر.",
+    "permissionTitle": "التنبيهات متوقفة",
+    "permissionMessage": "اسمح بالتنبيهات لتلقي تذكيرات الأذان.",
+    "exactAlarmTitle": "السماح بالتنبيهات الدقيقة",
+    "exactAlarmMessage": "فعّل صلاحية التنبيهات الدقيقة لتصل تذكيرات الأذان في وقت الصلاة.",
+    "openSettings": "فتح الإعدادات",
+    "sounds": {
+      "defaultAthan": "الأذان الافتراضي",
+      "fullAthan": "الأذان الكامل",
+      "bannaAthan": "البنا",
+      "haramAthan": "الحرم",
+      "qatamyAthan": "القطامي",
+      "abdelbasetAthan": "عبد الباسط",
+      "refaatAthan": "رفعت"
+    }
+  },
   "about": {
     "title": "عن التطبيق"
   },

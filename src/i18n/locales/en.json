@@ -114,6 +114,37 @@
     "trackedDays": "Days with records",
     "recordedPrayers": "Prayers recorded"
   },
+  "athan": {
+    "title": "Athan notifications",
+    "settingsSubtitle": "Choose which prayers notify you and select a sound.",
+    "description": "Enable an alert for each prayer and choose the Athan sound you prefer.",
+    "prayersTitle": "Prayer alerts",
+    "enabled": "Athan notification is on",
+    "disabled": "Athan notification is off",
+    "soundTitle": "Notification sound",
+    "soundDescription": "Used for all enabled prayers. iOS plays a 29-second clip.",
+    "soundDescriptionAndroid": "Used for all enabled prayers",
+    "chooseSound": "Choose an Athan sound",
+    "playPreview": "Play sound preview",
+    "stopPreview": "Stop sound preview",
+    "selectedSound": "Selected sound",
+    "previewErrorTitle": "Could not play preview",
+    "previewErrorMessage": "Try again or choose a different sound.",
+    "permissionTitle": "Notifications are disabled",
+    "permissionMessage": "Allow notifications to receive Athan reminders.",
+    "exactAlarmTitle": "Allow exact alarms",
+    "exactAlarmMessage": "Enable exact alarm access so Athan reminders arrive at prayer time.",
+    "openSettings": "Open settings",
+    "sounds": {
+      "defaultAthan": "Default Athan",
+      "fullAthan": "Full Athan",
+      "bannaAthan": "Banna",
+      "haramAthan": "Haram",
+      "qatamyAthan": "Qatamy",
+      "abdelbasetAthan": "Abdelbaset",
+      "refaatAthan": "Refaat"
+    }
+  },
   "about": {
     "title": "About"
   },

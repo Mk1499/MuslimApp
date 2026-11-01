@@ -9,6 +9,7 @@ import SplashScreen from '@/features/splash/screens/SplashScreen/Splash.screen';
 import PrayerTrackerScreen from '@/features/prayer-tracker/PrayerTracker.screen';
 import ScreenNames from './ScreenNames';
 import SavedAyahsScreen from '@/features/quran/screens/SavedAyahs/SavedAyahs.screen';
+import AthanSettingsScreen from '@/features/athan/AthanSettings.screen';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -42,6 +43,11 @@ export function AppStack(): React.JSX.Element {
       <Stack.Screen
         name={ScreenNames.PrayerTracker}
         component={PrayerTrackerScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={ScreenNames.AthanSettings}
+        component={AthanSettingsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

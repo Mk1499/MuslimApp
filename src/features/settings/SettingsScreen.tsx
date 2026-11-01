@@ -167,6 +167,13 @@ export function SettingsScreen(): React.JSX.Element {
           />
           <View style={styles.divider} />
           <SettingAction
+            icon="notifications-outline"
+            title={t('athan.title')}
+            subtitle={t('athan.settingsSubtitle')}
+            onPress={() => navigate(ScreenNames.AthanSettings)}
+          />
+          <View style={styles.divider} />
+          <SettingAction
             icon="bookmark-outline"
             title={t('settings.bookmarks')}
             subtitle={t('settings.bookmarksSubtitle')}
