@@ -2047,6 +2047,29 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - RNFBCrashlytics (27.1.0):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-bridging
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - RNFBApp
+    - Yoga
   - RNGestureHandler (3.4.0):
     - hermes-engine
     - RCTRequired
@@ -2483,6 +2506,7 @@ DEPENDENCIES:
   - RNAudioAPI (from `../node_modules/react-native-audio-api`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNNotifee (from `../node_modules/react-native-notify-kit`)
@@ -2697,6 +2721,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBCrashlytics:
+    :path: "../node_modules/@react-native-firebase/crashlytics"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
@@ -2817,6 +2843,7 @@ SPEC CHECKSUMS:
   RNAudioAPI: 2504fd9f6e75d7c3b51f309c351e37f9d201a765
   RNFBAnalytics: 3a699213c92c3cdeab4c8af42911952f1a6d6676
   RNFBApp: 124941f619b358b59a4086c78c25340b672f65ca
+  RNFBCrashlytics: e71b39d26dc5fb9b7f8be8b1a7ca1043a9209eb8
   RNGestureHandler: 1d2dbd83c97892e717fdac6e8684f278bf3b951c
   RNLocalize: b455f46c17ac976e0a7a83467a458f97fec6b393
   RNNotifee: 98b34ff86418187d6d7e54d1614b5ca450cfd3ad

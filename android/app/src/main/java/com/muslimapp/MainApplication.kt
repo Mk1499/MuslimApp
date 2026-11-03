@@ -6,6 +6,9 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
+import io.invertase.firebase.analytics.ReactNativeFirebaseAnalyticsPackage;
+import io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsPackage;
+
 
 class MainApplication : Application(), ReactApplication {
 
