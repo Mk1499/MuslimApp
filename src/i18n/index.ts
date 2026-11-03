@@ -1,7 +1,6 @@
 import { I18nManager } from 'react-native';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as Localization from 'react-native-localize';
 import { storage } from '../utils/storage';
 import en from './locales/en.json';
 import ar from './locales/ar.json';
@@ -15,18 +14,13 @@ export function isRTL(language: Language): boolean {
   return language === 'ar';
 }
 
-function detectDeviceLanguage(): Language {
-  const deviceLocale = Localization.getLocales()[0]?.languageCode;
-  return deviceLocale === 'ar' ? 'ar' : 'en';
-}
-
-/** Read the saved language, falling back to the device locale. */
+/** Read the saved language, defaulting to Arabic on a fresh install. */
 export function getInitialLanguage(): Language {
   const stored = storage.getString(LANGUAGE_STORAGE_KEY);
   if (stored === 'en' || stored === 'ar') {
     return stored;
   }
-  return detectDeviceLanguage();
+  return 'ar';
 }
 
 export function persistLanguage(language: Language): void {
@@ -48,7 +42,7 @@ const resources = {
 i18next.use(initReactI18next).init({
   resources,
   lng: getInitialLanguage(),
-  fallbackLng: 'en',
+  fallbackLng: 'ar',
   supportedLngs: LANGUAGES,
   interpolation: {
     escapeValue: false,

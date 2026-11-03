@@ -34,6 +34,7 @@
     "react-native-audio-api": "^0.13.6",
     "react-native-collapsible-fluid-tabs": "^1.5.1",
     "react-native-compass-heading": "^2.0.2",
+    "react-native-device-info": "^15.0.2",
     "react-native-gesture-handler": "^3.2.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-localize": "^3.7.0",

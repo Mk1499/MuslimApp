@@ -75,6 +75,14 @@ async function scheduleAthanNotifications({
   enabled,
   sound,
 }: AthanScheduleOptions): Promise<void> {
+  const permission = await notifee.getNotificationSettings();
+  if (
+    permission.authorizationStatus !== AuthorizationStatus.AUTHORIZED &&
+    permission.authorizationStatus !== AuthorizationStatus.PROVISIONAL
+  ) {
+    return;
+  }
+
   const currentTriggers = await notifee.getTriggerNotifications();
   const oldAthanIds = currentTriggers
     .map(trigger => trigger.notification.id)
@@ -87,14 +95,6 @@ async function scheduleAthanNotifications({
   }
 
   if (!PRAYER_NAMES.some(prayer => enabled[prayer])) {
-    return;
-  }
-
-  const permission = await notifee.getNotificationSettings();
-  if (
-    permission.authorizationStatus !== AuthorizationStatus.AUTHORIZED &&
-    permission.authorizationStatus !== AuthorizationStatus.PROVISIONAL
-  ) {
     return;
   }
 

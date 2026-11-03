@@ -2002,6 +2002,8 @@ PODS:
     - ReactNativeDependencies
     - RNWorklets
     - Yoga
+  - RNDeviceInfo (15.0.2):
+    - React-Core
   - RNFBAnalytics (27.1.0):
     - hermes-engine
     - RCTRequired
@@ -2504,6 +2506,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeDependencies (from `../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`)
   - RNAudioAPI (from `../node_modules/react-native-audio-api`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
@@ -2717,6 +2720,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec"
   RNAudioAPI:
     :path: "../node_modules/react-native-audio-api"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFBAnalytics:
     :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
@@ -2841,6 +2846,7 @@ SPEC CHECKSUMS:
   ReactCommon: 5f5a302748322015f2e3334869cdd9b4d0395846
   ReactNativeDependencies: ec5530432d8191b38e278117d498aaff05ea9d6f
   RNAudioAPI: 2504fd9f6e75d7c3b51f309c351e37f9d201a765
+  RNDeviceInfo: 4c852998208b60dc192ae3529e5867817719ad1e
   RNFBAnalytics: 3a699213c92c3cdeab4c8af42911952f1a6d6676
   RNFBApp: 124941f619b358b59a4086c78c25340b672f65ca
   RNFBCrashlytics: e71b39d26dc5fb9b7f8be8b1a7ca1043a9209eb8

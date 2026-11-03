@@ -6437,6 +6437,11 @@ react-native-compass-heading@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-native-compass-heading/-/react-native-compass-heading-2.0.2.tgz#3d504e83a21aa333d682b3c3b958dab6513357bf"
   integrity sha512-HeWeJp3Z+DjJBGjw89M11Oz3Zmw32ge458bNjtjKC1aN5IBbUoZQYCtmDcwwo1V6GG3fomWdCpHgHgaKO5crQw==
 
+react-native-device-info@^15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-15.0.2.tgz#c7de1bb6baeb07e1bab70159ad540c5705cb8dc0"
+  integrity sha512-dd71eXG2l3Cwp66IvKNadMTB8fhU3PEjyVddI97sYan+D4bgIAUmgGDhbSOFvHcGavksb2U17kiQYaDiK2WK2g==
+
 react-native-gesture-handler@^3.2.1:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-3.4.0.tgz#aecac40bb2e468a14dad8cb58917cb6357cc66b6"

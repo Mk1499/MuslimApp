@@ -32,7 +32,6 @@ import {
 } from '@/store/useAthanSettingsStore';
 import { isRTL } from '@/utils/constants';
 import makeStyles from './styles';
-import { rescheduleAthanNotificationsForCurrentSettings } from './athanNotifications';
 
 const SOUND_ASSETS: Record<AthanSoundId, number> = {
   default_azan: require('@/assets/sounds/default_azan.mp3'),
@@ -54,7 +53,6 @@ export default function AthanSettingsScreen(): React.JSX.Element {
   );
   const setSound = useAthanSettingsStore(state => state.setSound);
   const soundSheetRef = useRef<AppBottomSheetRef>(null);
-  const permissionPromptedRef = useRef(false);
   const [pendingPrayer, setPendingPrayer] = useState<TrackedPrayer | null>(
     null,
   );
@@ -155,83 +153,6 @@ export default function AthanSettingsScreen(): React.JSX.Element {
     },
     [stopPreview],
   );
-
-  useEffect(() => {
-    let active = true;
-    async function requestNotificationPermissionIfNeeded() {
-      if (permissionPromptedRef.current) return;
-      if (
-        !PRAYER_NAMES.some(
-          prayer => useAthanSettingsStore.getState().enabled[prayer],
-        )
-      ) {
-        return;
-      }
-      permissionPromptedRef.current = true;
-      try {
-        let settings = await notifee.getNotificationSettings();
-        let requestedNow = false;
-        if (
-          settings.authorizationStatus !== AuthorizationStatus.AUTHORIZED &&
-          settings.authorizationStatus !== AuthorizationStatus.PROVISIONAL
-        ) {
-          requestedNow = true;
-          settings = await notifee.requestPermission();
-        }
-        if (!active) return;
-
-        if (
-          settings.authorizationStatus !== AuthorizationStatus.AUTHORIZED &&
-          settings.authorizationStatus !== AuthorizationStatus.PROVISIONAL
-        ) {
-          Alert.alert(
-            t('athan.permissionTitle'),
-            t('athan.permissionMessage'),
-            [
-              { text: t('common.cancel'), style: 'cancel' },
-              {
-                text: t('athan.openSettings'),
-                onPress: () => void notifee.openNotificationSettings(),
-              },
-            ],
-          );
-        } else if (
-          Platform.OS === 'android' &&
-          settings.android.alarm === AndroidNotificationSetting.DISABLED
-        ) {
-          Alert.alert(
-            t('athan.exactAlarmTitle'),
-            t('athan.exactAlarmMessage'),
-            [
-              { text: t('common.cancel'), style: 'cancel' },
-              {
-                text: t('athan.openSettings'),
-                onPress: () => void notifee.openAlarmPermissionSettings(),
-              },
-            ],
-          );
-          if (requestedNow) {
-            void rescheduleAthanNotificationsForCurrentSettings().catch(
-              error => {
-                console.warn('Unable to refresh Athan reminders:', error);
-              },
-            );
-          }
-        } else if (requestedNow) {
-          void rescheduleAthanNotificationsForCurrentSettings().catch(error => {
-            console.warn('Unable to refresh Athan reminders:', error);
-          });
-        }
-      } catch {
-        // The per-prayer switches remain usable if permission status is unavailable.
-      }
-    }
-
-    void requestNotificationPermissionIfNeeded();
-    return () => {
-      active = false;
-    };
-  }, [t]);
 
   async function togglePrayer(prayer: TrackedPrayer, value: boolean) {
     if (!value) {
