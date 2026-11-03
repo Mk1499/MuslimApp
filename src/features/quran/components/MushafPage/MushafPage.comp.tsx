@@ -12,6 +12,7 @@ function MushafPage({
   pageNumber,
   playingAya,
   onWordLongPress,
+  onWordPress,
 }: {
   pageNumber: number;
   playingAya: string | null;
@@ -20,6 +21,7 @@ function MushafPage({
     pageNumber: number,
     ayahText: string,
   ) => void;
+  onWordPress: (word: QuranWord, pageNumber: number, ayahText: string) => void;
 }) {
   const { pageData, lines, loading, error } = useQuranPage(pageNumber);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
@@ -42,6 +44,26 @@ function MushafPage({
       onWordLongPress(word, pageNumber, ayahText || word.text_uthmani);
     },
     [onWordLongPress, pageData?.words, pageNumber],
+  );
+
+  const handleWordPress = useCallback(
+    (word: QuranWord) => {
+      // Key on the full surah:ayah pair so selection is unique even when a
+      // page holds multiple surahs with overlapping ayah numbers.
+      setSelectedKey(`${word.surah_number}:${word.ayah_number}`);
+      const ayahText = (pageData?.words ?? [])
+        .filter(
+          candidate =>
+            candidate.surah_number === word.surah_number &&
+            candidate.ayah_number === word.ayah_number &&
+            (candidate.char_type_name === 'word' ||
+              candidate.char_type_name === 'end'),
+        )
+        .map(candidate => candidate.text_uthmani)
+        .join(' ');
+      onWordPress(word, pageNumber, ayahText || word.text_uthmani);
+    },
+    [onWordPress, pageData?.words, pageNumber],
   );
 
   if (loading) {
@@ -76,6 +98,7 @@ function MushafPage({
                   key={line.lineNumber + '-MushafLine'}
                   words={line.words}
                   onWordLongPress={handleWordLongPress}
+                  onWordPress={handleWordPress}
                   selectedKey={selectedKey}
                   playingKey={playingAya}
                 />
@@ -88,6 +111,7 @@ function MushafPage({
               <MushafLine
                 words={line.words}
                 onWordLongPress={handleWordLongPress}
+                onWordPress={handleWordPress}
                 selectedKey={selectedKey}
                 playingKey={playingAya}
               />

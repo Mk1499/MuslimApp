@@ -6,6 +6,7 @@ import { fontFamily, useTheme } from '@/theme';
 interface Props {
   words: QuranWord[];
   onWordLongPress?: (word: QuranWord) => void;
+  onWordPress?: (word: QuranWord) => void;
   /** Full "surah:ayah" key of the pressed word — unique across surahs. */
   selectedKey?: string | null;
   /** Full "surah:ayah" key of the currently playing ayah — unique across surahs. */
@@ -15,6 +16,7 @@ interface Props {
 export default function MushafLine({
   words,
   onWordLongPress,
+  onWordPress,
   selectedKey,
   playingKey,
 }: Props) {
@@ -44,6 +46,7 @@ export default function MushafLine({
                 ...ayahHighlight,
               ]}
               onLongPress={() => onWordLongPress?.(w)}
+              onPress={() => onWordPress?.(w)}
             >
               {w.text_uthmani + ' '}
             </Text>
@@ -54,6 +57,7 @@ export default function MushafLine({
             key={`${wordKey}-${idx}`}
             style={[styles.word, ...ayahHighlight]}
             onLongPress={() => onWordLongPress?.(w)}
+            onPress={() => onWordPress?.(w)}
           >
             {w.text_uthmani + ' '}
           </Text>

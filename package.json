@@ -77,5 +77,8 @@
   },
   "engines": {
     "node": ">= 22.11.0"
+  },
+  "react-native-audio-api": {
+    "enableFFmpeg": false
   }
 }

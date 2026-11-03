@@ -19,6 +19,8 @@ else
   use_frameworks! :linkage => :dynamic
 end
 
+ENV['DISABLE_AUDIOAPI_FFMPEG'] = '1'
+
 target 'MuslimApp' do
   config = use_native_modules!
 
@@ -36,16 +38,15 @@ target 'MuslimApp' do
       # :ccache_enabled => true
     )
 
-    installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-        # بيمنع أخطاء الـ non-modular include
-        config.build_settings['CLANG_WARN_STRICT_PROTOTYPES'] = 'NO'
-        config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -Wno-error=non-modular-include-in-framework-module'
-        config.build_settings['OTHER_CFLAGS'] = '$(inherited) -Wno-error=non-modular-include-in-framework-module'
+    # installer.pods_project.targets.each do |target|
+    #   target.build_configurations.each do |config|
+    #     # بيمنع أخطاء الـ non-modular include
+    #     config.build_settings['CLANG_WARN_STRICT_PROTOTYPES'] = 'NO'
+    #     config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -Wno-error=non-modular-include-in-framework-module'
+    #     config.build_settings['OTHER_CFLAGS'] = '$(inherited) -Wno-error=non-modular-include-in-framework-module'
         
-        # بيسمح بالـ undefined symbols لو مكتبات الصوت أو FFmpeg بتطلبها وما لقيتهاش
-        config.build_settings['OTHER_LDFLAGS'] = '$(inherited) -undefined dynamic_lookup'
-      end
-    end
+    #     config.build_settings['OTHER_LDFLAGS'] = '$(inherited) -undefined dynamic_lookup'
+    #   end
+    # end
   end
 end

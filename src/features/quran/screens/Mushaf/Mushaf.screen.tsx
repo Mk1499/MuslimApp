@@ -61,10 +61,12 @@ const PagerItem = React.memo(function PagerItem({
   playingAya,
   onWordLongPress,
   isReady,
+  onWordPress,
 }: {
   pageNumber: number;
   playingAya: string | null;
   onWordLongPress: (word: QuranWord, page: number, ayahText: string) => void;
+  onWordPress: (word: QuranWord, page: number, ayahText: string) => void;
   isReady: boolean;
 }) {
   if (!isReady) {
@@ -79,6 +81,7 @@ const PagerItem = React.memo(function PagerItem({
       pageNumber={pageNumber}
       playingAya={playingAya}
       onWordLongPress={onWordLongPress}
+      onWordPress={onWordPress}
     />
   );
 });
@@ -176,6 +179,15 @@ export default function MushafScreen() {
       });
       setSheetView('actions');
       ayahActionsSheetRef.current?.present();
+    },
+    [],
+  );
+  const handleAyahPress = useCallback(
+    (word: QuranWord, page: number, text: string) => {
+      playAyah({
+        surah_number: word.surah_number,
+        ayah_number: word.ayah_number,
+      });
     },
     [],
   );
@@ -311,6 +323,7 @@ export default function MushafScreen() {
                   pageNumber={pageNumber}
                   playingAya={playingAya}
                   onWordLongPress={handleAyahLongPress}
+                  onWordPress={handleAyahPress}
                   isReady={isContentReady}
                 />
               ) : (
