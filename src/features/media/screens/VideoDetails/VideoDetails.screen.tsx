@@ -16,6 +16,7 @@ import makeStyles from './styles';
 import { useSharedValue } from 'react-native-reanimated';
 import AccordionItem from '@/components/common/AccordionItem/AccordionItem.comp';
 import moment from 'moment';
+import 'moment/locale/ar';
 
 export default function VideoDetails() {
   const theme = useTheme();
@@ -31,7 +32,7 @@ export default function VideoDetails() {
   const { getLocalizedText } = useFormatter();
   const speaker = video.speakers?.[0];
   const publishedDate = video.publishedAt
-    ? moment(video.publishedAt).locale('ar-SA').format('Do MMMM YYYY')
+    ? moment(video.publishedAt).format('Do MMMM YYYY')
     : '';
   const isDescExpanded = useSharedValue(false);
   const { likes, dislikes } = video ?? {};
