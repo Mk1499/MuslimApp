@@ -17,7 +17,6 @@ export default function YTPlayer({ videoId, id }: YTPlayerProps) {
   const { refetch } = useWatchVideoQuery(id);
 
   const onStateChange = useCallback((state: string) => {
-    console.log({ state });
     if (state === 'ended') {
       setPlaying(false);
     } else if (state === 'unstarted') {

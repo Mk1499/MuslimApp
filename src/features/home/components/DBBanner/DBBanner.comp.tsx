@@ -32,15 +32,36 @@ import {
   isPrayerUpcoming,
   PRAYER_ORDER,
 } from '@/features/prayer-times/prayerTimes.utils';
+import App from 'App';
 
 const PRAYER_OUTCOMES: {
   value: PrayerOutcome;
   emoji: string;
   translationKey: string;
+  iconName: string;
+  iconFamily: any;
 }[] = [
-  { value: 'congregation', emoji: '😊', translationKey: 'congregation' },
-  { value: 'alone', emoji: '😐', translationKey: 'alone' },
-  { value: 'missed', emoji: '😞', translationKey: 'notPrayed' },
+  {
+    value: 'congregation',
+    emoji: '😊',
+    translationKey: 'congregation',
+    iconName: 'users',
+    iconFamily: 'Feather',
+  },
+  {
+    value: 'alone',
+    emoji: '😐',
+    translationKey: 'alone',
+    iconName: 'user',
+    iconFamily: 'Feather',
+  },
+  {
+    value: 'missed',
+    emoji: '😞',
+    translationKey: 'notPrayed',
+    iconName: 'x',
+    iconFamily: 'Feather',
+  },
 ];
 
 export default function DBBannerComponent() {
@@ -59,9 +80,7 @@ export default function DBBannerComponent() {
   const recordPrayer = usePrayerTrackerStore(state => state.recordPrayer);
   const recordedPrayers = todayHistory ?? {};
   const { getCurrentLocation } = useLocation();
-  const { userLocation, userAddress, prayerTimes } = useAppStore();
-
-  console.log(userAddress);
+  const { userAddress, prayerTimes } = useAppStore();
 
   const { data: hijriDateData } = useTodayHijriDate();
 
@@ -82,7 +101,7 @@ export default function DBBannerComponent() {
     const prayerName = item.name as TrackedPrayer;
     const outcome = recordedPrayers[prayerName];
     const isUpcoming = isPrayerUpcoming(prayerName, prayerTimes, now);
-
+    console.log('recordedPrayers', recordedPrayers);
     return (
       <Pressable
         accessibilityRole="button"
@@ -106,18 +125,28 @@ export default function DBBannerComponent() {
           nextPrayer?.name === item.name &&
             nextPrayer.isElapsed === false &&
             styles.prayerItemActive,
-          !isUpcoming ? styles.prayerItemUpcoming : undefined,
+          isUpcoming ? styles.prayerItemUpcoming : undefined,
         ]}
       >
         <View style={styles.prayerNameRow}>
-          <AppText style={styles.prayerName}>
+          <AppText
+            style={[
+              styles.prayerName,
+              outcome && {
+                backgroundColor:
+                  outcome === 'alone'
+                    ? theme.status.success
+                    : outcome === 'congregation'
+                    ? theme.status.successSoft
+                    : theme.status.error,
+                padding: spacing.xs,
+                borderRadius: spacing.xs,
+                marginBottom: spacing.xs,
+              },
+            ]}
+          >
             {t(`prayerTimes.${item.name}`) ?? item.name}
           </AppText>
-          {outcome ? (
-            <AppText style={styles.prayerOutcomeEmoji}>
-              {PRAYER_OUTCOMES.find(option => option.value === outcome)?.emoji}
-            </AppText>
-          ) : null}
         </View>
         <AppIcon
           name={item.icon}
@@ -148,6 +177,8 @@ export default function DBBannerComponent() {
     }
   }
 
+  console.log(userAddress);
+
   return (
     <AppGradient colors={theme.gradient.banner} style={[styles.upperCont]}>
       <Image
@@ -162,11 +193,19 @@ export default function DBBannerComponent() {
           </AppText>
         </View>
         <Pressable onPress={getCurrentLocation} style={styles.addressCont}>
-          <AppText style={styles.address} numberOfLines={1}>
-            {(userAddress && userAddress?.address?.city) ??
-              userAddress?.name ??
-              ''}
-          </AppText>
+          {userAddress && (
+            <View>
+              <AppText style={styles.cityName} numberOfLines={1}>
+                {(userAddress?.name || userAddress?.address?.neighbourhood) ??
+                  ''}
+              </AppText>
+              <AppText style={styles.address} numberOfLines={1}>
+                {(userAddress && userAddress?.address?.city) ??
+                  userAddress?.name ??
+                  ''}
+              </AppText>
+            </View>
+          )}
           <AppIcon
             name="map-pin"
             size={spacing.xl}
@@ -263,14 +302,24 @@ export default function DBBannerComponent() {
                         isSelected ? styles.outcomeSelected : undefined,
                       ]}
                     >
-                      <AppText style={styles.outcomeEmoji}>
-                        {option.emoji}
-                      </AppText>
+                      <AppIcon
+                        name={option.iconName}
+                        as={option.iconFamily}
+                        size={21}
+                        color={
+                          isSelected ? theme.text.brand : theme.text.primary
+                        }
+                      />
                       <View style={styles.outcomeCopy}>
                         <AppText
                           variant="body"
                           weight="semiBold"
-                          style={styles.outcomeTitle}
+                          style={[
+                            styles.outcomeTitle,
+                            isSelected
+                              ? { color: theme.text.brand }
+                              : undefined,
+                          ]}
                         >
                           {t(`prayerTracker.${option.translationKey}`)}
                         </AppText>

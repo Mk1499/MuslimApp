@@ -92,7 +92,6 @@ export default function TafseerDetailsScreen() {
             icon: <AppIcon name="book" size={24} color={theme.tabBar.active} />,
           }}
           onSelectOption={option => {
-            console.log({ option });
             setSelectedSurah({
               number: parseInt(option.id ?? '0', 10),
               name_arabic: option.title,

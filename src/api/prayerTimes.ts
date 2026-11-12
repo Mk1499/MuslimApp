@@ -18,14 +18,11 @@ export async function getPrayerTimes(
       ? CalculationMethod.Egyptian()
       : CalculationMethod.UmmAlQura();
 
-  console.log({ adhanParams });
   const prayerTimes = new PrayerTimes(
     coordinates,
     params.date ? new Date(params.date) : new Date(),
     adhanParams,
   );
-
-  console.log({ prayerTimes });
 
   return { prayerTimes };
 }

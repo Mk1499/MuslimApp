@@ -9,19 +9,20 @@ import { SplashAnimation } from '@/assets/animations';
 import moment from 'moment';
 import 'moment/locale/ar';
 import { isRTL } from '@/utils/constants';
+import { getPrayerTimes } from '@/api/prayerTimes';
 
 export default function SplashScreen() {
   const { getCurrentLocation } = useLocation();
-  const { userLocation } = useAppStore();
+  const { userLocation, userAddress, setPrayerTimes } = useAppStore();
   const { reset } = useNavigation();
 
-  function initApp() {
+  async function initApp() {
     moment.locale(isRTL ? 'ar' : 'en');
 
     if (!userLocation) {
       getCurrentLocation()
         .catch(error => {
-          console.log('Error getting current location:', error);
+          console.error('Error getting current location:', error);
         })
         .finally(() => {
           reset({
@@ -30,6 +31,14 @@ export default function SplashScreen() {
           });
         });
     } else {
+      const prayerTimesData = await getPrayerTimes(
+        {
+          latitude: userLocation?.latitude,
+          longitude: userLocation?.longitude,
+        },
+        userAddress as string,
+      );
+      setPrayerTimes(prayerTimesData?.prayerTimes);
       reset({
         index: 0,
         routes: [{ name: 'MainTabs' }],

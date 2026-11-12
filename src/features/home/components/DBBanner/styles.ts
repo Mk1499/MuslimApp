@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { spacing, AppTheme, fontSize } from '@/theme';
+import { spacing, AppTheme, fontSize, fontFamily } from '@/theme';
 import { SCREEN_WIDTH } from '@/utils/constants';
 
 export default (theme: AppTheme) =>
@@ -46,9 +46,19 @@ export default (theme: AppTheme) =>
       textAlign: 'right',
       color: theme.basic.white,
       fontSize: fontSize.lg,
-      paddingTop: spacing.lg,
-      fontWeight: '100',
+      lineHeight: fontSize.lg * 1.5,
       width: 0.45 * SCREEN_WIDTH,
+      alignSelf: 'flex-start',
+      fontFamily: fontFamily.regular,
+    },
+    cityName: {
+      textAlign: 'right',
+      fontSize: fontSize.lg,
+      lineHeight: fontSize.lg * 1.5,
+      width: 0.45 * SCREEN_WIDTH,
+      alignSelf: 'flex-start',
+      fontFamily: fontFamily.bold,
+      color: theme.text.highlight,
     },
     paryersListCont: {
       flexDirection: 'row',
@@ -67,7 +77,7 @@ export default (theme: AppTheme) =>
       minWidth: 72,
       paddingVertical: spacing.xs,
     },
-    prayerItemUpcoming: { opacity: 0.62 },
+    prayerItemUpcoming: { opacity: 0.92 },
     prayerNameRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
     prayerOutcomeEmoji: { fontSize: 13 },
     prayerName: {
@@ -91,7 +101,7 @@ export default (theme: AppTheme) =>
     },
     addressCont: {
       flexDirection: 'row',
-      alignItems: 'flex-end',
+      alignItems: 'center',
       justifyContent: 'flex-end',
       gap: spacing.sm,
       paddingHorizontal: spacing.md,
