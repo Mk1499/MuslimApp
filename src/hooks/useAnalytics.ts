@@ -18,6 +18,7 @@ export const EVENTS = {
   Get_AZKAR_COLLECTIONS_ERROR: 'get_azkar_collections_error',
   Get_HADITH_COLLECTION_ERROR: 'get_hadith_collection_error',
   Get_LATEST_VIDEOS_ERROR: 'get_latest_videos_error',
+  Get_MOST_VIEWED_VIDEOS_ERROR: 'get_most_viewed_videos_error',
 };
 
 /** Shared Firebase Analytics helpers for recording meaningful app behavior. */

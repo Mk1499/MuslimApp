@@ -9,6 +9,7 @@ import AllSpeakers from '@/features/media/screens/AllSpeakers/AllSpeakers.screen
 import { Video } from '@/types/media.types';
 import MediaSearchResults from '@/features/media/screens/MediaSearchResults/MediaSearchResults.screen';
 import LatestVideos from '@/features/media/screens/LatestVideos/LatestVideos.screen';
+import TopVideos from '@/features/media/screens/TopVideos/TopVideos.screen';
 
 const Stack = createNativeStackNavigator<MediaStackParamList>();
 
@@ -31,6 +32,7 @@ export default function MediaStack() {
         component={MediaSearchResults}
       />
       <Stack.Screen name={ScreenNames.LatestVideos} component={LatestVideos} />
+      <Stack.Screen name={ScreenNames.TopVideos} component={TopVideos} />
     </Stack.Navigator>
   );
 }

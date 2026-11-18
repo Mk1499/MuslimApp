@@ -57,7 +57,6 @@ export default function useMediaData() {
       initialPageParam: 1,
       staleTime: 1000 * 60 * 5,
       getNextPageParam: lastPage => {
-        console.log('lastPage:', lastPage);
         const { pagination } = lastPage ?? [];
         const { page, totalPages } = pagination ?? {};
         return page && totalPages && page < totalPages ? page + 1 : undefined;
@@ -66,7 +65,7 @@ export default function useMediaData() {
 
   const useMostViewedVideosQuery = () =>
     useInfiniteQuery({
-      queryKey: ['most-viewed-videos'],
+      queryKey: ['most-viewed-videos-infinite'],
       queryFn: ({ pageParam = 1 }) => getMostViewedVideos(pageParam),
       getNextPageParam: lastPage => {
         const { page, totalPages } = lastPage.pagination ?? {};

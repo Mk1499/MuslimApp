@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import React, { useEffect } from 'react';
 import useMediaData from '@/api/queries/useMediaData';
 import { useTranslation } from 'react-i18next';
