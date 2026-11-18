@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AppText, Screen } from '@/components/ui';
 import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
 import SpeakerCard from '@/features/media/components/SpeakerCard/SpeakerCard.comp';
-import useMediaData from '@/hooks/queries/useMediaData';
+import useMediaData from '@/api/queries/useMediaData';
 import { useTheme } from '@/theme';
 import makeStyles from './styles';
 import ScreenNames from '@/navigation/ScreenNames';

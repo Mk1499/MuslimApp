@@ -6,7 +6,7 @@ import { AppIcon, AppText, AppTouchable, Screen } from '@/components/ui';
 import AppImage from '@/components/ui/AppImage';
 import YTPlayer from '@/features/media/components/YTPlayer/YTPlayer.comp';
 import VideoCard from '@/features/media/components/VideoCard/VideoCard.comp';
-import useMediaData from '@/hooks/queries/useMediaData';
+import useMediaData from '@/api/queries/useMediaData';
 import useFormatter from '@/hooks/useFormatter';
 import { MediaStackParamList } from '@/navigation/stacks/mediaStack';
 import ScreenNames from '@/navigation/ScreenNames';

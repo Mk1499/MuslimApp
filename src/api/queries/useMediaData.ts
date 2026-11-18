@@ -12,7 +12,7 @@ import {
   searchMedia,
   searchSpeakers,
   searchVideos,
-} from '@/api/media';
+} from '@/api/funcs/media';
 
 export default function useMediaData() {
   const useMediaDashboardQueries = () =>
@@ -48,6 +48,32 @@ export default function useMediaData() {
         refetch: () => Promise.all(results.map(result => result.refetch())),
         isRefetching: results.some(result => result.isRefetching),
       }),
+    });
+
+  const useLatestVideosQuery = () =>
+    useInfiniteQuery({
+      queryKey: ['latest-videos-infinite'],
+      queryFn: ({ pageParam = 1 }) => getLatestVideos(pageParam),
+      initialPageParam: 1,
+      staleTime: 1000 * 60 * 5,
+      getNextPageParam: lastPage => {
+        console.log('lastPage:', lastPage);
+        const { pagination } = lastPage ?? [];
+        const { page, totalPages } = pagination ?? {};
+        return page && totalPages && page < totalPages ? page + 1 : undefined;
+      },
+    });
+
+  const useMostViewedVideosQuery = () =>
+    useInfiniteQuery({
+      queryKey: ['most-viewed-videos'],
+      queryFn: ({ pageParam = 1 }) => getMostViewedVideos(pageParam),
+      getNextPageParam: lastPage => {
+        const { page, totalPages } = lastPage.pagination ?? {};
+        return page && totalPages && page < totalPages ? page + 1 : undefined;
+      },
+      initialPageParam: 1,
+      staleTime: 1000 * 60 * 5,
     });
 
   const useGetFeaturedSpeakersQuery = () =>
@@ -175,5 +201,7 @@ export default function useMediaData() {
     useWatchVideoQuery,
     useSearchSpeakers,
     useSearchVideos,
+    useLatestVideosQuery,
+    useMostViewedVideosQuery,
   };
 }

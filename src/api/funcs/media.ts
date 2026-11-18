@@ -35,17 +35,23 @@ export type MediaSearchResponse = {
 };
 
 // Videos
-export async function getLatestVideos(): Promise<GetLatestVideosResponse> {
+export async function getLatestVideos(
+  page = 1,
+  limit = 5,
+): Promise<GetLatestVideosResponse> {
   const response = await mediaClient.get<GetLatestVideosResponse>(
-    '/videos/latest?page=1&limit=5',
+    `/videos/latest?page=${page}&limit=${limit}`,
   );
 
   return response.data;
 }
 
-export async function getMostViewedVideos(): Promise<GetLatestVideosResponse> {
+export async function getMostViewedVideos(
+  page = 1,
+  limit = 5,
+): Promise<GetLatestVideosResponse> {
   const response = await mediaClient.get<GetLatestVideosResponse>(
-    '/videos/most-viewed?page=1&limit=5',
+    `/videos/most-viewed?page=${page}&limit=${limit}`,
   );
 
   return response.data;

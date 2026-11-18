@@ -8,6 +8,7 @@ import VideoDetails from '@/features/media/screens/VideoDetails/VideoDetails.scr
 import AllSpeakers from '@/features/media/screens/AllSpeakers/AllSpeakers.screen';
 import { Video } from '@/types/media.types';
 import MediaSearchResults from '@/features/media/screens/MediaSearchResults/MediaSearchResults.screen';
+import LatestVideos from '@/features/media/screens/LatestVideos/LatestVideos.screen';
 
 const Stack = createNativeStackNavigator<MediaStackParamList>();
 
@@ -29,6 +30,7 @@ export default function MediaStack() {
         name={ScreenNames.MediaSearchResults}
         component={MediaSearchResults}
       />
+      <Stack.Screen name={ScreenNames.LatestVideos} component={LatestVideos} />
     </Stack.Navigator>
   );
 }
@@ -41,4 +43,6 @@ export type MediaStackParamList = {
   [ScreenNames.VideoDetails]: { video: Video };
   [ScreenNames.AllSpeakers]: undefined;
   [ScreenNames.MediaSearchResults]: { query: string };
+  [ScreenNames.LatestVideos]: undefined;
+  [ScreenNames.TopVideos]: undefined;
 };

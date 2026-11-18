@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { YTPlayerProps } from './types';
-import useMediaData from '@/hooks/queries/useMediaData';
+import useMediaData from '@/api/queries/useMediaData';
 
 const BORDER_WIDTH = 2;
 const RADIUS = 14;

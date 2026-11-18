@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { ActivityIndicator, SectionList, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import VideoCard from '@/features/media/components/VideoCard/VideoCard.comp';
-import useMediaData from '@/hooks/queries/useMediaData';
+import useMediaData from '@/api/queries/useMediaData';
 import { useTheme } from '@/theme';
 
 export default function LatestVideosView({

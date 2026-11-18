@@ -3,7 +3,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppText, Screen } from '@/components/ui';
-import useMediaData from '@/hooks/queries/useMediaData';
+import useMediaData from '@/api/queries/useMediaData';
 import VideoCard from '../../components/VideoCard/VideoCard.comp';
 import { Carousel } from 'react-native-reanimated-carousel';
 import { useTheme } from '@/theme';
@@ -41,14 +41,34 @@ export default function MediaDashboardScreen() {
     });
   };
 
-  function renderVideosSection(title: string, data: any[]) {
+  function showLatestVideos() {
+    navigate(StackNames.MediaStack, {
+      screen: ScreenNames.LatestVideos,
+    });
+  }
+
+  function showMostViewedVideos() {
+    navigate(StackNames.MediaStack, {
+      screen: ScreenNames.TopVideos,
+    });
+  }
+
+  function renderVideosSection(
+    title: string,
+    data: any[],
+    handleShowAll: () => void,
+  ) {
     return (
       <View style={styles.section}>
         <View style={styles.sectionHead}>
           <AppText variant="subtitle" style={styles.sectionTitle}>
             {title}
           </AppText>
-          <AppText variant="caption" style={styles.clickableText}>
+          <AppText
+            variant="caption"
+            style={styles.clickableText}
+            onPress={handleShowAll}
+          >
             {t('common.seeAll')}
           </AppText>
         </View>
@@ -149,11 +169,19 @@ export default function MediaDashboardScreen() {
 
       {latestVideos?.data &&
         latestVideos.data.length > 0 &&
-        renderVideosSection(t('media.latestVideos'), latestVideos.data)}
+        renderVideosSection(
+          t('media.latestVideos'),
+          latestVideos.data,
+          showLatestVideos,
+        )}
 
       {mostViewedVideos?.data &&
         mostViewedVideos.data.length > 0 &&
-        renderVideosSection(t('media.mostViewedVideos'), mostViewedVideos.data)}
+        renderVideosSection(
+          t('media.mostViewedVideos'),
+          mostViewedVideos.data,
+          showMostViewedVideos,
+        )}
 
       {isError && <AppText>Error loading latest videos</AppText>}
 

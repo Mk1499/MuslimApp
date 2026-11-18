@@ -16,7 +16,7 @@ import { AppText, Screen } from '@/components/ui';
 import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
 import SpeakerCardLarge from '@/features/media/components/SpeakerCardLarge/SpeakerCardLarge.comp';
 import VideoCard from '@/features/media/components/VideoCard/VideoCard.comp';
-import useMediaData from '@/hooks/queries/useMediaData';
+import useMediaData from '@/api/queries/useMediaData';
 import ScreenNames from '@/navigation/ScreenNames';
 import { MediaStackParamList } from '@/navigation/stacks/mediaStack';
 import { useTheme } from '@/theme';

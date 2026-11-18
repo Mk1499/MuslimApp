@@ -5,6 +5,7 @@ import {
   logScreenView,
 } from '@react-native-firebase/analytics';
 import Toast from 'react-native-toast-message';
+import i18next from 'i18next';
 
 export type AnalyticsParams = Record<string, string | number | boolean | null>;
 
@@ -16,6 +17,7 @@ export const EVENTS = {
   Get_TAFSEER_PAGES_ERROR: 'get_tafseer_pages_error',
   Get_AZKAR_COLLECTIONS_ERROR: 'get_azkar_collections_error',
   Get_HADITH_COLLECTION_ERROR: 'get_hadith_collection_error',
+  Get_LATEST_VIDEOS_ERROR: 'get_latest_videos_error',
 };
 
 /** Shared Firebase Analytics helpers for recording meaningful app behavior. */
@@ -25,7 +27,7 @@ export function useAnalytics() {
       eventName: string,
       params?: AnalyticsParams,
       withToast?: boolean,
-      toastMessage?: string,
+      toastMessage = i18next.t('appMessages.error'),
     ) => {
       try {
         const result = logEvent(
