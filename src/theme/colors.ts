@@ -133,6 +133,7 @@ export type AppTheme = {
   basic: {
     white: string;
     black: string;
+    gold: string;
   };
 };
 
@@ -208,6 +209,7 @@ export const lightTheme: AppTheme = {
   basic: {
     white: palette.neutral[0],
     black: palette.neutral[900],
+    gold: palette.gold[300],
   },
 };
 
@@ -283,6 +285,7 @@ export const darkTheme: AppTheme = {
   basic: {
     white: palette.neutral[0],
     black: palette.neutral[900],
+    gold: palette.gold[300],
   },
 };
 

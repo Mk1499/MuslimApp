@@ -31,6 +31,7 @@ import {
   getNextPrayer,
   isPrayerUpcoming,
   PRAYER_ORDER,
+  PrayerKey,
 } from '@/features/prayer-times/prayerTimes.utils';
 import App from 'App';
 
@@ -64,6 +65,15 @@ const PRAYER_OUTCOMES: {
   },
 ];
 
+const PRAYER_ICONS: Record<PrayerKey, string> = {
+  fajr: 'partly-sunny',
+  sunrise: 'partly-sunny-sharp',
+  dhuhr: 'sunny',
+  asr: 'sunny-sharp',
+  maghrib: 'cloudy-night-sharp',
+  isha: 'cloudy-sharp',
+};
+
 export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
@@ -88,7 +98,7 @@ export default function DBBannerComponent() {
   const prayers = PRAYER_ORDER.map(name => ({
     name,
     time: prayerTimes ? getFormattedTime(prayerTimes[name]) : '',
-    icon: name === 'fajr' ? 'sunrise' : 'sunset',
+    icon: PRAYER_ICONS[name],
   }));
 
   useEffect(() => {
@@ -100,6 +110,9 @@ export default function DBBannerComponent() {
     const prayerName = item.name as TrackedPrayer;
     const outcome = recordedPrayers[prayerName];
     const isUpcoming = isPrayerUpcoming(prayerName, prayerTimes, now);
+    const isNext =
+      nextPrayer?.name === item.name && nextPrayer.isElapsed === false;
+
     return (
       <Pressable
         accessibilityRole="button"
@@ -120,9 +133,6 @@ export default function DBBannerComponent() {
         }}
         style={[
           styles.prayerItem,
-          nextPrayer?.name === item.name &&
-            nextPrayer.isElapsed === false &&
-            styles.prayerItemActive,
           isUpcoming ? styles.prayerItemUpcoming : undefined,
         ]}
       >
@@ -130,17 +140,17 @@ export default function DBBannerComponent() {
           <AppText
             style={[
               styles.prayerName,
-              outcome && {
-                backgroundColor:
-                  outcome === 'alone'
-                    ? theme.status.success
-                    : outcome === 'congregation'
-                    ? theme.status.successSoft
-                    : theme.status.error,
-                padding: spacing.xs,
-                borderRadius: spacing.xs,
-                marginBottom: spacing.xs,
-              },
+              outcome || isNext
+                ? {
+                    color: isNext
+                      ? theme.basic.gold
+                      : outcome === 'alone'
+                      ? theme.status.success
+                      : outcome === 'congregation'
+                      ? theme.status.successSoft
+                      : theme.status.error,
+                  }
+                : undefined,
             ]}
           >
             {t(`prayerTimes.${item.name}`) ?? item.name}
@@ -149,10 +159,17 @@ export default function DBBannerComponent() {
         <AppIcon
           name={item.icon}
           size={spacing.xxl}
-          color={theme.basic.white}
-          as="Feather"
+          color={isNext ? theme.basic.gold : theme.basic.white}
+          as="Ionicons"
         />
-        <AppText style={styles.prayerTime}>{item.time}</AppText>
+        <AppText
+          style={[
+            styles.prayerTime,
+            isNext ? { color: theme.basic.gold } : undefined,
+          ]}
+        >
+          {item.time}
+        </AppText>
       </Pressable>
     );
   }
