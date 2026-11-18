@@ -17,3 +17,4 @@ export const BGPatternImage = require('./BGpattern.png');
 export const QiblaCompass = require('./QiblaCompass.png');
 export const NoInternetImage = require('./noInternet.png');
 export const LocationImage = require('./location.png');
+export const EmptyListImage = require('./box.png');

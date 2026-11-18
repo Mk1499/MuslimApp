@@ -1,6 +1,6 @@
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import EmptyList from '@/components/common/EmptyList/EmptyList.comp';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Screen } from '@/components/ui/Screen';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { MutashabihatStackParamList } from '@/navigation/stacks/mutashabihatStack';
@@ -11,6 +11,7 @@ import useMutashabihatData from '@/hooks/queries/useMutashabihatData';
 import AyahMutCard from '../../components/AyahMutashabihatCard/AyahMutCard.comp';
 import { useTranslation } from 'react-i18next';
 import useFormatter from '@/hooks/useFormatter';
+import { useAnalytics, EVENTS } from '@/hooks/useAnalytics';
 
 export default function SurahMutashabihat() {
   const theme = useTheme();
@@ -31,7 +32,10 @@ export default function SurahMutashabihat() {
     hasNextPage,
     isFetchingNextPage,
     isLoading: isMutashabihatLoading,
+    isError,
+    error,
   } = useSurahMutashabihatQuery(number);
+  const { trackEvent } = useAnalytics();
 
   const verses =
     mutashabihatData?.pages.flatMap(page => page.data.verses) ?? [];
@@ -39,6 +43,21 @@ export default function SurahMutashabihat() {
   function loadNextPage() {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }
+
+  useEffect(() => {
+    if (isError && JSON.parse(JSON.stringify(error)).status !== 404) {
+      trackEvent(
+        EVENTS.General_API_ERROR,
+        {
+          error: error?.message ?? 'Unknown error',
+          context: 'SurahMutashabihat',
+          surahNumber: number,
+        },
+        true,
+        t('appMessages.error'),
+      );
+    }
+  }, [isError, error]);
 
   return (
     <Screen

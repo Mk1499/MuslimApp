@@ -1,4 +1,5 @@
 import { I18nManager, StatusBar, StyleSheet } from 'react-native';
+import { toastConfig } from './src/utils/toast.config';
 import React from 'react';
 import {
   DarkTheme,
@@ -15,6 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './src/i18n';
 import { AthanNotificationManager } from './src/features/athan/AthanNotificationManager';
 import { trackScreenView } from './src/hooks/useAnalytics';
+import Toast, { ToastProps } from 'react-native-toast-message';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,7 @@ function App(): React.JSX.Element {
         <SafeAreaProvider>
           <QueryClientProvider client={queryClient}>
             <ThemedApp />
+            <Toast config={toastConfig as any} />
           </QueryClientProvider>
         </SafeAreaProvider>
       </ThemeProvider>

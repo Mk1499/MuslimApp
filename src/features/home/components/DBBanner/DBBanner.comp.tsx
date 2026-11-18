@@ -100,7 +100,6 @@ export default function DBBannerComponent() {
     const prayerName = item.name as TrackedPrayer;
     const outcome = recordedPrayers[prayerName];
     const isUpcoming = isPrayerUpcoming(prayerName, prayerTimes, now);
-    console.log('recordedPrayers', recordedPrayers);
     return (
       <Pressable
         accessibilityRole="button"

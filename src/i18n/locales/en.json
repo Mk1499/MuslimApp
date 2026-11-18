@@ -313,6 +313,7 @@
     "netReqMutashabihat": "Network connection is required to show Mutashabihat Surah",
     "netReqMedia": "Network connection is required to show Media content",
     "netReqDuaa": "Network connection is required to show Today Duaa",
-    "netReqHadeeth": "Network connection is required to show Today Hadeeth"
+    "netReqHadeeth": "Network connection is required to show Today Hadeeth",
+    "error": "An unexpected error occurred And we are working to fix soon"
   }
 }

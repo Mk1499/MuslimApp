@@ -20,8 +20,7 @@ export default (theme: AppTheme) =>
       textAlign: 'center',
       color: theme.basic.white,
       width: '100%',
-      fontSize: 12,
-      lineHeight: 24,
+      fontSize: 16,
     },
     surah: {
       color: theme.accent.soft,

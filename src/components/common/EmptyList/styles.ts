@@ -16,4 +16,10 @@ export default (theme: AppTheme) =>
       textAlign: 'center',
       marginTop: 8,
     },
+    image: {
+      width: 120,
+      height: 120,
+      resizeMode: 'contain',
+      marginBottom: 16,
+    },
   });

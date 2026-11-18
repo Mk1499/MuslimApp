@@ -10,6 +10,8 @@ import StackNames from '@/navigation/StackNames';
 import ScreenNames from '@/navigation/ScreenNames';
 import { AppStackParamList } from '@/navigation/types';
 import { HadithCollection } from '@/types/hadith';
+import { EVENTS, useAnalytics } from '@/hooks/useAnalytics';
+import EmptyList from '@/components/common/EmptyList/EmptyList.comp';
 
 export default function HadithCollectionsScreen() {
   const { hadithCollectionsQuery } = useHadithData();
@@ -17,15 +19,24 @@ export default function HadithCollectionsScreen() {
     data: hadithCollectionsData,
     isLoading,
     isError,
+    error,
   } = hadithCollectionsQuery;
   const { collections = [] } = hadithCollectionsData?.data ?? {};
   const { t } = useTranslation();
   const { getLocalizedText } = useFormatter();
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { trackEvent } = useAnalytics();
 
   useEffect(() => {
     if (isError) {
-      console.error('Error fetching hadith collections');
+      trackEvent(
+        EVENTS.Get_HADITH_COLLECTIONS_ERROR,
+        {
+          error: error?.message ?? 'Unknown error',
+        },
+        true,
+        t('appMessages.error'),
+      );
     }
   }, [isError]);
 
@@ -58,6 +69,7 @@ export default function HadithCollectionsScreen() {
             icon={<AppIcon name="book" as="Feather" />}
           />
         )}
+        ListEmptyComponent={!isLoading ? <EmptyList /> : undefined}
       />
     </Screen>
   );
