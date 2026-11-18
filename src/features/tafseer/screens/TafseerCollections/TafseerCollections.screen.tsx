@@ -22,8 +22,10 @@ import SurahListView from '@/features/quran/screens/QuranDB/Views/SurahsList/Sur
 import { Surah } from '@/types/surah';
 import StackNames from '@/navigation/StackNames';
 import ScreenNames from '@/navigation/ScreenNames';
-import { TafseerStackParamList } from '@/navigation/stacks/tafseerStack';
 import { HomeStackParamList } from '@/navigation/stacks/homeStack';
+import { useAnalytics, EVENTS } from '@/hooks/useAnalytics';
+import { useAppStore } from '@/store/useAppStore';
+import NetworkFail from '@/components/common/NetworkFail/NetworkFail.comp';
 
 export default function TafseerCollectionsScreen() {
   const theme = useTheme();
@@ -39,20 +41,29 @@ export default function TafseerCollectionsScreen() {
   const collections = isRTL
     ? tafseerCollectionsData?.filter(item => item?.language === 'ar') ?? []
     : tafseerCollectionsData?.filter(item => item?.language === 'en') ?? [];
-  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState<Tafseer | null>(
     null,
   );
+  const { trackEvent } = useAnalytics();
+  const { isInternetConnected } = useAppStore();
 
   const bottomSheetRef = React.useRef<AppBottomSheetRef>(null);
 
   const { t } = useTranslation();
   const { navigate } =
-    useNavigation<NavigationProp<HomeStackParamList, 'TafseerStack'>>();
+    useNavigation<NavigationProp<HomeStackParamList, StackNames.Tafseer>>();
 
   useEffect(() => {
     if (isError) {
       console.error('Error fetching Tafseer collections : ', error);
+      trackEvent(
+        EVENTS.Get_TAFSEER_COLLECTIONS_ERROR,
+        {
+          error: error?.message ?? 'Unknown error',
+        },
+        true,
+        t('appMessages.error'),
+      );
     }
   }, [isError]);
 
@@ -78,6 +89,14 @@ export default function TafseerCollectionsScreen() {
         tafseer: selectedCollection,
       },
     });
+  }
+
+  if (!isInternetConnected) {
+    return (
+      <Screen isInnerPage screenTitle={t('tafseer.screenName')}>
+        <NetworkFail />
+      </Screen>
+    );
   }
 
   return (
@@ -109,7 +128,6 @@ export default function TafseerCollectionsScreen() {
       <AppBottomSheet
         ref={bottomSheetRef}
         snapPoints={['50%', '70%']}
-        onDismiss={() => setIsBottomSheetVisible(false)}
         scrollable={true}
       >
         <BottomSheetFlatList

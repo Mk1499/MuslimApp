@@ -1,5 +1,6 @@
 import { View, FlatList, ActivityIndicator } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Screen } from '@/components/ui';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { HomeStackParamList } from '@/navigation/stacks/homeStack';
@@ -9,6 +10,9 @@ import useHadithData from '@/hooks/queries/useHadithData';
 import HadithCard from '../../components/HadithCard/HadithCard.comp';
 import { HadithItem } from '@/types/hadith';
 import { useTheme } from '@/theme';
+import { useAnalytics, EVENTS } from '@/hooks/useAnalytics';
+import { useAppStore } from '@/store/useAppStore';
+import NetworkFail from '@/components/common/NetworkFail/NetworkFail.comp';
 
 export default function CollectionsDetails() {
   const { getLocalizedText } = useFormatter();
@@ -20,18 +24,50 @@ export default function CollectionsDetails() {
   const { collection } = params;
   const { key, arabic_name, name } = collection ?? {};
   const { useHadithCollectionQuery } = useHadithData();
+  const { trackEvent } = useAnalytics();
+  const { t } = useTranslation();
+  const { isInternetConnected } = useAppStore();
   const {
     data: hadithCollectionData,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading: isHadithCollectionLoading,
+    isError,
+    error,
   } = useHadithCollectionQuery(key);
   const hadiths =
     hadithCollectionData?.pages.flatMap(page => page.data.hadiths) ?? [];
 
   function loadNextPage() {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }
+
+  useEffect(() => {
+    if (isError) {
+      trackEvent(
+        EVENTS.Get_HADITH_COLLECTION_ERROR,
+        { error: error?.message ?? '' },
+        true,
+        t('appMessages.error'),
+      );
+    }
+  }, [isError, error, trackEvent]);
+
+  if (!isInternetConnected) {
+    return (
+      <Screen
+        isInnerPage
+        screenTitle={getLocalizedText(arabic_name ?? '', name)}
+        padded
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <NetworkFail />
+        </View>
+      </Screen>
+    );
   }
 
   return (

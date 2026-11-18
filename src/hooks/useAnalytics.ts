@@ -12,6 +12,10 @@ export const EVENTS = {
   General_API_ERROR: 'general_api_error',
   Get_HADITH_COLLECTIONS_ERROR: 'get_hadith_collections_error',
   Get_SURAH_MUTASHABIHAT_ERROR: 'get_surah_mutashabihat_error',
+  Get_TAFSEER_COLLECTIONS_ERROR: 'get_tafseer_collections_error',
+  Get_TAFSEER_PAGES_ERROR: 'get_tafseer_pages_error',
+  Get_AZKAR_COLLECTIONS_ERROR: 'get_azkar_collections_error',
+  Get_HADITH_COLLECTION_ERROR: 'get_hadith_collection_error',
 };
 
 /** Shared Firebase Analytics helpers for recording meaningful app behavior. */

@@ -1,7 +1,7 @@
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import AppDropDown from '@/components/ui/AppDropDown';
 import { AppIcon } from '@/components/ui/AppIcon';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import makeStyles from './styles';
 import { Screen } from '@/components/ui';
 import useQuranData from '@/hooks/queries/useQuranData';
@@ -16,19 +16,22 @@ import { useTranslation } from 'react-i18next';
 import { Surah } from '@/types/surah';
 import { Tafseer } from '@/types/tafseer.types';
 import TafseerCard from '../../components/TafseerCard/TafseerCard.comp';
+import ScreenNames from '@/navigation/ScreenNames';
+import { EVENTS, useAnalytics } from '@/hooks/useAnalytics';
 
 export default function TafseerDetailsScreen() {
   const { t } = useTranslation();
   const theme = useTheme();
   const styles = makeStyles();
   const { params } =
-    useRoute<RouteProp<TafseerStackParamList, 'tafseerDetails'>>();
+    useRoute<RouteProp<TafseerStackParamList, ScreenNames.TafseerDetails>>();
   const { tafseer, surah } = params;
   const [selectedSurah, setSelectedSurah] = React.useState<Surah>(surah);
   const [selectedTafseer, setSelectedTafseer] =
     React.useState<Tafseer>(tafseer);
 
   const { getLocalizedText } = useFormatter();
+  const { trackEvent } = useAnalytics();
   const { listSurahsQuery } = useQuranData();
   const { data: surahsData } = listSurahsQuery ?? {};
   const { tafseerCollectionsQuery, surahTafseerPagesQuery } = useTafseerData({
@@ -44,7 +47,20 @@ export default function TafseerDetailsScreen() {
     hasNextPage,
     isFetchingNextPage,
     isLoading: tafseerPagesLoading,
+    isError: isTafseerPagesError,
+    error: tafseerPagesError,
   } = surahTafseerPagesQuery;
+
+  useEffect(() => {
+    if (isTafseerPagesError) {
+      trackEvent(
+        EVENTS.Get_TAFSEER_PAGES_ERROR,
+        { error: tafseerPagesError?.message ?? '' },
+        true,
+        t('appMessages.error'),
+      );
+    }
+  }, [isTafseerPagesError]);
 
   const fullSurahTafseer = useMemo(
     () => tafseerPages?.pages.flatMap(page => page.items) ?? [],

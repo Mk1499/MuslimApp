@@ -1,4 +1,6 @@
 import { FlatList, View } from 'react-native';
+import NetworkFail from '@/components/common/NetworkFail/NetworkFail.comp';
+import { useAnalytics, EVENTS } from '@/hooks/useAnalytics';
 import React, { useEffect, useMemo, useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { AzkarStackParamList } from '@/navigation/stacks/azkarStack';
@@ -10,9 +12,12 @@ import ScreenNames from '@/navigation/ScreenNames';
 import { AzkarCollection } from '@/types/azkar';
 import useAzkarData from '@/hooks/queries/useAzkarData';
 import makeStyles from './styles';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function AzkarCollectionsScreen() {
   const { useAzkarCollectionQuery } = useAzkarData();
+  const { isInternetConnected } = useAppStore();
+  const { trackEvent } = useAnalytics();
   const {
     data: azkarCollectionsData,
     isLoading,
@@ -39,6 +44,14 @@ export default function AzkarCollectionsScreen() {
   useEffect(() => {
     if (isError) {
       console.error('Error fetching hadith collections');
+      trackEvent(
+        EVENTS.Get_AZKAR_COLLECTIONS_ERROR,
+        {
+          error: 'Error fetching hadith collections',
+        },
+        true,
+        t('appMessages.error'),
+      );
     }
   }, [isError]);
 
@@ -46,6 +59,14 @@ export default function AzkarCollectionsScreen() {
     navigate(ScreenNames.AzkarDetails, {
       item,
     });
+  }
+
+  if (!isInternetConnected) {
+    return (
+      <Screen isInnerPage screenTitle={t('azkar.screenName')}>
+        <NetworkFail />
+      </Screen>
+    );
   }
 
   return (
