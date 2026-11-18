@@ -2,9 +2,30 @@ import { getPrayerTimes } from '@/api/prayerTimes';
 import { useAppStore } from '@/store/useAppStore';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import { Alert, Linking } from 'react-native';
+import { openSettings } from 'react-native-permissions';
 
 export default function useLocation() {
   const { setUserLocation, setUserAddress, setPrayerTimes } = useAppStore();
+  const { t } = useTranslation();
+
+  function promptOpenSettings() {
+    Alert.alert(
+      t('common.locationPermission'),
+      t('common.locationPermissionDescription'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.openSettings'),
+          // The user taps the button first: never jump to Settings without telling them why
+          onPress: () => {
+            openSettings().catch(() => Linking.openSettings());
+          },
+        },
+      ],
+    );
+  }
 
   const getCurrentLocation = () => {
     return new Promise((resolve, reject) => {
@@ -30,7 +51,13 @@ export default function useLocation() {
           });
           resolve(position);
         },
-        error => reject(error),
+        error => {
+          console.log('location err', { error });
+          if (error.code === 1) {
+            promptOpenSettings();
+          }
+          return reject(error);
+        },
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
       );
     });

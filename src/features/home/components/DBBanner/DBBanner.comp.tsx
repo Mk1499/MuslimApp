@@ -68,7 +68,6 @@ export default function DBBannerComponent() {
   const theme = useTheme();
   const styles = makeStyle(theme);
   const { t } = useTranslation();
-  const { isRTL } = useAppStore();
   const { getFormattedTime } = useDateHook();
   const [selectedPrayer, setSelectedPrayer] = useState<TrackedPrayer | null>(
     null,
@@ -80,7 +79,7 @@ export default function DBBannerComponent() {
   const recordPrayer = usePrayerTrackerStore(state => state.recordPrayer);
   const recordedPrayers = todayHistory ?? {};
   const { getCurrentLocation } = useLocation();
-  const { userAddress, prayerTimes } = useAppStore();
+  const { userAddress, prayerTimes, isRTL } = useAppStore();
 
   const { data: hijriDateData } = useTodayHijriDate();
 
@@ -177,7 +176,28 @@ export default function DBBannerComponent() {
     }
   }
 
-  console.log(userAddress);
+  if (!userAddress) {
+    return (
+      <AppGradient colors={theme.gradient.banner} style={[styles.upperCont]}>
+        <Image
+          source={MosqueImage}
+          style={styles.bgImg}
+          tintColor={theme.basic.white}
+        />
+        <View style={styles.enableLocCont}>
+          <AppText style={styles.enableMsg}>
+            {t('home.locPermissionReq')}
+            <AppText
+              style={{ textDecorationLine: 'underline' }}
+              onPress={getCurrentLocation}
+            >
+              {' ' + t('common.enableNow') + ' '}{' '}
+            </AppText>
+          </AppText>
+        </View>
+      </AppGradient>
+    );
+  }
 
   return (
     <AppGradient colors={theme.gradient.banner} style={[styles.upperCont]}>

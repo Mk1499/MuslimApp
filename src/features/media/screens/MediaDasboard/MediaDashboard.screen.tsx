@@ -13,6 +13,8 @@ import ScreenNames from '@/navigation/ScreenNames';
 import StackNames from '@/navigation/StackNames';
 import { RootStackParamList } from '@/navigation/types';
 import SearchInput from '@/components/common/SearchInput/SearchInput.comp';
+import { useAppStore } from '@/store/useAppStore';
+import NetworkFail from '@/components/common/NetworkFail/NetworkFail.comp';
 
 export default function MediaDashboardScreen() {
   const theme = useTheme();
@@ -22,6 +24,7 @@ export default function MediaDashboardScreen() {
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, StackNames.MediaStack>>();
   const [searchQuery, setSearchQuery] = React.useState('');
+  const { isInternetConnected } = useAppStore();
 
   const { data, isError, isLoading, refetch, isRefetching } =
     useMediaDashboardQueries();
@@ -61,6 +64,14 @@ export default function MediaDashboardScreen() {
           style={styles.listCont}
         />
       </View>
+    );
+  }
+
+  if (!isInternetConnected) {
+    return (
+      <Screen>
+        <NetworkFail message={t('appMessages.netReqMedia')} />
+      </Screen>
     );
   }
 

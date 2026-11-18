@@ -22,13 +22,21 @@ export type AppBottomSheetProps = Omit<
   children?: React.ReactNode;
 };
 
-function ThemedBackdrop(props: BottomSheetBackdropProps): React.JSX.Element {
+function ThemedBackdrop({
+  props,
+  baseProps,
+}: {
+  props: BottomSheetBackdropProps;
+  baseProps: BottomSheetModalProps;
+}): React.JSX.Element {
   return (
     <BottomSheetBackdrop
       {...props}
       appearsOnIndex={0}
       disappearsOnIndex={-1}
-      pressBehavior="close"
+      pressBehavior={
+        baseProps.enableDismissOnClose === false ? 'none' : 'close'
+      }
     />
   );
 }
@@ -50,7 +58,9 @@ export const AppBottomSheet = forwardRef<
       snapPoints={snapPoints}
       enableDynamicSizing={!snapPoints}
       enablePanDownToClose
-      backdropComponent={ThemedBackdrop}
+      backdropComponent={props => (
+        <ThemedBackdrop props={props} baseProps={rest} />
+      )}
       backgroundStyle={{ backgroundColor: theme.card.primary }}
       handleIndicatorStyle={{ backgroundColor: theme.text.muted }}
       {...rest}

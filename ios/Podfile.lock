@@ -1387,6 +1387,28 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - react-native-netinfo (12.0.1):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-bridging
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - react-native-pager-view (9.0.11):
     - hermes-engine
     - RCTRequired
@@ -2163,6 +2185,28 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - RNPermissions (5.6.3):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-bridging
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - RNReanimated (4.6.0):
     - hermes-engine
     - RCTRequired
@@ -2464,6 +2508,7 @@ DEPENDENCIES:
   - React-mutationobservernativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver`)
   - react-native-compass-heading (from `../node_modules/react-native-compass-heading`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2513,6 +2558,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNNotifee (from `../node_modules/react-native-notify-kit`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -2636,6 +2682,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-compass-heading"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-restart:
@@ -2734,6 +2782,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-localize"
   RNNotifee:
     :path: "../node_modules/react-native-notify-kit"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -2804,6 +2854,7 @@ SPEC CHECKSUMS:
   React-mutationobservernativemodule: 44fd38a55451f25ea5a2c74e74f18bf08f94d40a
   react-native-compass-heading: 98a11fd5049b822f1be5ff658196f2d26f9afdad
   react-native-geolocation: 1202caa7bc8dc4149458369179e45d42172b506a
+  react-native-netinfo: afde752bbbafa8accf42ec4e8c82a91f3624922f
   react-native-pager-view: 47732065d69582d780431bc3a20d0f4828b699b5
   react-native-restart: 086848f5ccc8ab7e51fa434f67e8423ea94e1bc5
   react-native-safe-area-context: 076cb83e7562467ea234422b0fe7fd7873389be6
@@ -2853,6 +2904,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 1d2dbd83c97892e717fdac6e8684f278bf3b951c
   RNLocalize: b455f46c17ac976e0a7a83467a458f97fec6b393
   RNNotifee: 98b34ff86418187d6d7e54d1614b5ca450cfd3ad
+  RNPermissions: c7403b8f91e6ece6afe691fde2d75af39882b479
   RNReanimated: 7e68cf425d1c4a54c2dc4baee0ac9d8d347fd289
   RNScreens: a80e6f0c2d2e7e27a977938de02af641e5c2bb0c
   RNVectorIcons: c7cd45980aad8bbd77a47b906f62957c9494dcb6
@@ -2861,6 +2913,6 @@ SPEC CHECKSUMS:
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
   Yoga: d1c536142c5ff8ec8cd856ab2a7c227a1d875c8e
 
-PODFILE CHECKSUM: 00bd3ec781c5cbe93941b5301180b897b9bb1876
+PODFILE CHECKSUM: c50507388dc19faca403335762d916049f172b64
 
 COCOAPODS: 1.15.2

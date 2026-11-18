@@ -32,4 +32,12 @@ export default (theme: AppTheme) =>
       start: 10,
       textTransform: 'capitalize',
     },
+    sheetCont: {
+      padding: 16,
+    },
+    sheetText: {
+      fontSize: 20,
+      textAlign: 'center',
+      marginHorizontal: 16,
+    },
   });

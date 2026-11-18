@@ -13,7 +13,14 @@
     "back": "Back",
     "remove": "Remove",
     "noData": "No data available",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "locationPermission": "Location permission required",
+    "locationPermissionDescription": "The app needs access to your location to provide accurate prayer times.",
+    "allowLocation": "Allow location",
+    "allowLocationLater": "Allow location later",
+    "enableNow": "Enable Now",
+    "openSettings": "Open settings",
+    "networkRequired": "Network connection required"
   },
   "tabs": {
     "home": "Home",
@@ -39,7 +46,8 @@
       "tasbeeh": "Tasbeeh",
       "zakatCalc": "Zakat Calculation",
       "prayerTimes": "Prayer Times"
-    }
+    },
+    "locPermissionReq": "Location Access Required to fetch prayer times for your current region"
   },
   "quran": {
     "title": "Quran Kareem",
@@ -297,5 +305,14 @@
     "viewChannel": "View channel",
     "relatedVideos": "Related videos",
     "relatedError": "Could not load related videos."
+  },
+  "appMessages": {
+    "networkRequired": "Network connection is required",
+    "noInternet": "No internet connection",
+    "netReqTodayAya": "Network connection is required to show Today Ayah",
+    "netReqMutashabihat": "Network connection is required to show Mutashabihat Surah",
+    "netReqMedia": "Network connection is required to show Media content",
+    "netReqDuaa": "Network connection is required to show Today Duaa",
+    "netReqHadeeth": "Network connection is required to show Today Hadeeth"
   }
 }

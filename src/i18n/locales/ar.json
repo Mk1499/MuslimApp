@@ -13,7 +13,14 @@
     "back": "رجوع",
     "remove": "إزالة",
     "noData": "لا توجد بيانات متاحة",
-    "seeAll": "عرض الكل"
+    "seeAll": "عرض الكل",
+    "locationPermission": "مطلوب إذن الموقع",
+    "locationPermissionDescription": "يحتاج التطبيق إلى الوصول إلى موقعك لتوفير مواقيت الصلاة الدقيقة.",
+    "allowLocation": "السماح بالموقع",
+    "allowLocationLater": "السماح بالموقع لاحقًا",
+    "enableNow": "تفعيل الان",
+    "openSettings": "فتح الإعدادات",
+    "networkRequired": "مطلوب اتصال بالإنترنت"
   },
   "tabs": {
     "home": "الرئيسية",
@@ -29,6 +36,7 @@
     "viewAllPrayers": "عرض الكل",
     "quickAccess": "الوصول السريع",
     "todayDuaa": "دعاء اليوم",
+    "locPermissionReq": "السماح بالوصول لموقعك ضروري لعرض مواقيت الصلاة عندك",
     "features": {
       "mutashabihat": "متشابهات",
       "tafseer": "تفسير",
@@ -297,5 +305,14 @@
     "viewChannel": "عرض القناة",
     "relatedVideos": "فيديوهات ذات صلة",
     "relatedError": "تعذر تحميل الفيديوهات ذات الصلة."
+  },
+  "appMessages": {
+    "networkRequired": "مطلوب اتصال بالإنترنت",
+    "noInternet": "لا يوجد اتصال بالإنترنت",
+    "netReqTodayAya": "مطلوب اتصال بالإنترنت لعرض آية اليوم",
+    "netReqMutashabihat": "مطلوب اتصال بالإنترنت لعرض سور المتشابهات",
+    "netReqMedia": "مطلوب اتصال بالإنترنت لعرض محتوى الميديا",
+    "netReqDuaa": "مطلوب اتصال بالإنترنت لعرض دعاء اليوم",
+    "netReqHadeeth": "مطلوب اتصال بالإنترنت لعرض حديث اليوم"
   }
 }

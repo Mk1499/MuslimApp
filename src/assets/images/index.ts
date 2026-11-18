@@ -15,3 +15,5 @@ export const MadinahImage = require('./madinah.png');
 export const SurahNameBannerImage = require('./surahNameBanner.png');
 export const BGPatternImage = require('./BGpattern.png');
 export const QiblaCompass = require('./QiblaCompass.png');
+export const NoInternetImage = require('./noInternet.png');
+export const LocationImage = require('./location.png');

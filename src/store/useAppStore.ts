@@ -41,7 +41,9 @@ interface AppState {
   lastPlayedAyah: LastPlayedAyah | null;
   lastReadPage: number | null;
   prayerTimes: PrayerTimes | null;
+  isInternetConnected: boolean;
 
+  setIsInternetConnected: (status: boolean) => void;
   setPrayerTimes: (prayerTimes: PrayerTimes | null) => void;
   setUserAddress: (address: any | null) => void;
   setLastPlayedAyah: (aya: LastPlayedAyah | null) => void;
@@ -64,7 +66,11 @@ export const useAppStore = create<AppState>()(
       lastPlayedAyah: null,
       lastReadPage: null,
       prayerTimes: null,
+      isInternetConnected: false,
 
+      setIsInternetConnected: status => {
+        set({ isInternetConnected: status });
+      },
       setPrayerTimes: prayerTimes => {
         set({ prayerTimes });
       },

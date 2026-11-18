@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { spacing, AppTheme, fontSize, fontFamily } from '@/theme';
-import { SCREEN_WIDTH } from '@/utils/constants';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/utils/constants';
 
 export default (theme: AppTheme) =>
   StyleSheet.create({
@@ -58,7 +58,7 @@ export default (theme: AppTheme) =>
       width: 0.45 * SCREEN_WIDTH,
       alignSelf: 'flex-start',
       fontFamily: fontFamily.bold,
-      color: theme.text.highlight,
+      color: theme.basic.white,
     },
     paryersListCont: {
       flexDirection: 'row',
@@ -137,4 +137,14 @@ export default (theme: AppTheme) =>
     outcomeCopy: { flex: 1 },
     outcomeTitle: { color: theme.text.primary },
     outcomeScore: { color: theme.text.muted, marginTop: 2 },
+    enableLocCont: {
+      height: 0.2 * SCREEN_HEIGHT,
+      paddingHorizontal: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    enableMsg: {
+      textAlign: 'center',
+      color: theme.basic.white,
+    },
   });
