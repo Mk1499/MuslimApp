@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AppIcon, AppText, AppTouchable, Screen } from '@/components/ui';
 import AppImage from '@/components/ui/AppImage';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import makeStyles from './styles';
 import LatestVideosView from './Views/LatestVideos/LatestVideos.view';
 import PopularVideosView from './Views/PopularVideos/PopularVideos.view';
+import PlaylistsView from './Views/Playlists/Playlists.view';
 
 export default function SpeakerProfile() {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ export default function SpeakerProfile() {
   const tabs = [
     { id: 'latest', label: t('media.latestVideos') },
     { id: 'popular', label: t('media.mostViewedVideos') },
+    { id: 'playlists', label: t('media.playlists') },
   ] as const;
   const activeTab = tabs[selectedIndex] ?? tabs[0];
   const speakerName =
@@ -67,7 +69,11 @@ export default function SpeakerProfile() {
 
   const stickyTabs = (
     <View style={styles.stickyHeader}>
-      <View style={styles.segmentCont}>
+      <ScrollView
+        horizontal
+        style={styles.segmentCont}
+        showsHorizontalScrollIndicator={false}
+      >
         {tabs.map((tab, index) => (
           <Pressable
             key={tab.id}
@@ -87,7 +93,7 @@ export default function SpeakerProfile() {
             {selectedIndex === index && <View style={styles.tabIndicator} />}
           </Pressable>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 
@@ -103,8 +109,14 @@ export default function SpeakerProfile() {
           ListHeaderComponent={profileHeader}
           StickyHeaderComponent={stickyTabs}
         />
-      ) : (
+      ) : activeTab.id === 'popular' ? (
         <PopularVideosView
+          speakerId={speaker?._id ?? ''}
+          ListHeaderComponent={profileHeader}
+          StickyHeaderComponent={stickyTabs}
+        />
+      ) : (
+        <PlaylistsView
           speakerId={speaker?._id ?? ''}
           ListHeaderComponent={profileHeader}
           StickyHeaderComponent={stickyTabs}

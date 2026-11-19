@@ -304,7 +304,10 @@
     "speaker": "Speaker",
     "viewChannel": "View channel",
     "relatedVideos": "Related videos",
-    "relatedError": "Could not load related videos."
+    "relatedError": "Could not load related videos.",
+    "playlists": "Playlists",
+    "noPlaylists": "No published playlists found.",
+    "playlistVideos": "Videos in this playlist"
   },
   "appMessages": {
     "networkRequired": "Network connection is required",

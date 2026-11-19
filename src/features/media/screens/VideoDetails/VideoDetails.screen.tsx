@@ -26,11 +26,11 @@ export default function VideoDetails() {
   const { goBack } = useNavigation();
   const { params } =
     useRoute<RouteProp<MediaStackParamList, ScreenNames.VideoDetails>>();
-  const { video } = params;
+  const { video, speakers } = params;
   const { useRelatedVideosQuery } = useMediaData();
   const { data, isLoading, isError } = useRelatedVideosQuery(video._id);
   const { getLocalizedText } = useFormatter();
-  const speaker = video.speakers?.[0];
+  const speaker = speakers?.[0] || video.speakers?.[0];
   const publishedDate = video.publishedAt
     ? moment(video.publishedAt).format('Do MMMM YYYY')
     : '';

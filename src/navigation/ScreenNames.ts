@@ -28,6 +28,7 @@ enum ScreenNames {
   MediaSearchResults = 'mediaSearchResults',
   LatestVideos = 'latestVideos',
   TopVideos = 'topVideos',
+  PlaylistDetails = 'playlistDetails',
 }
 
 export default ScreenNames;

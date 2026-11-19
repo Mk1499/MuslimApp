@@ -1,5 +1,5 @@
 import { mediaClient } from '@/api/APIClients';
-import { Video, VideoSpeaker } from '@/types/media.types';
+import { Video, VideoPlaylist, VideoSpeaker } from '@/types/media.types';
 
 type GetLatestVideosResponse = {
   data: Video[];
@@ -13,6 +13,16 @@ type GetLatestVideosResponse = {
 
 type GetFeaturedSpeakersResponse = {
   data: VideoSpeaker[];
+  pagination?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+};
+
+export type PlaylistResponse = {
+  data: VideoPlaylist[];
   pagination?: {
     page: number;
     limit: number;
@@ -116,6 +126,28 @@ export async function getSpeakerMostViewedVideos(
     `/videos/most-viewed?speaker=${speakerId}&page=${page}&limit=3`,
   );
 
+  return response.data;
+}
+
+export async function getSpeakerPlaylists(
+  speakerId: string,
+  page: number,
+  limit = 6,
+): Promise<PlaylistResponse> {
+  const response = await mediaClient.get<PlaylistResponse>(
+    `/playlists?speaker=${encodeURIComponent(
+      speakerId,
+    )}&page=${page}&limit=${limit}`,
+  );
+  return response.data;
+}
+
+export async function getPlaylist(
+  playlistId: string,
+): Promise<{ data: VideoPlaylist }> {
+  const response = await mediaClient.get<{ data: VideoPlaylist }>(
+    `/playlists/${encodeURIComponent(playlistId)}`,
+  );
   return response.data;
 }
 

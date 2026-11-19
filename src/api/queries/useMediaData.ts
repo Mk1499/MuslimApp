@@ -12,6 +12,8 @@ import {
   searchMedia,
   searchSpeakers,
   searchVideos,
+  getSpeakerPlaylists,
+  getPlaylist,
 } from '@/api/funcs/media';
 
 export default function useMediaData() {
@@ -140,6 +142,27 @@ export default function useMediaData() {
       staleTime: 1000 * 60 * 5, // 5 minutes
     });
 
+  const useSpeakerPlaylistsQuery = (speakerId: string) =>
+    useInfiniteQuery({
+      queryKey: ['speaker-playlists', speakerId],
+      queryFn: ({ pageParam = 1 }) => getSpeakerPlaylists(speakerId, pageParam),
+      getNextPageParam: lastPage => {
+        const { page, totalPages } = lastPage.pagination ?? {};
+        return page && totalPages && page < totalPages ? page + 1 : undefined;
+      },
+      initialPageParam: 1,
+      enabled: !!speakerId,
+      staleTime: 1000 * 60 * 5,
+    });
+
+  const usePlaylistQuery = (playlistId: string) =>
+    useQuery({
+      queryKey: ['playlist', playlistId],
+      queryFn: () => getPlaylist(playlistId),
+      enabled: !!playlistId,
+      staleTime: 1000 * 60 * 5,
+    });
+
   const useRelatedVideosQuery = (videoId: string) =>
     useQuery({
       queryKey: ['related-videos', videoId],
@@ -196,6 +219,8 @@ export default function useMediaData() {
     useMediaDashboardQueries,
     useSpeakerTopVideosQuery,
     useSpeakerLatestVideosQuery,
+    useSpeakerPlaylistsQuery,
+    usePlaylistQuery,
     useRelatedVideosQuery,
     useWatchVideoQuery,
     useSearchSpeakers,

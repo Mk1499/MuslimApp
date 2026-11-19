@@ -48,3 +48,20 @@ export type Video = {
   dislikes: number;
   __v: number;
 };
+
+export type VideoPlaylist = {
+  _id: string;
+  title: string;
+  titleAr?: string;
+  titleEn?: string;
+  description?: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  coverImageUrl?: string;
+  videos: Video[];
+  speakers: VideoSpeaker[];
+  publishedAt?: string;
+  isPublished?: boolean;
+  createdAt?: string;
+  cover?: string;
+};

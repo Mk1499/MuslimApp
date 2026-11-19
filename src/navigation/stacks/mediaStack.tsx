@@ -10,6 +10,8 @@ import { Video } from '@/types/media.types';
 import MediaSearchResults from '@/features/media/screens/MediaSearchResults/MediaSearchResults.screen';
 import LatestVideos from '@/features/media/screens/LatestVideos/LatestVideos.screen';
 import TopVideos from '@/features/media/screens/TopVideos/TopVideos.screen';
+import PlaylistDetails from '@/features/media/screens/PlaylistDetails/PlaylistDetails.screen';
+import { VideoPlaylist } from '@/types/media.types';
 
 const Stack = createNativeStackNavigator<MediaStackParamList>();
 
@@ -33,6 +35,10 @@ export default function MediaStack() {
       />
       <Stack.Screen name={ScreenNames.LatestVideos} component={LatestVideos} />
       <Stack.Screen name={ScreenNames.TopVideos} component={TopVideos} />
+      <Stack.Screen
+        name={ScreenNames.PlaylistDetails}
+        component={PlaylistDetails}
+      />
     </Stack.Navigator>
   );
 }
@@ -42,9 +48,13 @@ export type MediaStackParamList = {
   [ScreenNames.SpeakerProfile]: {
     speaker?: VideoSpeaker;
   };
-  [ScreenNames.VideoDetails]: { video: Video };
+  [ScreenNames.VideoDetails]: { video: Video; speakers?: VideoSpeaker[] };
   [ScreenNames.AllSpeakers]: undefined;
   [ScreenNames.MediaSearchResults]: { query: string };
   [ScreenNames.LatestVideos]: undefined;
   [ScreenNames.TopVideos]: undefined;
+  [ScreenNames.PlaylistDetails]: {
+    playlistId: string;
+    playlist: VideoPlaylist;
+  };
 };

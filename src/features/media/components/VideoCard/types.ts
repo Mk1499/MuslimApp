@@ -1,5 +1,6 @@
-import { Video } from '@/types/media.types';
+import { Video, VideoSpeaker } from '@/types/media.types';
 
 export type VideoCardProps = {
   video: Video;
+  speakers?: VideoSpeaker[];
 };

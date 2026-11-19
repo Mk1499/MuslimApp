@@ -10,17 +10,24 @@ import { useNavigation } from '@react-navigation/native';
 import StackNames from '@/navigation/StackNames';
 import ScreenNames from '@/navigation/ScreenNames';
 
-export default function VideoCard({ video }: VideoCardProps) {
+export default function VideoCard({ video, speakers }: VideoCardProps) {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const { youtubeVideoId, title, speakers, views, duration } = video;
+  const {
+    youtubeVideoId,
+    title,
+    speakers: videoSpeakers,
+    views,
+    duration,
+  } = video;
   const coverURL = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
   const { formatDuration } = useFormatter();
   const navigation = useNavigation<any>();
+  const displaySpeakers = speakers || videoSpeakers;
   const openVideo = () =>
     navigation.navigate(StackNames.MediaStack, {
       screen: ScreenNames.VideoDetails,
-      params: { video },
+      params: { video, speakers: displaySpeakers },
     });
 
   return (
@@ -46,14 +53,14 @@ export default function VideoCard({ video }: VideoCardProps) {
           navigation.navigate(StackNames.MediaStack, {
             screen: ScreenNames.SpeakerProfile,
             params: {
-              speaker: speakers[0],
+              speaker: displaySpeakers?.[0],
             },
           });
         }}
         style={[styles.dataCont]}
       >
         <AppImage
-          source={{ uri: speakers[0]?.imageUrl }}
+          source={{ uri: displaySpeakers?.[0]?.imageUrl }}
           style={styles.speakerImg}
         />
         <View style={styles.infoCont}>
@@ -61,7 +68,7 @@ export default function VideoCard({ video }: VideoCardProps) {
             {title}
           </AppText>
           <AppText style={styles.speakerName} variant="caption">
-            {speakers[0]?.name}
+            {displaySpeakers?.[0]?.name}
           </AppText>
         </View>
       </Pressable>
